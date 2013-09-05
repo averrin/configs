@@ -1,12 +1,10 @@
 # Maximum Awesome
 
 Config files for vim and tmux, lovingly tended by a small subculture of
-peace-loving hippies. Built for Mac OS X.
+peace-loving hippies. Modified for Linux
 
 ## What's in it?
 
-* [MacVim](https://code.google.com/p/macvim/) (independent or for use in a terminal)
-* [iTerm 2](http://www.iterm2.com/)
 * [tmux](http://tmux.sourceforge.net/)
 * Awesome syntax highlighting with the [Solarized color scheme](http://ethanschoonover.com/solarized)
 
