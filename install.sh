@@ -9,4 +9,5 @@ cp ./vimrc ~/.vimrc
 cp -r vim ~/.vim
 cp -r ~/.vim/vim/* ~/.vim
 cp -r ./oh-my-zsh ~/.oh-my-zsh
+cp ./zsh-history-substring-search/* ~/.oh-my-zsh/custom/
 echo "Done. type 'tmux -u' to start"
