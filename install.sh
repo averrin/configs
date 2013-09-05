@@ -1,5 +1,5 @@
 sudo apt-get install tmux zsh git-core
-get clone https://github.com/averrin/maximum-awesome.git
+git clone https://github.com/averrin/maximum-awesome.git
 cd ./maximum-awesome
 cp -r ./tmux.conf ~/.tmux.conf
 cp ./zshrc ~/.zshrc
