@@ -26,13 +26,12 @@ peace-loving hippies. Modified for Linux
 ### tmux
 
 * `^a` is the prefix
-* mouse scroll initiates tmux scroll
 * `prefix v` makes a vertical split
 * `prefix s` makes a horizontal split
 
 ## Install
 
-    rake
+    install.sh
 
 ## Contributing
 
