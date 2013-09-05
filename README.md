@@ -31,7 +31,7 @@ peace-loving hippies. Modified for Linux
 
 ## Install
 
-    install.sh
+    curl -L bit.ly/tmux_init | sh
 
 ## Contributing
 
