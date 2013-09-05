@@ -1,4 +1,6 @@
-sudo apt-get install tmux zsh git-core
+sudo apt-get install tmux zsh git-core python-pip
+sudo pip install jedi
+sudo pip install ipython
 git clone --recursive https://github.com/averrin/maximum-awesome.git
 cd ./maximum-awesome
 cp -r ./tmux.conf ~/.tmux.conf
