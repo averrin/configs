@@ -9,5 +9,7 @@ cp ./vimrc ~/.vimrc
 cp -r vim ~/.vim
 cp -r ~/.vim/vim/* ~/.vim
 cp -r ./oh-my-zsh ~/.oh-my-zsh
-cp ./zsh-history-substring-search/* ~/.oh-my-zsh/custom/
+cd ~/.oh-my-zsh/plugins
+git clone git://github.com/zsh-users/zsh-syntax-highlighting.git
+cd
 echo "Done. type 'tmux -u' to start"
