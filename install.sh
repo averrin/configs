@@ -12,5 +12,7 @@ cp -r ./oh-my-zsh ~/.oh-my-zsh
 cd ~/.oh-my-zsh/plugins
 git clone git://github.com/zsh-users/zsh-syntax-highlighting.git
 git clone git://github.com/kennethreitz/autoenv.git ~/.autoenv
+echo "alias averrin='tmux -u attach -t averrin || tmux -u new -s averrin'" >> ~/.bashrc
+echo "alias tester='tmux -u attach -t tester || tmux -u new -s tester'" >> ~/.bashrc
 cd
 echo "Done. type 'tmux -u' to start"
