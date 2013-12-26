@@ -12,3 +12,6 @@ bindkey "\e[A" history-substring-search-up
 bindkey "\e[B" history-substring-search-down
 bindkey "\eOA" history-substring-search-up
 bindkey "\eOB" history-substring-search-down
+
+
+eval `dircolors ~/dircolors.256dark`
