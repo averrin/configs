@@ -1,4 +1,4 @@
-sudo apt-get install tmux zsh git-core python-pip htop wget tig -y
+sudo apt-get install tmux zsh git-core python-pip htop wget tig vim -y
 sudo pip install jedi
 sudo pip install ipython
 git clone --recursive https://github.com/averrin/maximum-awesome.git
