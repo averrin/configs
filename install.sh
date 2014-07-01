@@ -1,6 +1,7 @@
 sudo apt-get install tmux zsh git-core python-pip htop wget tig vim -y
 sudo pip install jedi
 sudo pip install ipython
+sudo pip install percol
 git clone --recursive https://github.com/averrin/maximum-awesome.git
 cd ./maximum-awesome
 cp -r ./tmux.conf ~/.tmux.conf
