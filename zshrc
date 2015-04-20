@@ -1,6 +1,6 @@
 ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="sporty_256"
-plugins=(git, autoenv, django,tmux, extract, zsh-syntax-highlighting, history-substring-search)
+plugins=(git, git-flow, autoenv, django,tmux, extract, zsh-syntax-highlighting, history-substring-search)
 source $ZSH/oh-my-zsh.sh
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
 
@@ -9,6 +9,13 @@ alias p="sudo python ~/p.py"
 alias pipi="sudo pip install"
 alias ipython="ptipython"
 alias ipy="ipython"
+alias ch="sudo python ~/projects/ch.py"
+alias how="/home/user/.local/bin/howdoi"
+alias commit="git commit -am"
+alias push="git push"
+alias status="git status"
+alias build="gulp build"
+alias fuck='$(thefuck $(fc -ln -1))'
 
 bindkey "\e[A" history-substring-search-up
 bindkey "\e[B" history-substring-search-down
@@ -32,3 +39,4 @@ if exists percol; then
     zle -N percol_select_history
     bindkey '^R' percol_select_history
 fi
+export TERM=xterm-256color
