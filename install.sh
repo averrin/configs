@@ -3,6 +3,7 @@ sudo pip install jedi
 sudo pip install ipython
 sudo pip install percol
 sudo pip install prompt-toolkit
+sudo pip install thefuck
 git clone --recursive https://github.com/averrin/maximum-awesome.git
 cd ./maximum-awesome
 cp -r ./tmux.conf ~/.tmux.conf
