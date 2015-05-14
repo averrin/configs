@@ -20,4 +20,5 @@ echo "alias averrin='tmux -u attach -t averrin || tmux -u new -s averrin'" >> ~/
 echo "alias tester='tmux -u attach -t tester || tmux -u new -s tester'" >> ~/.bashrc
 cd
 wget https://raw.github.com/seebi/dircolors-solarized/master/dircolors.256dark
+curl http://beyondgrep.com/ack-2.14-single-file > ~/.local/bin/ack; chmod +x ~/.local/bin/ack
 echo "Done. type 'tmux -u' to start"
