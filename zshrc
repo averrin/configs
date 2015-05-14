@@ -40,3 +40,5 @@ if exists percol; then
     bindkey '^R' percol_select_history
 fi
 export TERM=xterm-256color
+export PATH=$PATH:~/.local/bin
+
