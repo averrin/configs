@@ -19,6 +19,8 @@ alias fuck='$(thefuck $(fc -ln -1))'
 
 bindkey "\e[A" history-substring-search-up
 bindkey "\e[B" history-substring-search-down
+bindkey "^p" history-substring-search-up
+bindkey "^n" history-substring-search-down
 bindkey "\eOA" history-substring-search-up
 bindkey "\eOB" history-substring-search-down
 
