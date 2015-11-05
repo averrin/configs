@@ -6,7 +6,7 @@
     -- awful.key({ altkey }, "k", function () awful.util.spawn(terminal) end, "Abre terminal em janela*"),
 table5={
   ["a"]={"atom-beta","Atom"},
-  ["w"]={"google-chrome-unstable","google-chrome-unstable"},
+  ["w"]={"google-chrome-stable","google-chrome"},
   ["e"]={"/home/user/.local/bin/qb.sh qutebrowser qutebrowser", "qutebrowser"},
   ["h"]={"yakyak", "yakyak" },
   ["d"]={"slack", "slack" },

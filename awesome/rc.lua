@@ -16,6 +16,8 @@ local lain      = require("lain")
 local keydoc    = require("keydoc")
 local alttab    = require("alttab")
 local ror    = require("aweror")
+require("collision")()
+-- local rodentbane = require("rerodentbane")
 -- }}}
 
 -- {{{ Error handling
@@ -53,11 +55,12 @@ function run_once(cmd)
 end
 
 -- Compositor
-run_once("compton -b --detect-rounded-corners --config " .. os.getenv("HOME") .. "/.config/awesome/compton.conf")
+-- run_once("compton -b --detect-rounded-corners --config " .. os.getenv("HOME") .. "/.config/awesome/compton.conf")
 
 -- uncluter
 run_once("unclutter")
 -- }}}
+run_once("rofi")
 
 -- {{{ Variable definitions
 -- localization
@@ -124,7 +127,7 @@ mytextclock = awful.widget.textclock(" %a %d %b %H:%M")
 lain.widgets.calendar:attach(mytextclock, { font_size = 10 })
 
 -- File System Notification
-fswidget = lain.widgets.fs()
+-- fswidget = lain.widgets.fs()
 
 -- {{ Separators
 -- Spacer
@@ -214,7 +217,7 @@ for s = 2, screen.count() do
     local left_layout = wibox.layout.fixed.horizontal()
     left_layout:add(spr)
     left_layout:add(mytaglist[s])
-    left_layout:add(arrl_r)
+    -- left_layout:add(arrl_dl)
     left_layout:add(spr)
 
     -- Widgets that are aligned to the upper right
@@ -268,31 +271,38 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, ",", function () awful.util.spawn(kdeconf) end, "Abre configurações do KDE*"),
     awful.key({ altkey }, "c", function () lain.widgets.calendar:show(7) end, "Mostra calendário*"),
     awful.key({ modkey, "Control" }, "r", awesome.restart, "Reinicia awesome"),
+    awful.key({ modkey }, "q", rerodentbane, "rere..."),
 
     -- Focus management
-    keydoc.group("Foco"),
-    awful.key({ modkey,           }, "Tab",
-        function ()
-            awful.client.focus.history.previous()
-            if client.focus then
-                client.focus:raise()
-            end
-        end, "Alterna para janela focada anteriormente"),
-    awful.key({ modkey }, "u", awful.client.urgent.jumpto, "Foca próxima janela urgente"),
+    -- keydoc.group("Foco"),
+    -- awful.key({ modkey,           }, "Tab",
+    --     function ()
+    --         awful.client.focus.history.previous()
+    --         if client.focus then
+    --             client.focus:raise()
+    --         end
+    --     end, "Alterna para janela focada anteriormente"),
+    -- awful.key({ modkey }, "u", awful.client.urgent.jumpto, "Foca próxima janela urgente"),
     awful.key({ modkey, "Control" }, "j", function () awful.screen.focus_relative( 1) end, "Foca próxima tela"),
 
     -- awesome_alttab
     -- Forward
     awful.key({ altkey,         }, "Tab",
         function ()
-            alttab.switch(1, "Alt_L", "Tab", "ISO_Left_Tab")
+            -- alttab.switch(1, "Alt_L", "Tab", "ISO_Left_Tab")
+            awful.util.spawn('rofi -show window')
         end, "Alterna janelas* (shift para inverter)"),
-    -- Reverse
-    awful.key({ altkey, "Shift"   }, "Tab",
+    awful.key({ altkey,         }, "F2",
         function ()
-            alttab.switch(-1, "Alt_L", "Tab", "ISO_Left_Tab")
-        end),
-
+            -- alttab.switch(1, "Alt_L", "Tab", "ISO_Left_Tab")
+            awful.util.spawn('rofi -show run')
+        end, "Alterna janelas* (shift para inverter)"),
+    -- -- Reverse
+    -- awful.key({ altkey, "Shift"   }, "Tab",
+    --     function ()
+    --         alttab.switch(-1, "Alt_L", "Tab", "ISO_Left_Tab")
+    --     end),
+    --
     -- Layout management (tile mode)
     keydoc.group("Layout (modo encaixe)"),
     awful.key({ modkey }, "l", function () awful.tag.incmwfact(0.05) end, "Aumenta largura mestre"),
@@ -357,13 +367,13 @@ end
 -- {{ Client Keys
 clientkeys = awful.util.table.join(
     keydoc.group("Janelas"),
-    awful.key({ modkey }, "Down",
+    awful.key({ modkey }, "n",
         function (c)
             -- The client currently has the input focus, so it cannot be
             -- minimized, since minimized clients can't have the focus.
             c.minimized = true
         end, "Minimiza"),
-    awful.key({ modkey }, "Up",
+    awful.key({ modkey }, "m",
         function (c)
             c.maximized_horizontal = not c.maximized_horizontal
             c.maximized_vertical   = not c.maximized_vertical
@@ -395,16 +405,17 @@ clientkeys = awful.util.table.join(
             local result = ""
             result = result .. "<b>     Name :</b> " .. c.name .. "\n"
             result = result .. "<b>   Class :</b> " .. c.class .. "\n"
-            result = result .. "<b>Instância :</b> " .. c.instance .. "\n"
+            result = result .. "<b>Instance :</b> " .. c.instance .. "\n"
             if c.role then
-                result = result .. "<b>    Papel :</b> " .. c.role .. "\n"
+                result = result .. "<b>    Role :</b> " .. c.role .. "\n"
             else
-                result = result .. "<b>    Papel :</b> Não definido\n"
+                result = result .. "<b>    Role :</b> None\n"
             end
-            result = result .. "<b>     Tipo :</b> " .. c.type .. "\n"
+            result = result .. "<b>     Type :</b> " .. c.type .. "\n"
             result = result .. "<b>      PID :</b> " .. c.pid .. "\n"
             result = result .. "<b>      XID :</b> " .. c.window .. "\n"
-            result = result .. "<b>Geometria :</b> " .. c:geometry().x .. "," .. c:geometry().y .. "," .. c:geometry().width .. "," .. c:geometry().height
+            result = result .. "<b>      Screen :</b> " .. c.screen .. "\n"
+            result = result .. "<b>Geometry :</b> " .. c:geometry().x .. "," .. c:geometry().y .. "," .. c:geometry().width .. "," .. c:geometry().height
             local appicon = ""
             if c.icon then
                 appicon = c.icon
@@ -412,7 +423,7 @@ clientkeys = awful.util.table.join(
                 appicon = icons .. "/kAwOkenWhite/clear/22x22/actions/info2.png"
             end
               naughty.notify({
-                title = "Informações da Janela do Aplicativo",
+                title = "Info App",
                 text = result,
                 font = "Terminus 10",
                 icon = appicon,
@@ -439,29 +450,53 @@ awful.rules.rules = {
                      size_hints_honor = false } },
 
     -- Match all new clients, notify name and class (for debug purposes only)
-    { rule = { },
-     properties = { },
-     callback = function(c)
-                    naughty.notify({title="New Client Debug", text="Name: ".. c.name.."\nClass: ".. c.class})
-                end },
+    -- { rule = { },
+    --  properties = { },
+    --  callback = function(c)
+    --                 naughty.notify({title="New Client Debug", text="Name: ".. c.name.."\nClass: ".. c.class .. "\nScreen: ".. c.screen})
+    --             end },
 
     -- {{ Application rules
-    -- Firefox: all clients in screen 1, tag 1
+    { rule = { class = "konsole" },
+      properties = {
+          maximized_vertical   = true,
+          maximized_horizontal = true,
+          screen = 2,
+          x = 1920,
+          tag = tags[2][1],
+    } },
     { rule = { class = "google-chrome-unstable" },
       properties = {
           maximized_vertical   = true,
           maximized_horizontal = true,
     } },
+    { rule = { class = "Yakuake" },
+      properties = {
+          x = 0,
+          tag = tags[1][1],
+          screen = 1
+    } },
+    { rule = { class = "Slack" },
+      properties = {
+          maximized_vertical   = true,
+          maximized_horizontal = true,
+          x = 1920,
+          tag = tags[2][1],
+          screen = 2
+    } },
     { rule = { class = "Skype" },
       properties = {
           maximized_vertical   = true,
           maximized_horizontal = true,
+          x = 1920,
+          tag = tags[2][1],
+          screen = 2
     } },
     { rule = { class = "Atom" },
       properties = {
           maximized_vertical   = true,
           maximized_horizontal = true,
-    } },
+    } } ,
     { rule = { class = "qutebrowser" },
       properties = {
           maximized_vertical   = true,
@@ -473,86 +508,6 @@ awful.rules.rules = {
           maximized_horizontal = true,
     } },
 
-    -- { Kontact
-    -- All clients in screen 1, tag 2
-
-    -- { Kopete
-    -- All clients in screen 1, tag 3
-    { rule = { class = "Kopete" },
-      properties = { tag = tags[1][3] } },
-
-    -- Set geometry for main client (contact list)
-    { rule = { class = "Kopete",
-               role = "MainWindow#1" },
-      properties = { geometry = { x = 0,
-                                  y = 18,
-                                  width = 300,
-                                  height = 748 } } },
-
-    -- Set geometry and prevent focus steal for secondary client (chat window)
-    { rule = { class = "Kopete",
-               role = "MainWindow#2" },
-      properties = { switchtotag = false,
-                     focus = false,
-                     geometry = { x = 302,
-                                  y = 384,
-                                  width = 660,
-                                  height = 382 } } },
-    -- }
-
-    -- Conky: as widget in screen 1, tag 6 and set geometry
-    { rule = { class = "Conky" },
-      properties = { tag = tags[1][6],
-                     switchtotag = true,
-                     floating = true,
-                     ontop = false,
-                     skip_taskbar = true,
-                     geometry = { x = 0,
-                                  y = 18,
-                                  height = 750 } } },
-
-    -- { System Config
-    -- KDE System Settings: all clients in screen 1, tag 6, set geometry and get focus when opened
-    { rule = { class = "Systemsettings",
-               role = "MainWindow#1" },
-      properties = { tag = tags[1][6],
-                     switchtotag = true,
-                     focus = true,
-                     geometry = { x = 264,
-                                  y = 18,
-                                  width = 1100,
-                                  height = 748 } } },
-
-    -- Kate instance for awesome config: all clients in screen 1, tag 6, set geometry and get focus when opened
-    { rule = { class = "Kate",
-               instance = "aweconf",
-               role = "__KateMainWindow#1" },
-      properties = { tag = tags[1][6],
-                     switchtotag = true,
-                     focus = true,
-                     geometry = { x = 264,
-                                  y = 18,
-                                  width = 1100,
-                                  height = 748 } } },
-    -- }
-
-    -- Kate regular instances: set geometry
-    { rule = { class = "Kate",
-               instance = "kate",
-               role  = "__KateMainWindow#1" },
-      properties = { focus = true,
-                     geometry = { y = 18,
-                                  width = 683,
-                                  height = 748 } } },
-
-    -- Authy: all clients in screen 1, tag 1, set geometry and get focus when opened
-    { rule = { name = "Authy",
-               class = "chromium" },
-      properties = { tag = tags[1][1],
-                     switchtotag = true,
-                     focus = true,
-                     geometry = { x = 1044,
-                                  y = 18} } }
     -- }}
 }
 -- }}}
