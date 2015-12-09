@@ -17,7 +17,6 @@ local keydoc    = require("keydoc")
 local alttab    = require("alttab")
 local ror    = require("aweror")
 require("collision")()
--- local rodentbane = require("rerodentbane")
 -- }}}
 
 -- {{{ Error handling
@@ -117,141 +116,21 @@ alttab.settings.client_opacity = false
 -- }}}
 
 -- {{{ Wibox
-markup = lain.util.markup
-
--- Textclock
-clockicon = wibox.widget.imagebox(beautiful.widget_clock)
-mytextclock = awful.widget.textclock(" %a %d %b %H:%M")
-
--- calendar
-lain.widgets.calendar:attach(mytextclock, { font_size = 10 })
-
--- File System Notification
--- fswidget = lain.widgets.fs()
-
--- {{ Separators
--- Spacer
-spr = wibox.widget.textbox(' ')
--- Left pointing arrow
-arrl = wibox.widget.imagebox()
-arrl:set_image(beautiful.arrl)
--- Left pointing, lighter at left, darker at right arrow
-arrl_dl = wibox.widget.imagebox()
-arrl_dl:set_image(beautiful.arrl_dl)
--- Left pointing, darker at left, lighter at right arrow
-arrl_ld = wibox.widget.imagebox()
-arrl_ld:set_image(beautiful.arrl_ld)
--- Right pointing arrow
-arrl_r = wibox.widget.imagebox()
-arrl_r:set_image(beautiful.arrl_r)
--- }}
-
--- Create a wibox for each screen and add it
-mywibox = {}
-mylayoutbox = {}
-mytaglist = {}
-mytaglist.buttons = awful.util.table.join(
-                    awful.button({ }, 1, awful.tag.viewonly),
-                    awful.button({ modkey }, 1, awful.client.movetotag),
-                    awful.button({ }, 3, awful.tag.viewtoggle),
-                    awful.button({ modkey }, 3, awful.client.toggletag),
-                    awful.button({ }, 4, function(t) awful.tag.viewnext(awful.tag.getscreen(t)) end),
-                    awful.button({ }, 5, function(t) awful.tag.viewprev(awful.tag.getscreen(t)) end))
-mytasklist = {}
-mytasklist.buttons = awful.util.table.join(
-                     awful.button({ }, 1, function (c)
-                                              if c == client.focus then
-                                                  c.minimized = true
-                                              else
-                                                  -- Without this, the following
-                                                  -- :isvisible() makes no sense
-                                                  c.minimized = false
-                                                  if not c:isvisible() then
-                                                      awful.tag.viewonly(c:tags()[1])
-                                                  end
-                                                  -- This will also un-minimize
-                                                  -- the client, if needed
-                                                  client.focus = c
-                                                  c:raise()
-                                              end
-                                          end),
-                     awful.button({ }, 3, function ()
-                                              if instance then
-                                                  instance:hide()
-                                                  instance = nil
-                                              else
-                                                  instance = awful.menu.clients({ width=250 })
-                                              end
-                                          end),
-                     awful.button({ }, 4, function ()
-                                              awful.client.focus.byidx(1)
-                                              if client.focus then client.focus:raise() end
-                                          end),
-                     awful.button({ }, 5, function ()
-                                              awful.client.focus.byidx(-1)
-                                              if client.focus then client.focus:raise() end
-                                          end))
-
-for s = 2, screen.count() do
-
-    -- We need one layoutbox per screen.
-    mylayoutbox[s] = awful.widget.layoutbox(s)
-    mylayoutbox[s]:buttons(awful.util.table.join(
-                            awful.button({ }, 1, function () awful.layout.inc(layouts, 1) end),
-                            awful.button({ }, 3, function () awful.layout.inc(layouts, -1) end),
-                            awful.button({ }, 4, function () awful.layout.inc(layouts, 1) end),
-                            awful.button({ }, 5, function () awful.layout.inc(layouts, -1) end),
-                            awful.button({ }, 6, function () awful.layout.inc(layouts, 1) end)))
-
-    -- Create a taglist widget
-    mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.filter.all, mytaglist.buttons)
-
-    -- Create a tasklist widget
-    mytasklist[s] = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, mytasklist.buttons)
-
-    -- Create the wibox
-    -- if s >= 1 then
-    mywibox[s] = awful.wibox({ position = "top", screen = s, height = 18 })
-
-    -- Widgets that are aligned to the upper left
-    local left_layout = wibox.layout.fixed.horizontal()
-    left_layout:add(spr)
-    left_layout:add(mytaglist[s])
-    -- left_layout:add(arrl_dl)
-    left_layout:add(spr)
-
-    -- Widgets that are aligned to the upper right
-    -- If you are moving widgets from a section with light grey background to dark grey or vice versa,
-    -- use a replacement icon as appropriate from themes/powerarrow-darker/alticons so your icons match the bg.
-    local right_layout = wibox.layout.fixed.horizontal()
-    right_layout:add(spr)
-    right_layout:add(arrl)
-    right_layout:add(spr)
-    right_layout:add(wibox.widget.systray())
-    right_layout:add(spr)
-    right_layout:add(arrl_ld)
-    right_layout:add(arrl_dl)
-    -- right_layout:add(mytextclock)
-    right_layout:add(mytextclock)
-    right_layout:add(spr)
-    right_layout:add(arrl_ld)
-    right_layout:add(mylayoutbox[s])
-
-    -- Now bring it all together (with the tasklist in the middle)
-    local layout = wibox.layout.align.horizontal()
-    layout:set_left(left_layout)
-    layout:set_middle(mytasklist[s])
-    layout:set_right(right_layout)
-    mywibox[s]:set_widget(layout)
-end
--- }}}
+-- markup = lain.util.markup
+--
+-- -- Textclock
+-- clockicon = wibox.widget.imagebox(beautiful.widget_clock)
+-- mytextclock = awful.widget.textclock(" %a %d %b %H:%M")
+--
+-- -- calendar
+-- lain.widgets.calendar:attach(mytextclock, { font_size = 10 })
 
 -- {{{ Mouse bindings
 -- Root window
-root.buttons(awful.util.table.join(
-    awful.button({ }, 3, function () mymainmenu:toggle() end)
-    )
-)
+-- root.buttons(awful.util.table.join(
+--     awful.button({ }, 3, function () mymainmenu:toggle() end)
+--     )
+-- )
 
 -- Clients
 clientbuttons = awful.util.table.join(
@@ -269,9 +148,9 @@ globalkeys = awful.util.table.join(
     keydoc.group("Assistência"),
 
     awful.key({ modkey }, ",", function () awful.util.spawn(kdeconf) end, "Abre configurações do KDE*"),
-    awful.key({ altkey }, "c", function () lain.widgets.calendar:show(7) end, "Mostra calendário*"),
+    -- awful.key({ altkey }, "c", function () lain.widgets.calendar:show(7) end, "Mostra calendário*"),
     awful.key({ modkey, "Control" }, "r", awesome.restart, "Reinicia awesome"),
-    awful.key({ modkey }, "q", rerodentbane, "rere..."),
+    -- awful.key({ modkey }, "q", rerodentbane, "rere..."),
 
     -- Focus management
     -- keydoc.group("Foco"),
@@ -290,7 +169,14 @@ globalkeys = awful.util.table.join(
     awful.key({ altkey,         }, "Tab",
         function ()
             -- alttab.switch(1, "Alt_L", "Tab", "ISO_Left_Tab")
-            awful.util.spawn('rofi -show window')
+            -- awful.util.spawn('rofi -show window')
+            awful.util.spawn_with_shell('python3.5 ~/projects/shadow/main.py -name Shadow')
+            local all_clients = client.get()
+            for i, c in pairs(all_clients) do
+              if c.instance == 'Shadow' then
+                client.focus = c
+              end
+            end
         end, "Alterna janelas* (shift para inverter)"),
     awful.key({ altkey,         }, "F2",
         function ()
@@ -318,52 +204,6 @@ globalkeys = awful.util.table.join(
 )
 globalkeys = awful.util.table.join(globalkeys, ror.genkeys(altkey))
 
--- { Navigation and tag management
--- B all key numbers to tags.
--- Be careful: we use keycodes to make it works on any keyboard layout.
--- This should map on the top row of your keyboard, usually 1 to 9.
-for i = 1, 9 do
-    globalkeys = awful.util.table.join(globalkeys,
-        keydoc.group("Navegação e Tags"),
-        awful.key({ modkey }, "#" .. i + 9,
-                  function ()
-                        local screen = mouse.screen
-                        local tag = awful.tag.gettags(screen)[i]
-                        if tag then
-                           awful.tag.viewonly(tag)
-                        end
-                  end,
-                  i == 5 and "Mostra apenas tag #" or nil),
-        awful.key({ modkey, "Control" }, "#" .. i + 9,
-                  function ()
-                      local screen = mouse.screen
-                      local tag = awful.tag.gettags(screen)[i]
-                      if tag then
-                         awful.tag.viewtoggle(tag)
-                      end
-                  end,
-                  i == 5 and "Mostra/esconde tag #" or nil),
-        awful.key({ modkey, "Shift" }, "#" .. i + 9,
-                  function ()
-                      local tag = awful.tag.gettags(client.focus.screen)[i]
-                      if client.focus and tag then
-                          awful.client.movetotag(tag)
-                     end
-                  end,
-                  i == 5 and "Move janela para tag #" or nil),
-        awful.key({ modkey, "Control", "Shift" }, "#" .. i + 9,
-                  function ()
-                      local tag = awful.tag.gettags(client.focus.screen)[i]
-                      if client.focus and tag then
-                          awful.client.toggletag(tag)
-                      end
-                  end,
-                  i == 5 and "Adiciona janela na tag #" or nil))
-end
-
--- }
--- }}
-
 -- {{ Client Keys
 clientkeys = awful.util.table.join(
     keydoc.group("Janelas"),
@@ -387,7 +227,7 @@ clientkeys = awful.util.table.join(
         end, "Centraliza* (modo flutuante)"),
     awful.key({ modkey }, "f", function (c) c.fullscreen = not c.fullscreen end, "Alterna para tela cheia"),
     awful.key({ modkey }, "o", awful.client.movetoscreen, "Move para outra tela"),
-    awful.key({ modkey, "Control" }, "Up", function (c) c.ontop = not c.ontop end, "Sobe janela*"),
+    awful.key({ modkey }, "u", function (c) c.ontop = not c.ontop end, "Sobe janela*"),
     awful.key({ modkey }, "x", function (c) c:kill() end, "Mata aplicação*"),
     awful.key({ modkey, "Control" }, "space", awful.client.floating.toggle, "Torna flutuante" ),
     awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end, "Coloca no mestre (modo encaixe)"),
@@ -442,7 +282,7 @@ awful.rules.rules = {
     { rule = { },
       properties = { border_width = beautiful.border_width,
                      border_color = beautiful.border_normal,
-                     focus = awful.client.focus.filter,
+                    --  focus = awful.client.focus.filter,
                      keys = clientkeys,
                      maximized_vertical   = false,
                      maximized_horizontal = false,
@@ -453,10 +293,20 @@ awful.rules.rules = {
     -- { rule = { },
     --  properties = { },
     --  callback = function(c)
-    --                 naughty.notify({title="New Client Debug", text="Name: ".. c.name.."\nClass: ".. c.class .. "\nScreen: ".. c.screen})
+    --naughty.notify({title="New Client Debug", text="Name: ".. c.name.."\nClass: ".. c.class .. "\nScreen: ".. c.screen})
     --             end },
 
     -- {{ Application rules
+    { rule = { instance = "Shadow" },
+      properties = {
+        focus = true,
+        ontop = true,
+        urgent = true
+      },
+      -- callback = function(c)
+      --   naughty.notify({title="New Client Debug", text="Name: ".. c.name.."\nClass: ".. c.class .. "\nScreen: ".. c.screen})
+      -- end
+    },
     { rule = { class = "konsole" },
       properties = {
           maximized_vertical   = true,

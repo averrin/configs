@@ -10,6 +10,7 @@ table5={
   ["e"]={"/home/user/.local/bin/qb.sh qutebrowser qutebrowser", "qutebrowser"},
   ["h"]={"yakyak", "yakyak" },
   ["d"]={"slack", "slack" },
+  ["t"]={"thunderbird", "Thunderbird" },
   ["s"]={"skype", "Skype"},
   ["n"]={"dolphin", "Dolphin"},
   ["k"]={"konsole", "konsole"}
