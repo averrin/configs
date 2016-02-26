@@ -1,9 +1,3 @@
---[[
-     KDEsome awesome WM config
-     github.com/denydias/kdesome
-     based on github.com/copycat-killer/awesome-copycats Powerarrow Darker
---]]
-
 -- {{{ Required libraries
 local gears     = require("gears")
 local awful     = require("awful")
@@ -58,12 +52,12 @@ end
 
 -- uncluter
 run_once("unclutter")
--- }}}
 run_once("rofi")
+-- }}}
 
 -- {{{ Variable definitions
 -- localization
-os.setlocale(os.getenv("LANG"))
+-- os.setlocale(os.getenv("LANG"))
 
 -- beautiful init
 beautiful.init(os.getenv("HOME") .. "/.config/awesome/themes/kdesome/theme.lua")
@@ -78,11 +72,6 @@ altkey     = "Mod1"
 -- user defined
 icons       = home .. "/.kde/share/icons"
 kdeconf     = "systemsettings5"
-aweconf     = "kate --new --name aweconf " .. home .. "/.conkyrc " ..
-              config_dir .. "/compton.conf " .. theme_dir .. "/theme.lua "
-              .. config_dir .. "/rc.lua"
-menutheme   = "sed 's/xdgmenu = {/xdgmenu = { theme = { height = 16, width = 300 },/'"
-menugen     = "xdg_menu --format awesome | " .. menutheme .. " > " .. config_dir .. "/xdg_menu.lua"
 -- }}}
 
 -- {{{ Layouts and Tags
@@ -91,8 +80,8 @@ local layouts = {
     awful.layout.suit.floating,
     awful.layout.suit.tile,
     awful.layout.suit.tile.bottom,
-    awful.layout.suit.fair,
-    awful.layout.suit.fair.horizontal,
+    -- awful.layout.suit.fair,
+    -- awful.layout.suit.fair.horizontal,
 }
 
 -- Available tags
@@ -105,32 +94,6 @@ tags = {
 for s = 1, screen.count() do
    tags[s] = awful.tag(tags.names, s, tags.layout)
 end
-
--- awesome_alttab
-alttab.settings.preview_box = true
-alttab.settings.preview_box_bg = "#1F1F1FAA"
-alttab.settings.preview_box_border = "#1F1F1F00"
-alttab.settings.preview_box_fps = 30
-alttab.settings.preview_box_delay = 100
-alttab.settings.client_opacity = false
--- }}}
-
--- {{{ Wibox
--- markup = lain.util.markup
---
--- -- Textclock
--- clockicon = wibox.widget.imagebox(beautiful.widget_clock)
--- mytextclock = awful.widget.textclock(" %a %d %b %H:%M")
---
--- -- calendar
--- lain.widgets.calendar:attach(mytextclock, { font_size = 10 })
-
--- {{{ Mouse bindings
--- Root window
--- root.buttons(awful.util.table.join(
---     awful.button({ }, 3, function () mymainmenu:toggle() end)
---     )
--- )
 
 -- Clients
 clientbuttons = awful.util.table.join(
@@ -148,29 +111,15 @@ globalkeys = awful.util.table.join(
     keydoc.group("Assistência"),
 
     awful.key({ modkey }, ",", function () awful.util.spawn(kdeconf) end, "Abre configurações do KDE*"),
-    -- awful.key({ altkey }, "c", function () lain.widgets.calendar:show(7) end, "Mostra calendário*"),
     awful.key({ modkey, "Control" }, "r", awesome.restart, "Reinicia awesome"),
-    -- awful.key({ modkey }, "q", rerodentbane, "rere..."),
 
-    -- Focus management
-    -- keydoc.group("Foco"),
-    -- awful.key({ modkey,           }, "Tab",
-    --     function ()
-    --         awful.client.focus.history.previous()
-    --         if client.focus then
-    --             client.focus:raise()
-    --         end
-    --     end, "Alterna para janela focada anteriormente"),
-    -- awful.key({ modkey }, "u", awful.client.urgent.jumpto, "Foca próxima janela urgente"),
+    awful.key({ modkey, "Shift" }, "u", awful.client.urgent.jumpto, "Foca próxima janela urgente"),
     awful.key({ modkey, "Control" }, "j", function () awful.screen.focus_relative( 1) end, "Foca próxima tela"),
 
-    -- awesome_alttab
     -- Forward
     awful.key({ altkey,         }, "Tab",
         function ()
-            -- alttab.switch(1, "Alt_L", "Tab", "ISO_Left_Tab")
-            -- awful.util.spawn('rofi -show window')
-            awful.util.spawn_with_shell('python3.5 ~/projects/shadow/main.py -name Shadow')
+            awful.util.spawn_with_shell('~/projects/shadow-go/shadow')
             local all_clients = client.get()
             for i, c in pairs(all_clients) do
               if c.instance == 'Shadow' then
@@ -180,25 +129,36 @@ globalkeys = awful.util.table.join(
         end, "Alterna janelas* (shift para inverter)"),
     awful.key({ altkey,         }, "F2",
         function ()
-            -- alttab.switch(1, "Alt_L", "Tab", "ISO_Left_Tab")
             awful.util.spawn('rofi -show run')
         end, "Alterna janelas* (shift para inverter)"),
-    -- -- Reverse
-    -- awful.key({ altkey, "Shift"   }, "Tab",
-    --     function ()
-    --         alttab.switch(-1, "Alt_L", "Tab", "ISO_Left_Tab")
-    --     end),
-    --
+
     -- Layout management (tile mode)
     keydoc.group("Layout (modo encaixe)"),
-    awful.key({ modkey }, "l", function () awful.tag.incmwfact(0.05) end, "Aumenta largura mestre"),
-    awful.key({ modkey }, "h", function () awful.tag.incmwfact(-0.05) end, "Diminui largura mestre"),
+    awful.key({ modkey }, "a", function () awful.layout.arrange(mouse.screen) end, "Aumenta largura mestre"),
+    awful.key({ modkey, altkey }, "l", function () awful.tag.incmwfact(0.05) end, "Aumenta largura mestre"),
+    awful.key({ modkey, altkey }, "h", function () awful.tag.incmwfact(-0.05) end, "Diminui largura mestre"),
     awful.key({ modkey, "Shift" }, "l", function () awful.tag.incnmaster(1) end, "Aumenta número de mestres*"),
     awful.key({ modkey, "Shift" }, "h", function () awful.tag.incnmaster(-1) end, "Diminui número de mestres*"),
     awful.key({ modkey, "Control" }, "l", function () awful.tag.incncol(1) end, "Aumenta número de colunas*"),
     awful.key({ modkey, "Control" }, "h", function () awful.tag.incncol(-1) end, "Diminui número de colunas*"),
-    awful.key({ modkey, "Ctrl" }, "space", function () awful.layout.inc(layouts, 1) end, "Próximo layout*"),
-    awful.key({ modkey, "Shift" }, "space", function () awful.layout.inc(layouts, -1) end, "Layout anterior"),
+    awful.key({ modkey, "Ctrl" }, "space", function ()
+        awful.layout.inc(layouts, 1)
+        naughty.notify({
+          title = "Layout",
+          text = awful.layout.getname(awful.layout.get(mouse.screen)),
+          font = "Terminus 10"
+        })
+        awful.layout.arrange(mouse.screen)
+     end, "Próximo layout*"),
+    awful.key({ modkey, "Shift" }, "space", function ()
+        awful.layout.inc(layouts, -1)
+        naughty.notify({
+          title = "Layout",
+          text = awful.layout.getname(awful.layout.get(mouse.screen)),
+          font = "Terminus 10"
+        })
+        awful.layout.arrange(mouse.screen)
+     end, "Layout anterior"),
     awful.key({ modkey, "Shift" }, "j", function () awful.client.swap.byidx(1) end, "Troca com a próxima janela"),
     awful.key({ modkey, "Shift" }, "k", function () awful.client.swap.byidx(-1) end, "Troca com a janela anterior")
 )
@@ -220,8 +180,8 @@ clientkeys = awful.util.table.join(
         end, "Maximiza"),
    awful.key({ modkey }, "c",
         function (c)
-            c:geometry({ x = 30,
-                         y = 48,
+            c:geometry({ x = 200,
+                         y = 100,
                          width = 1304,
                          height = 688 })
         end, "Centraliza* (modo flutuante)"),
@@ -229,11 +189,11 @@ clientkeys = awful.util.table.join(
     awful.key({ modkey }, "o", awful.client.movetoscreen, "Move para outra tela"),
     awful.key({ modkey }, "u", function (c) c.ontop = not c.ontop end, "Sobe janela*"),
     awful.key({ modkey }, "x", function (c) c:kill() end, "Mata aplicação*"),
-    awful.key({ modkey, "Control" }, "space", awful.client.floating.toggle, "Torna flutuante" ),
+    -- awful.key({ modkey, "Control" }, "space", awful.client.floating.toggle, "Torna flutuante" ),
     awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end, "Coloca no mestre (modo encaixe)"),
     awful.key({ altkey }, "q",
         function (c)
-            local result = awful.util.pread("python /home/user/ts_time.py")
+            local result = awful.util.pread("~/projects/ts_time/ts_time")
             naughty.notify({
               -- title = "Time",
               text = result,
@@ -243,19 +203,20 @@ clientkeys = awful.util.table.join(
     awful.key({ modkey }, "i",
         function (c)
             local result = ""
-            result = result .. "<b>     Name :</b> " .. c.name .. "\n"
+            result = result .. "<b>   Layout :</b> " .. awful.layout.getname(awful.layout.get(mouse.screen)) .. "\n"
+            result = result .. "<b>   Name :</b> " .. c.name .. "\n"
             result = result .. "<b>   Class :</b> " .. c.class .. "\n"
-            result = result .. "<b>Instance :</b> " .. c.instance .. "\n"
+            result = result .. "<b>   Instance :</b> " .. c.instance .. "\n"
             if c.role then
                 result = result .. "<b>    Role :</b> " .. c.role .. "\n"
             else
                 result = result .. "<b>    Role :</b> None\n"
             end
-            result = result .. "<b>     Type :</b> " .. c.type .. "\n"
+            result = result .. "<b>      Type :</b> " .. c.type .. "\n"
             result = result .. "<b>      PID :</b> " .. c.pid .. "\n"
             result = result .. "<b>      XID :</b> " .. c.window .. "\n"
             result = result .. "<b>      Screen :</b> " .. c.screen .. "\n"
-            result = result .. "<b>Geometry :</b> " .. c:geometry().x .. "," .. c:geometry().y .. "," .. c:geometry().width .. "," .. c:geometry().height
+            result = result .. "<b>      Geometry :</b> " .. c:geometry().x .. "," .. c:geometry().y .. "," .. c:geometry().width .. "," .. c:geometry().height
             local appicon = ""
             if c.icon then
                 appicon = c.icon
@@ -282,7 +243,7 @@ awful.rules.rules = {
     { rule = { },
       properties = { border_width = beautiful.border_width,
                      border_color = beautiful.border_normal,
-                    --  focus = awful.client.focus.filter,
+                     focus = awful.client.focus.filter,
                      keys = clientkeys,
                      maximized_vertical   = false,
                      maximized_horizontal = false,
@@ -356,6 +317,7 @@ awful.rules.rules = {
       properties = {
           maximized_vertical   = true,
           maximized_horizontal = true,
+          tag = tags[2][1],
     } },
 
     -- }}
