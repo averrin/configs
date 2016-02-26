@@ -134,7 +134,7 @@ globalkeys = awful.util.table.join(
 
     -- Layout management (tile mode)
     keydoc.group("Layout (modo encaixe)"),
-    awful.key({ modkey }, "a", function () awful.layout.arrange(mouse.screen) end, "Aumenta largura mestre"),
+    awful.key({ modkey }, "a", function () awful.layout.arrange(client.focus.screen) end, "Aumenta largura mestre"),
     awful.key({ modkey, altkey }, "l", function () awful.tag.incmwfact(0.05) end, "Aumenta largura mestre"),
     awful.key({ modkey, altkey }, "h", function () awful.tag.incmwfact(-0.05) end, "Diminui largura mestre"),
     awful.key({ modkey, "Shift" }, "l", function () awful.tag.incnmaster(1) end, "Aumenta número de mestres*"),
@@ -145,19 +145,19 @@ globalkeys = awful.util.table.join(
         awful.layout.inc(layouts, 1)
         naughty.notify({
           title = "Layout",
-          text = awful.layout.getname(awful.layout.get(mouse.screen)),
+          text = awful.layout.getname(awful.layout.get(client.focus.screen)),
           font = "Terminus 10"
         })
-        awful.layout.arrange(mouse.screen)
+        awful.layout.arrange(client.focus.screen)
      end, "Próximo layout*"),
     awful.key({ modkey, "Shift" }, "space", function ()
         awful.layout.inc(layouts, -1)
         naughty.notify({
           title = "Layout",
-          text = awful.layout.getname(awful.layout.get(mouse.screen)),
+          text = awful.layout.getname(awful.layout.get(client.focus.screen)),
           font = "Terminus 10"
         })
-        awful.layout.arrange(mouse.screen)
+        awful.layout.arrange(client.focus.screen)
      end, "Layout anterior"),
     awful.key({ modkey, "Shift" }, "j", function () awful.client.swap.byidx(1) end, "Troca com a próxima janela"),
     awful.key({ modkey, "Shift" }, "k", function () awful.client.swap.byidx(-1) end, "Troca com a janela anterior")
@@ -203,7 +203,7 @@ clientkeys = awful.util.table.join(
     awful.key({ modkey }, "i",
         function (c)
             local result = ""
-            result = result .. "<b>   Layout :</b> " .. awful.layout.getname(awful.layout.get(mouse.screen)) .. "\n"
+            result = result .. "<b>   Layout :</b> " .. awful.layout.getname(awful.layout.get(client.focus.screen)) .. "\n"
             result = result .. "<b>   Name :</b> " .. c.name .. "\n"
             result = result .. "<b>   Class :</b> " .. c.class .. "\n"
             result = result .. "<b>   Instance :</b> " .. c.instance .. "\n"
