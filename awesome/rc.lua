@@ -52,7 +52,7 @@ end
 
 -- uncluter
 run_once("unclutter")
-run_once("rofi")
+-- run_once("rofi")
 -- }}}
 
 -- {{{ Variable definitions
@@ -129,7 +129,8 @@ globalkeys = awful.util.table.join(
         end, "Alterna janelas* (shift para inverter)"),
     awful.key({ altkey,         }, "F2",
         function ()
-            awful.util.spawn('rofi -show run')
+            -- awful.util.spawn('rofi -show run')
+            awful.util.spawn_with_shell('~/projects/shadow-go/shadow --mode runner')
         end, "Alterna janelas* (shift para inverter)"),
 
     -- Layout management (tile mode)
@@ -189,16 +190,17 @@ clientkeys = awful.util.table.join(
     awful.key({ modkey }, "o", awful.client.movetoscreen, "Move para outra tela"),
     awful.key({ modkey }, "u", function (c) c.ontop = not c.ontop end, "Sobe janela*"),
     awful.key({ modkey }, "x", function (c) c:kill() end, "Mata aplicação*"),
-    -- awful.key({ modkey, "Control" }, "space", awful.client.floating.toggle, "Torna flutuante" ),
+    awful.key({ modkey, "Control" }, "f", awful.client.floating.toggle, "Torna flutuante" ),
     awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end, "Coloca no mestre (modo encaixe)"),
     awful.key({ altkey }, "q",
         function (c)
-            local result = awful.util.pread("~/projects/ts_time/ts_time")
-            naughty.notify({
+            awful.util.spawn_with_shell('~/projects/shadow-go/shadow --mode time')
+            -- local result = awful.util.pread("~/projects/ts_time/ts_time")
+            -- naughty.notify({
               -- title = "Time",
-              text = result,
-              font = "Terminus 10"
-            })
+              -- text = result,
+              -- font = "Terminus 10"
+            -- })
         end, "Time"),
     awful.key({ modkey }, "i",
         function (c)
@@ -298,7 +300,7 @@ awful.rules.rules = {
     { rule = { class = "Skype" },
       properties = {
           maximized_vertical   = true,
-          maximized_horizontal = true,
+          -- maximized_horizontal = true,
           x = 1920,
           tag = tags[2][1],
           screen = 2
@@ -316,7 +318,7 @@ awful.rules.rules = {
     { rule = { class = "Thunderbird" },
       properties = {
           maximized_vertical   = true,
-          maximized_horizontal = true,
+          -- maximized_horizontal = true,
           tag = tags[2][1],
     } },
 
