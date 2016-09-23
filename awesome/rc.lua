@@ -98,6 +98,15 @@ tyrannical.tags = {
     }
 }
 
+tyrannical.properties.floating = {
+  "yakyak"
+}
+
+-- Force the matching clients (by classes) to be centered on the screen on init
+tyrannical.properties.centered = {
+  "yakyak"
+}
+
 -- Clients
 clientbuttons = awful.util.table.join(
     awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
