@@ -1,16 +1,10 @@
 -- {{{ Required libraries
-local gears     = require("gears")
-local awful     = require("awful")
-awful.rules     = require("awful.rules")
-                  require("awful.autofocus")
-local wibox     = require("wibox")
-local beautiful = require("beautiful")
-local naughty   = require("naughty")
-local lain      = require("lain")
-local keydoc    = require("keydoc")
-local alttab    = require("alttab")
-local ror    = require("aweror")
-require("collision")()
+local awful      = require("awful")
+awful.rules      = require("awful.rules")
+                   require("awful.autofocus")
+local beautiful  = require("beautiful")
+local naughty    = require("naughty")
+local tyrannical = require("tyrannical")
 -- }}}
 
 -- {{{ Error handling
@@ -27,7 +21,6 @@ do
     awesome.connect_signal("debug::error", function (err)
         if in_error then return end
         in_error = true
-
         naughty.notify({ preset = naughty.config.presets.critical,
                          title = "Oops, an error happened!",
                          text = err })
@@ -37,7 +30,6 @@ end
 -- }}}
 
 -- {{{ Autostart applications
---     Only awesome related. Other apps startup are managed by KDE.
 function run_once(cmd)
   findme = cmd
   firstspace = cmd:find(" ")
@@ -48,16 +40,15 @@ function run_once(cmd)
 end
 
 -- Compositor
--- run_once("compton -b --detect-rounded-corners --config " .. os.getenv("HOME") .. "/.config/awesome/compton.conf")
+run_once("compton -b --detect-rounded-corners --config " .. os.getenv("HOME") .. "/.config/awesome/compton.conf")
 
 -- uncluter
 run_once("unclutter")
--- run_once("rofi")
+run_once("killall mission-control-5")
+run_once("killall xembedproxy")
+run_once("killall xembedsniproxy")
+run_once("qdbus org.kde.kactivitymanagerd /ActivityManager org.kde.ActivityManager.Stop")
 -- }}}
-
--- {{{ Variable definitions
--- localization
--- os.setlocale(os.getenv("LANG"))
 
 -- beautiful init
 beautiful.init(os.getenv("HOME") .. "/.config/awesome/themes/kdesome/theme.lua")
@@ -84,16 +75,28 @@ local layouts = {
     -- awful.layout.suit.fair.horizontal,
 }
 
--- Available tags
-tags = {
-   names = {"#"},
-   layout = { layouts[1] }
+tyrannical.tags = {
+    {
+        name        = "#",
+        init        = true,
+        exclusive   = false,
+        screen      = {1,2},
+        layout      = awful.layout.suit.max,
+        class       = {
+          "Atom", "vivaldi-snapshot"
+        }
+    } ,
+    {
+        name        = "@",
+        init        = true,
+        exclusive   = false,
+        screen      = 2,
+        layout      = awful.layout.suit.tile,
+        class = {
+          "skypeforlinux", "Thunderbird", "HyperTerm"
+        }
+    }
 }
-
--- Set tags and layouts for each attached screen
-for s = 1, screen.count() do
-   tags[s] = awful.tag(tags.names, s, tags.layout)
-end
 
 -- Clients
 clientbuttons = awful.util.table.join(
@@ -106,15 +109,24 @@ clientbuttons = awful.util.table.join(
 -- {{{ Key bindings
 -- {{ Global keys
 
+ror = {
+  ["h"]={"yakyak", "yakyak" },
+  ["a"]={"atom-beta","Atom"},
+  ["d"]={"slack", "slack" },
+  ["t"]={"thunderbird", "Thunderbird" },
+  ["s"]={"skypeforlinux", "skypeforlinux"},
+  ["n"]={"dolphin", "Dolphin"},
+  ["v"]={"vivaldi-snapshot", "vivaldi-snapshot"},
+  ["g"]={"telegram", "telegram"},
+  ["k"]={"hyperterm", "HyperTerm"},
+  ["w"]={"shodan", "Shodan UI"},
+}
+
 globalkeys = awful.util.table.join(
     -- Assistance
-    keydoc.group("Assistência"),
-
-    awful.key({ modkey }, ",", function () awful.util.spawn(kdeconf) end, "Abre configurações do KDE*"),
-    awful.key({ modkey, "Control" }, "r", awesome.restart, "Reinicia awesome"),
-
-    awful.key({ modkey, "Shift" }, "u", awful.client.urgent.jumpto, "Foca próxima janela urgente"),
-    awful.key({ modkey, "Control" }, "j", function () awful.screen.focus_relative( 1) end, "Foca próxima tela"),
+    awful.key({ modkey }, ",", function () awful.util.spawn(kdeconf) end),
+    awful.key({ modkey, "Control" }, "r", awesome.restart),
+    awful.key({ modkey, "Control" }, "j", function () awful.screen.focus_relative( 1) end),
 
     -- Forward
     awful.key({ altkey,         }, "Tab",
@@ -126,82 +138,81 @@ globalkeys = awful.util.table.join(
                 client.focus = c
               end
             end
-        end, "Alterna janelas* (shift para inverter)"),
+        end),
     awful.key({ altkey,         }, "F2",
         function ()
-            -- awful.util.spawn('rofi -show run')
             awful.util.spawn_with_shell('~/projects/shadow-go/shadow --mode runner')
-        end, "Alterna janelas* (shift para inverter)"),
+        end),
+    awful.key({ "Control" }, "space",
+        function ()
+            awful.util.spawn_with_shell('~/projects/shadow-go/shadow --mode ultra')
+        end),
+    awful.key({ altkey }, "q",
+        function (c)
+            awful.util.spawn_with_shell('~/projects/shadow-go/shadow --mode time')
+        end),
 
     -- Layout management (tile mode)
-    keydoc.group("Layout (modo encaixe)"),
-    awful.key({ modkey }, "a", function () awful.layout.arrange(client.focus.screen) end, "Aumenta largura mestre"),
-    awful.key({ modkey, altkey }, "l", function () awful.tag.incmwfact(0.05) end, "Aumenta largura mestre"),
-    awful.key({ modkey, altkey }, "h", function () awful.tag.incmwfact(-0.05) end, "Diminui largura mestre"),
-    awful.key({ modkey, "Shift" }, "l", function () awful.tag.incnmaster(1) end, "Aumenta número de mestres*"),
-    awful.key({ modkey, "Shift" }, "h", function () awful.tag.incnmaster(-1) end, "Diminui número de mestres*"),
-    awful.key({ modkey, "Control" }, "l", function () awful.tag.incncol(1) end, "Aumenta número de colunas*"),
-    awful.key({ modkey, "Control" }, "h", function () awful.tag.incncol(-1) end, "Diminui número de colunas*"),
-    awful.key({ modkey, "Ctrl" }, "space", function ()
-        awful.layout.inc(layouts, 1)
-        naughty.notify({
-          title = "Layout",
-          text = awful.layout.getname(awful.layout.get(client.focus.screen)),
-          font = "Terminus 10"
-        })
-        awful.layout.arrange(client.focus.screen)
-     end, "Próximo layout*"),
-    awful.key({ modkey, "Shift" }, "space", function ()
-        awful.layout.inc(layouts, -1)
-        naughty.notify({
-          title = "Layout",
-          text = awful.layout.getname(awful.layout.get(client.focus.screen)),
-          font = "Terminus 10"
-        })
-        awful.layout.arrange(client.focus.screen)
-     end, "Layout anterior"),
-    awful.key({ modkey, "Shift" }, "j", function () awful.client.swap.byidx(1) end, "Troca com a próxima janela"),
-    awful.key({ modkey, "Shift" }, "k", function () awful.client.swap.byidx(-1) end, "Troca com a janela anterior")
+
+    awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end),
+    awful.key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx( -1)    end)
 )
-globalkeys = awful.util.table.join(globalkeys, ror.genkeys(altkey))
+
+function genfun(t3)
+   local cmd=t3[1]
+   local rule=t3[2]
+   local flag=t3[3]
+   local table1={}
+   s1="class"
+   if flag then
+     s1=flag
+   end
+   table1[s1]=rule
+   return function()
+      local matcher = function (c)
+        return awful.rules.match(c, {class = rule})
+      end
+      awful.client.run_or_raise(cmd, matcher)
+   end
+end
+function genkeys(mod1)
+  rorkeys = awful.util.table.join()
+  for i,v in pairs(ror) do
+    modifier=""
+    if i:len() > 1 then
+      modifier=i:sub(1, i:find("-")-1)
+      i=i:sub(-1,-1)
+    end
+    rorkeys = awful.util.table.join(rorkeys,
+      awful.key({ mod1, modifier}, i, genfun(v)))
+  end
+  return rorkeys
+end
+globalkeys = awful.util.table.join(globalkeys, genkeys(altkey))
 
 -- {{ Client Keys
 clientkeys = awful.util.table.join(
-    keydoc.group("Janelas"),
     awful.key({ modkey }, "n",
         function (c)
-            -- The client currently has the input focus, so it cannot be
-            -- minimized, since minimized clients can't have the focus.
             c.minimized = true
-        end, "Minimiza"),
+        end),
     awful.key({ modkey }, "m",
         function (c)
             c.maximized_horizontal = not c.maximized_horizontal
             c.maximized_vertical   = not c.maximized_vertical
-        end, "Maximiza"),
+        end),
    awful.key({ modkey }, "c",
         function (c)
             c:geometry({ x = 200,
                          y = 100,
                          width = 1304,
                          height = 688 })
-        end, "Centraliza* (modo flutuante)"),
-    awful.key({ modkey }, "f", function (c) c.fullscreen = not c.fullscreen end, "Alterna para tela cheia"),
-    awful.key({ modkey }, "o", awful.client.movetoscreen, "Move para outra tela"),
-    awful.key({ modkey }, "u", function (c) c.ontop = not c.ontop end, "Sobe janela*"),
-    awful.key({ modkey }, "x", function (c) c:kill() end, "Mata aplicação*"),
-    awful.key({ modkey, "Control" }, "f", awful.client.floating.toggle, "Torna flutuante" ),
-    awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end, "Coloca no mestre (modo encaixe)"),
-    awful.key({ altkey }, "q",
-        function (c)
-            awful.util.spawn_with_shell('~/projects/shadow-go/shadow --mode time')
-            -- local result = awful.util.pread("~/projects/ts_time/ts_time")
-            -- naughty.notify({
-              -- title = "Time",
-              -- text = result,
-              -- font = "Terminus 10"
-            -- })
-        end, "Time"),
+        end),
+    awful.key({ modkey }, "f", function (c) c.fullscreen = not c.fullscreen end),
+    awful.key({ modkey }, "o", awful.client.movetoscreen),
+    awful.key({ modkey }, "u", function (c) c.ontop = not c.ontop end),
+    awful.key({ modkey }, "x", function (c) c:kill() end),
+    awful.key({ modkey, "Control" }, "f", awful.client.floating.toggle),
     awful.key({ modkey }, "i",
         function (c)
             local result = ""
@@ -231,7 +242,7 @@ clientkeys = awful.util.table.join(
                 font = "Terminus 10",
                 icon = appicon,
             })
-        end, "Informações da janela do aplicativo*")
+        end)
 )
 -- }}
 
@@ -243,86 +254,16 @@ root.keys(globalkeys)
 awful.rules.rules = {
     -- All clients will match this rule
     { rule = { },
-      properties = { border_width = beautiful.border_width,
-                     border_color = beautiful.border_normal,
-                     focus = awful.client.focus.filter,
-                     keys = clientkeys,
-                     maximized_vertical   = false,
-                     maximized_horizontal = false,
-                     buttons = clientbuttons,
-                     size_hints_honor = false } },
-
-    -- Match all new clients, notify name and class (for debug purposes only)
-    -- { rule = { },
-    --  properties = { },
-    --  callback = function(c)
-    --naughty.notify({title="New Client Debug", text="Name: ".. c.name.."\nClass: ".. c.class .. "\nScreen: ".. c.screen})
-    --             end },
-
-    -- {{ Application rules
-    { rule = { instance = "Shadow" },
       properties = {
-        focus = true,
-        ontop = true,
-        urgent = true
-      },
-      -- callback = function(c)
-      --   naughty.notify({title="New Client Debug", text="Name: ".. c.name.."\nClass: ".. c.class .. "\nScreen: ".. c.screen})
-      -- end
+        border_width = beautiful.border_width,
+        border_color = beautiful.border_normal,
+        focus = awful.client.focus.filter,
+        keys = clientkeys,
+        maximized_vertical   = false,
+        maximized_horizontal = false,
+        buttons = clientbuttons,
+        size_hints_honor = false }
     },
-    { rule = { class = "konsole" },
-      properties = {
-          maximized_vertical   = true,
-          maximized_horizontal = true,
-          screen = 2,
-          x = 1920,
-          tag = tags[2][1],
-    } },
-    { rule = { class = "google-chrome-unstable" },
-      properties = {
-          maximized_vertical   = true,
-          maximized_horizontal = true,
-    } },
-    { rule = { class = "Yakuake" },
-      properties = {
-          x = 0,
-          tag = tags[1][1],
-          screen = 1
-    } },
-    { rule = { class = "Slack" },
-      properties = {
-          maximized_vertical   = true,
-          maximized_horizontal = true,
-          x = 1920,
-          tag = tags[2][1],
-          screen = 2
-    } },
-    { rule = { class = "Skype" },
-      properties = {
-          maximized_vertical   = true,
-          -- maximized_horizontal = true,
-          x = 1920,
-          tag = tags[2][1],
-          screen = 2
-    } },
-    { rule = { class = "Atom" },
-      properties = {
-          maximized_vertical   = true,
-          maximized_horizontal = true,
-    } } ,
-    { rule = { class = "qutebrowser" },
-      properties = {
-          maximized_vertical   = true,
-          maximized_horizontal = true,
-    } },
-    { rule = { class = "Thunderbird" },
-      properties = {
-          maximized_vertical   = true,
-          -- maximized_horizontal = true,
-          tag = tags[2][1],
-    } },
-
-    -- }}
 }
 -- }}}
 
