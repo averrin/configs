@@ -41,6 +41,7 @@ end
 
 -- Compositor
 run_once("compton -b --detect-rounded-corners --config " .. os.getenv("HOME") .. "/.config/awesome/compton.conf")
+run_once("xbindkeys")
 
 -- uncluter
 run_once("unclutter")
@@ -65,32 +66,33 @@ icons       = home .. "/.kde/share/icons"
 kdeconf     = "systemsettings5"
 -- }}}
 
--- {{{ Layouts and Tags
--- Available layouts
-local layouts = {
-    awful.layout.suit.floating,
-    awful.layout.suit.tile,
-    awful.layout.suit.tile.bottom,
-    -- awful.layout.suit.fair,
-    -- awful.layout.suit.fair.horizontal,
-}
-
 tyrannical.tags = {
     {
-        name        = "#",
+        name        = "float",
+        init        = true,
+        exclusive   = false,
+        screen      = {1,2},
+        layout      = awful.layout.suit.floating,
+        class       = {
+          "yakyak", "adom"
+        }
+    } ,
+    {
+        name        = "left",
         init        = true,
         exclusive   = false,
         screen      = {1,2},
         layout      = awful.layout.suit.max,
         class       = {
-          "Atom", "vivaldi-snapshot"
+          "Atom", "vivaldi-snapshot", "yakyak", "adom"
         }
     } ,
     {
-        name        = "@",
+        name        = "right",
         init        = true,
         exclusive   = false,
         screen      = 2,
+        force_screen = true,
         layout      = awful.layout.suit.tile,
         class = {
           "skypeforlinux", "Thunderbird", "HyperTerm"
@@ -99,12 +101,7 @@ tyrannical.tags = {
 }
 
 tyrannical.properties.floating = {
-  "yakyak"
-}
-
--- Force the matching clients (by classes) to be centered on the screen on init
-tyrannical.properties.centered = {
-  "yakyak"
+  "yakyak", "adom"
 }
 
 -- Clients
@@ -115,9 +112,6 @@ clientbuttons = awful.util.table.join(
 )
 -- }}}
 
--- {{{ Key bindings
--- {{ Global keys
-
 ror = {
   ["h"]={"yakyak", "yakyak" },
   ["a"]={"atom-beta","Atom"},
@@ -127,7 +121,7 @@ ror = {
   ["n"]={"dolphin", "Dolphin"},
   ["v"]={"vivaldi-snapshot", "vivaldi-snapshot"},
   ["g"]={"telegram", "telegram"},
-  ["k"]={"hyperterm", "HyperTerm"},
+  -- ["k"]={"hyperterm", "HyperTerm"},
   ["w"]={"shodan", "Shodan UI"},
 }
 
@@ -161,11 +155,53 @@ globalkeys = awful.util.table.join(
             awful.util.spawn_with_shell('~/projects/shadow-go/shadow --mode time')
         end),
 
+    awful.key({  }, '`', function ()
+      pid = getpid()
+      local matcher = function (c)
+        itis = awful.rules.match(c, {pid = pid})
+        if itis then
+          c:geometry({
+            x = 0,
+            y = 0,
+            height = 500
+          })
+          c.maximized_horizontal = true
+          c.floating = true
+          return true
+        else
+          return false
+        end
+      end
+      if matcher(client.focus) then
+        client.focus.minimized = true
+      else
+        awful.client.run_or_raise('bash -c "hyperterm & echo $! > ~/.ht.pid"', matcher)
+      end
+    end),
+    awful.key({ altkey }, 'k', function ()
+      local matcher = function (c)
+        return awful.rules.match(c, {class="HyperTerm", screen = 2})
+      end
+      awful.client.run_or_raise('hyperterm', matcher)
+  end),
+
     -- Layout management (tile mode)
 
     awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end),
     awful.key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx( -1)    end)
 )
+
+function getpid()
+  file = io.open("/home/user/.ht.pid")
+  pid = "None"
+  if file then
+    pid = file:read "*a"
+    pid = pid:match( "^%s*(.-)%s*$" )
+    pid = tonumber(pid)
+    file:close()
+  end
+  return pid
+end
 
 function genfun(t3)
    local cmd=t3[1]
@@ -202,15 +238,15 @@ globalkeys = awful.util.table.join(globalkeys, genkeys(altkey))
 -- {{ Client Keys
 clientkeys = awful.util.table.join(
     awful.key({ modkey }, "n",
-        function (c)
-            c.minimized = true
-        end),
+      function (c)
+        c.minimized = true
+      end),
     awful.key({ modkey }, "m",
-        function (c)
-            c.maximized_horizontal = not c.maximized_horizontal
-            c.maximized_vertical   = not c.maximized_vertical
-        end),
-   awful.key({ modkey }, "c",
+      function (c)
+        c.maximized_horizontal = not c.maximized_horizontal
+        c.maximized_vertical   = not c.maximized_vertical
+      end),
+    awful.key({ modkey }, "c",
         function (c)
             c:geometry({ x = 200,
                          y = 100,
@@ -228,6 +264,9 @@ clientkeys = awful.util.table.join(
             result = result .. "<b>   Layout :</b> " .. awful.layout.getname(awful.layout.get(client.focus.screen)) .. "\n"
             result = result .. "<b>   Name :</b> " .. c.name .. "\n"
             result = result .. "<b>   Class :</b> " .. c.class .. "\n"
+            if c.ontop then
+              result = result .. "<b>   On Top :</b> true\n"
+            end
             result = result .. "<b>   Instance :</b> " .. c.instance .. "\n"
             if c.role then
                 result = result .. "<b>    Role :</b> " .. c.role .. "\n"
@@ -280,12 +319,12 @@ awful.rules.rules = {
 -- Functions to execute when a new client appears.
 client.connect_signal("manage", function (c, startup)
     -- enable sloppy focus
-    c:connect_signal("mouse::enter", function(c)
-        if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
-            and awful.client.focus.filter(c) then
-            client.focus = c
-        end
-    end)
+    -- c:connect_signal("mouse::enter", function(c)
+    --     if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
+    --         and awful.client.focus.filter(c) then
+    --         client.focus = c
+    --     end
+    -- end)
 
     -- Prevent overlap and off screen
     if not startup and not c.size_hints.user_position
@@ -308,10 +347,8 @@ client.connect_signal("focus",
             mt:stop() end)
             mt:start()
         -- Unless they are special ones
-        elseif c.class == "Conky" or c.class == "Kruler" or c.class == "krunner" then
-            c.border_width = 0
         else
-            c.border_color = beautiful.border_focus
+          c.border_color = beautiful.border_focus
         end
     end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
