@@ -1,6 +1,6 @@
 ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="sporty_256"
-plugins=(git git-flow tmux extract vi-mode zsh-syntax-highlighting z fzf-z history-substring-search command-not-found common-aliases, dirhistory)
+plugins=(git git-flow tmux extract vi-mode zsh-syntax-highlighting z fzf-z history-substring-search command-not-found common-aliases dirhistory nvm)
 source $ZSH/oh-my-zsh.sh
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
 
@@ -51,8 +51,8 @@ export OVERRIDE_WRIKE_DART_DEPS_BRANCH=true
 export DART_FLAGS="--checked"
 export PUB_HOSTED_URL=http://pub-dev.wrke.in
 PATH=${PATH}:~/bin/dart-sdk/bin
-export NVM_DIR="/home/alexeynabrodov/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+#export NVM_DIR="/home/alexeynabrodov/.nvm"
+#[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 export GOPATH=/home/alexeynabrodov/go;
 export PATH=$PATH:/home/alexeynabrodov/.nvm/versions/node/v5.12.0/bin/:$GOPATH/bin;
 
