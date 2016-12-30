@@ -41,10 +41,14 @@ end
 
 -- Compositor
 run_once("compton -b --detect-rounded-corners --config " .. os.getenv("HOME") .. "/.config/awesome/compton.conf")
-run_once("xbindkeys")
+-- run_once("xbindkeys")
+run_once("~/.screenlayout/main.sh")
+-- run_once("setxkbmap -layout 'us,ru' -option 'grp:ctrl_shift_toggle,grp_led:scroll,caps:escape'")
+-- run_once("gxkb")
 
 -- uncluter
 run_once("unclutter")
+run_once("killall plasmashell")
 run_once("killall mission-control-5")
 run_once("killall xembedproxy")
 run_once("killall xembedsniproxy")
@@ -71,17 +75,18 @@ tyrannical.tags = {
         name        = "float",
         init        = true,
         exclusive   = false,
-        screen      = {1,2},
+        screen      = {1,2,3},
         layout      = awful.layout.suit.floating,
         class       = {
           "yakyak", "adom"
-        }
+        },
+        role = {"None"}
     } ,
     {
         name        = "left",
         init        = true,
         exclusive   = false,
-        screen      = {1,2},
+        screen      = {1,2,3},
         layout      = awful.layout.suit.max,
         class       = {
           "Atom", "vivaldi-snapshot", "yakyak", "adom"
@@ -95,7 +100,7 @@ tyrannical.tags = {
         force_screen = true,
         layout      = awful.layout.suit.tile,
         class = {
-          "skypeforlinux", "Thunderbird", "HyperTerm"
+          "skypeforlinux", "Thunderbird", "st-256color", "Slack"
         }
     }
 }
@@ -115,14 +120,14 @@ clientbuttons = awful.util.table.join(
 ror = {
   ["h"]={"yakyak", "yakyak" },
   ["a"]={"atom-beta","Atom"},
-  ["d"]={"slack", "slack" },
-  ["t"]={"thunderbird", "Thunderbird" },
-  ["s"]={"skypeforlinux", "skypeforlinux"},
-  ["n"]={"dolphin", "Dolphin"},
-  ["v"]={"vivaldi-snapshot", "vivaldi-snapshot"},
+  ["s"]={"slack", "slack" },
+  ["t"]={"skypeforlinux", "skypeforlinux"},
+  ["n"]={"dolphin", "dolphin"},
+  ["v"]={"vivaldi-snapshot", "Vivaldi-snapshot"},
   ["g"]={"telegram", "telegram"},
-  -- ["k"]={"hyperterm", "HyperTerm"},
-  ["w"]={"shodan", "Shodan UI"},
+  ["e"]={"krusader", "krusader"},
+  ["w"]={"google-chrome", "Google-chrome"},
+  ["d"]={"dartium", "Chrome"},
 }
 
 globalkeys = awful.util.table.join(
@@ -134,7 +139,8 @@ globalkeys = awful.util.table.join(
     -- Forward
     awful.key({ altkey,         }, "Tab",
         function ()
-            awful.util.spawn_with_shell('~/projects/shadow-go/shadow')
+            -- awful.util.spawn_with_shell('~/projects/shadow-go/shadow')
+            awful.util.spawn_with_shell('rofi -show combi -switchers combi -combi-modi window,run')
             local all_clients = client.get()
             for i, c in pairs(all_clients) do
               if c.instance == 'Shadow' then
@@ -144,7 +150,8 @@ globalkeys = awful.util.table.join(
         end),
     awful.key({ altkey,         }, "F2",
         function ()
-            awful.util.spawn_with_shell('~/projects/shadow-go/shadow --mode runner')
+            -- awful.util.spawn_with_shell('~/projects/shadow-go/shadow --mode runner')
+            awful.util.spawn_with_shell('rofi -show combi -switchers combi -combi-modi window,run')
         end),
     awful.key({ "Control" }, "space",
         function ()
@@ -154,11 +161,19 @@ globalkeys = awful.util.table.join(
         function (c)
             awful.util.spawn_with_shell('~/projects/shadow-go/shadow --mode time')
         end),
+    awful.key({ modkey }, "l",
+        function ()
+            awful.util.spawn_with_shell('gnome-screensaver-command -l')
+        end),
 
     awful.key({  }, '`', function ()
       pid = getpid()
       local matcher = function (c)
-        itis = awful.rules.match(c, {pid = pid})
+        if c then
+          itis = awful.rules.match(c, {pid = pid})
+        else
+          return
+        end
         if itis then
           c:geometry({
             x = 0,
@@ -175,14 +190,14 @@ globalkeys = awful.util.table.join(
       if matcher(client.focus) then
         client.focus.minimized = true
       else
-        awful.client.run_or_raise('bash -c "hyperterm & echo $! > ~/.ht.pid"', matcher)
+        awful.client.run_or_raise('bash -c "st -e tmux & echo $! > ~/.ht.pid"', matcher)
       end
     end),
     awful.key({ altkey }, 'k', function ()
       local matcher = function (c)
-        return awful.rules.match(c, {class="HyperTerm", screen = 2})
+        return awful.rules.match(c, {class="st-256color", screen = 2})
       end
-      awful.client.run_or_raise('hyperterm', matcher)
+      awful.client.run_or_raise('st -e tmux', matcher)
   end),
 
     -- Layout management (tile mode)
@@ -192,7 +207,7 @@ globalkeys = awful.util.table.join(
 )
 
 function getpid()
-  file = io.open("/home/user/.ht.pid")
+  file = io.open("/home/alexeynabrodov/.ht.pid")
   pid = "None"
   if file then
     pid = file:read "*a"
@@ -246,6 +261,11 @@ clientkeys = awful.util.table.join(
         c.maximized_horizontal = not c.maximized_horizontal
         c.maximized_vertical   = not c.maximized_vertical
       end),
+    awful.key({ "Control" }, '`',
+      function (c)
+        c.maximized_horizontal = not c.maximized_horizontal
+        c.maximized_vertical   = not c.maximized_vertical
+      end),
     awful.key({ modkey }, "c",
         function (c)
             c:geometry({ x = 200,
@@ -263,11 +283,15 @@ clientkeys = awful.util.table.join(
             local result = ""
             result = result .. "<b>   Layout :</b> " .. awful.layout.getname(awful.layout.get(client.focus.screen)) .. "\n"
             result = result .. "<b>   Name :</b> " .. c.name .. "\n"
-            result = result .. "<b>   Class :</b> " .. c.class .. "\n"
+            if c.class then
+              result = result .. "<b>   Class :</b> " .. c.class .. "\n"
+            end
             if c.ontop then
               result = result .. "<b>   On Top :</b> true\n"
             end
-            result = result .. "<b>   Instance :</b> " .. c.instance .. "\n"
+            if c.instance then
+              result = result .. "<b>   Instance :</b> " .. c.instance .. "\n"
+            end
             if c.role then
                 result = result .. "<b>    Role :</b> " .. c.role .. "\n"
             else
@@ -312,6 +336,12 @@ awful.rules.rules = {
         buttons = clientbuttons,
         size_hints_honor = false }
     },
+    {rule = {role= "None"},
+      properties = {
+        width=100,
+        hight=100
+      }
+  }
 }
 -- }}}
 

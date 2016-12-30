@@ -46,6 +46,18 @@ _fzf_compgen_path() {
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 bindkey -s '\ec' '$(find . -type d -not -path "*/\.*" -not -path "*/node_modules*" | fzf --read0 -0 -1)\n'
 
+export DART_SDK_PATH=~/bin/dart-sdk
+export OVERRIDE_WRIKE_DART_DEPS_BRANCH=true
+export DART_FLAGS="--checked"
+export PUB_HOSTED_URL=http://pub-dev.wrke.in
+PATH=${PATH}:~/bin/dart-sdk/bin
+export NVM_DIR="/home/alexeynabrodov/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+export GOPATH=/home/alexeynabrodov/go;
+export PATH=$PATH:/home/alexeynabrodov/.nvm/versions/node/v5.12.0/bin/:$GOPATH/bin;
+
+. /home/alexeynabrodov/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
+
 alias !="sudo"
 alias pipi="sudo pip install"
 alias ipython="ptipython"
@@ -54,5 +66,13 @@ alias tag="blight tag"
 alias push="git push"
 alias pull="git pull"
 alias st="git status"
-alias dff='git diff --color | diff-so-fancy'
+alias dff='git diff --color | diff-so-fancy | less'
 
+alias ch="git checkout"
+alias master="git checkout master"
+alias branch="git checkout -b"
+alias stash="git stash"
+alias pop="git stash pop"
+alias merge="git checkout master; git pull; git checkout -; git merge master"
+
+export KEYTIMEOUT=1
