@@ -1,1 +1,3 @@
 /home/alexeynabrodov/projects/mvp-wtalk	40
+/home/alexeynabrodov/projects/Slack-Gitsin	40
+/home/alexeynabrodov	40

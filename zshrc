@@ -1,6 +1,6 @@
 ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="sporty_256"
-plugins=(git git-flow tmux extract vi-mode zsh-syntax-highlighting z fzf-z history-substring-search command-not-found common-aliases)
+plugins=(git git-flow tmux extract vi-mode zsh-syntax-highlighting z fzf-z history-substring-search command-not-found common-aliases, dirhistory)
 source $ZSH/oh-my-zsh.sh
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
 
@@ -70,7 +70,12 @@ alias dff='git diff --color | diff-so-fancy | less'
 
 alias ch="git checkout"
 alias master="git checkout master"
-alias branch="git checkout -b"
+#alias branch="git checkout -b"
+
+branch() {
+  git checkout -b $1; git push --set-upstream origin $1;
+}
+
 alias stash="git stash"
 alias pop="git stash pop"
 alias merge="git checkout master; git pull; git checkout -; git merge master"
