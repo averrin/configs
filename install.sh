@@ -2,6 +2,7 @@ sudo apt-get install tmux zsh git-core python-pip htop wget vim -y
 git clone --recursive https://github.com/averrin/maximum-awesome.git
 cd ./maximum-awesome
 cp -r ./tmux.conf ~/.tmux.conf
+cp -r ./gitconfig ~/.gitconfig
 cp -r ./tmux ~/.tmux
 cp ./vimrc ~/.vimrc
 cp -r vim ~/.vim

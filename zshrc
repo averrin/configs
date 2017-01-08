@@ -65,7 +65,7 @@ alias commit="git commit -am"
 alias tag="blight tag"
 alias push="git push"
 alias pull="git pull"
-alias st="git status"
+alias st="git status --short --branch"
 alias dff='git diff --color | diff-so-fancy | less'
 
 alias ch="git checkout"
