@@ -1,0 +1,2 @@
+#!/bin/bash
+curl -H 'PRIVATE-TOKEN: nw3feasv9cyqFUCzxv9Z' 'https://git.wrke.in/api/v3/projects/851/repository/branches?per_page=100' --silent | jq '.[] | select(.commit.author_name == "Alexey Nabrodov") | .name' | tac | nl

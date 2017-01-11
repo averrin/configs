@@ -1,0 +1,3 @@
+#!/bin/bash
+export DART_SDK_PATH=/home/alexeynabrodov/bin/dart-sdk-1.19.1
+$DART_SDK_PATH/bin/pub $@

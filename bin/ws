@@ -1,0 +1,4 @@
+cd ~/projects/workspace/assets
+p get;
+p run grinder pub_get;
+p serve --port 8080 --no-dart2js

@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+export DEVELOPMENT_MODE=dev
+
+function semver_to_int {
+  spaced_current_version=`echo $1 | sed  "s/\./ /g"`
+  printf "%.3d%.3d%.3d" ${spaced_current_version}
+}
+DEPRECATED_PUB_VERSION='1.18.0'
+PUB_VERSION=`${DART_SDK_PATH}/bin/pub --version | awk '{print $2}'`
+if [ `semver_to_int $PUB_VERSION` -gt `semver_to_int $DEPRECATED_PUB_VERSION` ]; then
+    p upgrade --no-precompile --packages-dir || exit $?
+else
+    echo "Pub version $PUB_VERSION is deprecated and will not be supported in next build release"
+    p upgrade --no-precompile || exit $?
+fi
+npm install . &&
+node node_modules/.bin/gulp clean  &&
+node node_modules/.bin/gulp dev:build &&
+# Extract dart commands to prevent uncontrol spawning
+if [ "x${DART_SDK_PATH}" = "x" ]; then
+echo '[ ERROR ]: please export DART_SDK_PATH'
+  exit 127
+fi
+
+echo "BUILD NUM dart-build:::: ${BUILD_NUMBER}"
+
+echo "##teamcity[blockOpened name='WS Runing extractor']"
+p run grinder extractor || exit $?
+echo "##teamcity[blockClosed name='WS Runing extractor']"
+
+
+echo "##teamcity[blockOpened name='WS Runing Grinder']"
+p run grinder build_all || exit $?
+echo "##teamcity[blockClosed name='WS Runing Grinder']"
+
+echo "##teamcity[blockOpened name='WS Runing Prepare RPM']"
+p run grinder prepare_rpm || exit $?
+echo "##teamcity[blockClosed name='WS Runing Prepare RPM']"
+
+node node_modules/.bin/gulp dev:watch

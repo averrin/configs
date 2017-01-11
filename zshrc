@@ -1,6 +1,6 @@
 ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="sporty_256"
-plugins=(git git-flow tmux extract vi-mode zsh-syntax-highlighting z fzf-z history-substring-search command-not-found common-aliases dirhistory nvm)
+plugins=(git git-flow extract vi-mode zsh-syntax-highlighting z fzf-z history-substring-search command-not-found dirhistory nvm)
 source $ZSH/oh-my-zsh.sh
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
 
@@ -33,7 +33,6 @@ co () {
 eval `dircolors ~/dircolors.256dark`
 
 export TERM=xterm-256color
-export PATH=$PATH:~/.local/bin:/usr/local/go/bin:/home/user/projects/go/bin
 export EDITOR=vim
 export FZF_DEFAULT_COMMAND='ag --ignore .git --ignore-dir node_modules -g ""'
 
@@ -55,6 +54,7 @@ PATH=${PATH}:~/bin/dart-sdk/bin
 #[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 export GOPATH=/home/alexeynabrodov/go;
 export PATH=$PATH:/home/alexeynabrodov/.nvm/versions/node/v5.12.0/bin/:$GOPATH/bin;
+export PATH=$PATH:~/.local/bin:/usr/local/go/bin:/home/user/projects/go/bin
 
 . /home/alexeynabrodov/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
 

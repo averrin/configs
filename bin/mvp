@@ -1,0 +1,4 @@
+cd ~/projects/mvp-wtalk
+p get
+p run grinder pub_get;
+p serve web --no-dart2js --port=8181
