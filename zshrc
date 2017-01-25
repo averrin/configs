@@ -71,6 +71,7 @@ alias dff='git diff --color | diff-so-fancy | less'
 alias ch="git checkout"
 alias master="git checkout master"
 #alias branch="git checkout -b"
+alias t="z"
 
 branch() {
   git checkout -b $1; git push --set-upstream origin $1;

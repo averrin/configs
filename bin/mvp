@@ -1,4 +1,7 @@
 cd ~/projects/mvp-wtalk
-p get
-p run grinder pub_get;
-p serve web --no-dart2js --port=8181
+pub get --packages-dir
+pub run grinder pub_get;
+pub run grinder html_gen;
+pub run grinder make_conf;
+pub run grinder svg_sprite;
+pub serve web --no-dart2js --port=8181;

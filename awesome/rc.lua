@@ -42,7 +42,7 @@ end
 -- Compositor
 run_once("compton -b --detect-rounded-corners --config " .. os.getenv("HOME") .. "/.config/awesome/compton.conf")
 -- run_once("xbindkeys")
-run_once("~/.screenlayout/main.sh")
+-- run_once("~/.screenlayout/main.sh")
 -- run_once("setxkbmap -layout 'us,ru' -option 'grp:ctrl_shift_toggle,grp_led:scroll,caps:escape'")
 -- run_once("gxkb")
 
@@ -89,7 +89,7 @@ tyrannical.tags = {
         screen      = {1,2,3},
         layout      = awful.layout.suit.max,
         class       = {
-          "Atom", "vivaldi-snapshot", "yakyak", "adom"
+          "Atom", "vivaldi-snapshot", "yakyak", "adom", "Emacs"
         }
     } ,
     {
@@ -119,13 +119,14 @@ clientbuttons = awful.util.table.join(
 
 ror = {
   ["h"]={"yakyak", "yakyak" },
-  ["a"]={"atom-beta","Atom"},
+  -- ["a"]={"atom-beta","Atom"},
   ["s"]={"slack", "slack" },
   ["t"]={"skypeforlinux", "skypeforlinux"},
   ["n"]={"dolphin", "dolphin"},
   ["v"]={"vivaldi-snapshot", "Vivaldi-snapshot"},
   ["g"]={"telegram", "telegram"},
-  ["e"]={"krusader", "krusader"},
+  ["e"]={"emacs", "Emacs"},
+  ["a"]={"emacs", "Emacs"},
   ["w"]={"google-chrome", "Google-chrome"},
   ["d"]={"dartium", "Chrome"},
 }
@@ -141,21 +142,11 @@ globalkeys = awful.util.table.join(
         function ()
             -- awful.util.spawn_with_shell('~/projects/shadow-go/shadow')
             awful.util.spawn_with_shell('rofi -show combi -switchers combi -combi-modi window,run')
-            local all_clients = client.get()
-            for i, c in pairs(all_clients) do
-              if c.instance == 'Shadow' then
-                client.focus = c
-              end
-            end
         end),
     awful.key({ altkey,         }, "F2",
         function ()
             -- awful.util.spawn_with_shell('~/projects/shadow-go/shadow --mode runner')
             awful.util.spawn_with_shell('rofi -show combi -switchers combi -combi-modi window,run')
-        end),
-    awful.key({ "Control" }, "space",
-        function ()
-            awful.util.spawn_with_shell('~/projects/shadow-go/shadow --mode ultra')
         end),
     awful.key({ altkey }, "q",
         function (c)
@@ -281,7 +272,7 @@ clientkeys = awful.util.table.join(
     awful.key({ modkey }, "i",
         function (c)
             local result = ""
-            result = result .. "<b>   Layout :</b> " .. awful.layout.getname(awful.layout.get(client.focus.screen)) .. "\n"
+            result = result .. "<b>   Layout :</b> " .. awful.layout.getname(awful.layout.get(client.focus.screen.index)) .. "\n"
             result = result .. "<b>   Name :</b> " .. c.name .. "\n"
             if c.class then
               result = result .. "<b>   Class :</b> " .. c.class .. "\n"
@@ -300,7 +291,7 @@ clientkeys = awful.util.table.join(
             result = result .. "<b>      Type :</b> " .. c.type .. "\n"
             result = result .. "<b>      PID :</b> " .. c.pid .. "\n"
             result = result .. "<b>      XID :</b> " .. c.window .. "\n"
-            result = result .. "<b>      Screen :</b> " .. c.screen .. "\n"
+            result = result .. "<b>      Screen :</b> " .. c.screen.index .. "\n"
             result = result .. "<b>      Geometry :</b> " .. c:geometry().x .. "," .. c:geometry().y .. "," .. c:geometry().width .. "," .. c:geometry().height
             local appicon = ""
             if c.icon then
