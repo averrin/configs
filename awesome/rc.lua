@@ -158,7 +158,7 @@ globalkeys = awful.util.table.join(
         end),
 
     awful.key({  }, '`', function ()
-      pid = getpid()
+        pid = getpid(".ht.pid")
       local matcher = function (c)
         if c then
           itis = awful.rules.match(c, {pid = pid})
@@ -185,10 +185,21 @@ globalkeys = awful.util.table.join(
       end
     end),
     awful.key({ altkey }, 'k', function ()
+      pid = getpid(".ht_2.pid")
       local matcher = function (c)
-        return awful.rules.match(c, {class="st-256color", screen = 2})
+        if c then
+          awful.rules.match(c, {pid = pid})
+          itis = awful.rules.match(c, {pid = pid})
+          if itis then
+            return true
+          else
+            return false
+          end
+        else
+          return
+        end
       end
-      awful.client.run_or_raise('st -e tmux', matcher)
+      awful.client.run_or_raise('bash -c "st -e tmux & echo $! > ~/.ht_2.pid"', matcher)
   end),
 
     -- Layout management (tile mode)
@@ -197,8 +208,8 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx( -1)    end)
 )
 
-function getpid()
-  file = io.open("/home/alexeynabrodov/.ht.pid")
+function getpid(f)
+  file = io.open("/home/alexeynabrodov/" .. f)
   pid = "None"
   if file then
     pid = file:read "*a"
