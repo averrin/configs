@@ -353,14 +353,16 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
 
   (global-set-key (kbd "C-j") (kbd "RET"))
-
+  (define-key helm-map (kbd "C-j") (kbd "RET"))
+  (define-key helm-M-x-map (kbd "C-j") (kbd "RET"))
+  
   (spacemacs/set-leader-keys "fl" 'fiplr-find-file)
   (spacemacs/set-leader-keys "gc" 'magit-commit)
   (spacemacs/set-leader-keys "gp" 'magit-push-current)
   (spacemacs/set-leader-keys "gd" 'magit-diff)
   (spacemacs/set-leader-keys "ww" 'ace-window)
   (spacemacs/set-leader-keys "bj" 'bookmark-jump)
-  (spacemacs/set-leader-keys "bs" 'bookmark-save)
+  (spacemacs/set-leader-keys "bs" 'bookmark-set)
 
   (spacemacs/set-leader-keys-for-major-mode 'dart-mode
     "mj" 'dart-jump-to-defn)
