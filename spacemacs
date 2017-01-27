@@ -342,6 +342,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (define-key evil-normal-state-map (kbd "C-SPC") 'View-scroll-half-page-forward)
   (define-key evil-normal-state-map (kbd "C-S-SPC") 'View-scroll-half-page-backward)
   (define-key evil-normal-state-map (kbd "<C-return>") 'dart-jump-to-defn)
+  (define-key evil-normal-state-map (kbd "gj") 'pop-global-mark)
 
   (define-prefix-command 'tmux-map)
   (global-set-key (kbd "C-a") 'tmux-map)
@@ -363,8 +364,6 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   (spacemacs/set-leader-keys-for-major-mode 'dart-mode
     "mj" 'dart-jump-to-defn)
-  (spacemacs/set-leader-keys-for-major-mode 'evil-mode
-    "gj" 'pop-global-mark)
   )
 
 
