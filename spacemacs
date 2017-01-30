@@ -344,18 +344,10 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (define-key evil-normal-state-map (kbd "<C-return>") 'dart-jump-to-defn)
   (define-key evil-normal-state-map (kbd "gj") 'pop-global-mark)
 
-  (define-prefix-command 'tmux-map)
-  (global-set-key (kbd "C-a") 'tmux-map)
-  (define-key tmux-map (kbd "SPC") 'evil-window-next)
-  (define-key tmux-map (kbd "h") 'evil-window-left)
-  (define-key tmux-map (kbd "l") 'evil-window-right)
-  (define-key tmux-map (kbd "c") 'evil-window-new)
-
-
   (global-set-key (kbd "C-j") (kbd "RET"))
-  (define-key helm-map (kbd "C-j") (kbd "RET"))
-  (define-key helm-M-x-map (kbd "C-j") (kbd "RET"))
-  
+  ;; (define-key helm-map (kbd "C-j") (kbd "RET"))
+  ;; (define-key helm-M-x-map (kbd "C-j") (kbd "RET"))
+
   (spacemacs/set-leader-keys "fl" 'fiplr-find-file)
   (spacemacs/set-leader-keys "gc" 'magit-commit)
   (spacemacs/set-leader-keys "gp" 'magit-push-current)
@@ -366,7 +358,9 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   (spacemacs/set-leader-keys-for-major-mode 'dart-mode
     "mj" 'dart-jump-to-defn)
-  )
+  (spacemacs/set-leader-keys-for-major-mode 'dart-mode
+    "mf" 'dart-format-file)
+)
 
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -379,7 +373,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
  '(evil-want-Y-yank-to-eol nil)
  '(package-selected-packages
    (quote
-    (tidy ample-theme git-gutter+ evil-search-highlight-persist yaml-mode fiplr company-quickhelp find-file-in-project web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data helm-fuzzier tree-mode el-get erc-hl-nicks erc-image erc-social-graph erc-view-log erc-yt slack emojify alert circe oauth2 websocket log4e gntp ht jabber fsm selectric-mode xkcd 2048-game pacmacs dash-functional typit mmt auto-dictionary flyspell-correct-ivy ivy flyspell-correct-helm flyspell-correct-popup flyspell-correct flyspell-popup marmalade-demo lua-mode company-go base16-theme smart-mode-line-powerline-theme color-theme-sanityinc-tomorrow dart-mode smeargle orgit org mwim magit-gitflow helm-gitignore helm-company helm-c-yasnippet gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit with-editor company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async quelpa package-build spacemacs-theme))))
+    (shell-pop tidy ample-theme git-gutter+ evil-search-highlight-persist yaml-mode fiplr company-quickhelp find-file-in-project web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data helm-fuzzier tree-mode el-get erc-hl-nicks erc-image erc-social-graph erc-view-log erc-yt slack emojify alert circe oauth2 websocket log4e gntp ht jabber fsm selectric-mode xkcd 2048-game pacmacs dash-functional typit mmt auto-dictionary flyspell-correct-ivy ivy flyspell-correct-helm flyspell-correct-popup flyspell-correct flyspell-popup marmalade-demo lua-mode company-go base16-theme smart-mode-line-powerline-theme color-theme-sanityinc-tomorrow dart-mode smeargle orgit org mwim magit-gitflow helm-gitignore helm-company helm-c-yasnippet gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit with-editor company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async quelpa package-build spacemacs-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
