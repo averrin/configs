@@ -13,7 +13,7 @@ values."
    dotspacemacs-distribution 'spacemacs
    ;; Lazy installation of layers (i.e. layers are installed only when a file
    ;; with a supported type is opened). Possible values are `all', `unused'
-   ;; and `nil'. `unused' will lazy install only unused layers (i.e. layers
+   ;; and `nil'. `unusedactual chrome version' will lazy install only unused layers (i.e. layers
    ;; not listed in variable `dotspacemacs-configuration-layers'), `all' will
    ;; lazy install any layer that support lazy installation even the layers
    ;; listed in `dotspacemacs-configuration-layers'. `nil' disable the lazy
@@ -310,11 +310,10 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (global-company-mode t)
   (spacemacs/toggle-mode-line-minor-modes-off)
   (global-git-gutter+-mode)
-  (global-evil-mc-mode  1)
+  (global-evil-mc-mode 1)
   (add-hook 'focus-out-hook 'save-all)
 
   (add-hook 'after-init-hook 'global-company-mode)
-  ;; (company-quickhelp-mode 1)
 
   (defun save-all ()
     (interactive)
@@ -331,6 +330,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
     (dart)
   )
   (require 'view)
+  (require 'helm)
   (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
   (setq tab-width 4)
   (setq dart-enable-analysis-server t)
@@ -346,7 +346,6 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   (global-set-key (kbd "C-j") (kbd "RET"))
   (define-key helm-map (kbd "C-j") 'helm-confirm-and-exit-minibuffer)
-  (define-key helm-M-x-map (kbd "C-j") (kbd "RET"))
 
   (spacemacs/set-leader-keys "fl" 'fiplr-find-file)
   (spacemacs/set-leader-keys "gc" 'magit-commit)
