@@ -296,6 +296,11 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   (setq exec-path-from-shell-check-startup-files nil)
   (setq exec-path-from-shell-arguments '("-l"))
+
+  (add-to-list 'auto-mode-alist '("\\zsh\\'" . sh-mode))
+  (add-to-list 'auto-mode-alist '("\\.zsh\\'" . sh-mode))
+  (add-hook 'dart-mode-hook 'dart-hook)
+  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
   )
 
 (defun save-all ()
@@ -359,9 +364,6 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (add-hook 'focus-out-hook 'save-all)
   (add-hook 'after-init-hook 'global-company-mode)
 
-  (add-hook 'dart-mode-hook 'dart-hook) ;; y u didnt work?!
-  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
-  (dart-hook)
   (message "Spacemacs user-config finished")
 )
 
