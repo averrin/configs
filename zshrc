@@ -2,7 +2,6 @@ ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="sporty_256"
 plugins=(git git-flow extract vi-mode zsh-syntax-highlighting z fzf-z history-substring-search command-not-found dirhistory nvm)
 source $ZSH/oh-my-zsh.sh
-export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
 
 bindkey "\e[A" history-substring-search-up
 bindkey "^p" history-substring-search-up
@@ -32,11 +31,6 @@ co () {
 
 eval `dircolors ~/dircolors.256dark`
 
-export TERM=xterm-256color
-export EDITOR=vim
-export FZF_DEFAULT_COMMAND='ag --ignore .git --ignore-dir node_modules -g ""'
-
-export FZF_COMPLETION_OPTS='+c -x'
 
 _fzf_compgen_path() {
   ag -g "" "$1"
@@ -44,17 +38,6 @@ _fzf_compgen_path() {
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 bindkey -s '\ec' '$(find . -type d -not -path "*/\.*" -not -path "*/node_modules*" | fzf --read0 -0 -1)\n'
-
-export DART_SDK_PATH=~/bin/dart-sdk
-export OVERRIDE_WRIKE_DART_DEPS_BRANCH=true
-export DART_FLAGS="--checked"
-export PUB_HOSTED_URL=http://pub-dev.wrke.in
-PATH=${PATH}:~/bin/dart-sdk/bin
-#export NVM_DIR="/home/alexeynabrodov/.nvm"
-#[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-export GOPATH=/home/alexeynabrodov/go;
-export PATH=$PATH:/home/alexeynabrodov/.nvm/versions/node/v5.12.0/bin/:$GOPATH/bin;
-export PATH=$PATH:~/.local/bin:/usr/local/go/bin:/home/user/projects/go/bin
 
 . /home/alexeynabrodov/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
 
@@ -70,7 +53,6 @@ alias dff='git diff --color | diff-so-fancy | less'
 
 alias ch="git checkout"
 alias master="git checkout master"
-#alias branch="git checkout -b"
 alias t="z"
 
 branch() {
