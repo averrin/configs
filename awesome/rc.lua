@@ -53,6 +53,7 @@ run_once("killall mission-control-5")
 run_once("killall xembedproxy")
 run_once("killall xembedsniproxy")
 run_once("qdbus org.kde.kactivitymanagerd /ActivityManager org.kde.ActivityManager.Stop")
+run_once("emacs --daemon")
 -- }}}
 
 -- beautiful init

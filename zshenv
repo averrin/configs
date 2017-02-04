@@ -1,5 +1,5 @@
 export TERM=xterm-256color
-export EDITOR=vim
+export EDITOR=emacsclient
 
 export FZF_DEFAULT_COMMAND='ag --ignore .git --ignore-dir node_modules -g ""'
 export FZF_COMPLETION_OPTS='+c -x'
