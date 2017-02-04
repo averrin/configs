@@ -54,6 +54,7 @@ run_once("killall xembedproxy")
 run_once("killall xembedsniproxy")
 run_once("qdbus org.kde.kactivitymanagerd /ActivityManager org.kde.ActivityManager.Stop")
 run_once("emacs --daemon")
+run_once("feh --bg-scale ~/Downloads/bg.jpg")
 -- }}}
 
 -- beautiful init
