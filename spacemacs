@@ -35,22 +35,11 @@ values."
      html
      lua
      go
-     ;; ----------------------------------------------------------------
-     ;; Example of useful layers you may want to use right away.
-     ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
-     ;; <M-m f e R> (Emacs style) to install them.
-     ;; ----------------------------------------------------------------
      helm
      auto-completion
      better-defaults
      emacs-lisp
      git
-     ;; markdown
-     ;; org
-     ;; (shell :variables
-     ;;        shell-default-height 30
-     ;;        shell-default-position 'bottom)
-     ;; spell-checking
      syntax-checking
      ;; version-control
      )
@@ -60,9 +49,9 @@ values."
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(dart-mode
                                       git-gutter+
-                                      el-get)
+                                      )
    ;; A list of packages that cannot be updated.
-   dotspacemacs-frozen-packages '()
+   dotspacemacs-frozen-packages '(dart-mode)
    ;; A list of packages that will not be installed and loaded.
    dotspacemacs-excluded-packages '()
    ;; Defines the behaviour of Spacemacs when installing packages.
@@ -305,49 +294,55 @@ before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
   )
 
+(defun save-all ()
+  (interactive)
+  (save-some-buffers t))
+
+(defun dart-hook ()
+  (interactive)
+  (message "Install Dart-specific settings")
+  (flycheck-mode)
+  (set (make-local-variable 'company-backends)
+       '(company-dart (company-dabbrev)))
+
+  (spacemacs/declare-prefix-for-mode 'dart-mode "m" "lang_tools")
+  (spacemacs/set-leader-keys-for-major-mode 'dart-mode
+    "j" 'dart-jump-to-defn
+    "q" 'dart-quick-fix
+    "d" 'dart-jump-to-defn
+    "f" 'dartfmt
+    "i" 'dart-imports
+    )
+  )
+
 (defun dotspacemacs/user-config ()
+  (require 'helm)
+  (require 'dart-mode)
+  (require 'company-dart)
+
+  (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
   (display-time-mode 1)
   (global-company-mode t)
   (spacemacs/toggle-mode-line-minor-modes-off)
+  (spacemacs/toggle-centered-point-globally-on)
+  (spaceline-toggle-buffer-size-off)
+  (spaceline-toggle-buffer-encoding-abbrev-off)
   (global-git-gutter+-mode)
   (global-evil-mc-mode 1)
-  (add-hook 'focus-out-hook 'save-all)
-
-  (add-hook 'after-init-hook 'global-company-mode)
-
-  (defun save-all ()
-    (interactive)
-    (save-some-buffers t))
-  (defun dart ()
-    (global-company-mode t)
-    (add-hook 'dart-mode-hook 'flycheck-mode)
-    (add-hook 'dart-mode-hook (lambda ()
-                                (set (make-local-variable 'company-backends)
-                                     '(company-dart (company-dabbrev)))))
-    )
-  (el-get-bundle company-dart
-    :url "https://raw.githubusercontent.com/sid-kurias/company-dart/master/company-dart.el"
-    (dart)
-  )
-  (require 'view)
-  (require 'helm)
-  (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
-  (setq tab-width 4)
   (setq dart-enable-analysis-server t)
+  (setq tab-width 4)
+
   (vhl/define-extension 'evil 'evil-paste-after 'evil-paste-before
                         'evil-paste-pop 'evil-move)
   (vhl/install-extension 'evil)
 
-
-  (define-key evil-normal-state-map (kbd "C-SPC") 'View-scroll-half-page-forward)
-  (define-key evil-normal-state-map (kbd "C-S-SPC") 'View-scroll-half-page-backward)
-  (define-key evil-normal-state-map (kbd "<C-return>") 'dart-jump-to-defn)
+  (define-key evil-normal-state-map (kbd "C-SPC") 'evil-scroll-page-down)
+  (define-key evil-normal-state-map (kbd "C-S-SPC") 'evil-scroll-page-up)
   (define-key evil-normal-state-map (kbd "gj") 'pop-global-mark)
 
   (global-set-key (kbd "C-j") (kbd "RET"))
   (define-key helm-map (kbd "C-j") 'helm-confirm-and-exit-minibuffer)
 
-  (spacemacs/set-leader-keys "fl" 'fiplr-find-file)
   (spacemacs/set-leader-keys "gc" 'magit-commit)
   (spacemacs/set-leader-keys "gp" 'magit-push-current)
   (spacemacs/set-leader-keys "gd" 'magit-diff)
@@ -355,11 +350,13 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (spacemacs/set-leader-keys "bj" 'bookmark-jump)
   (spacemacs/set-leader-keys "bs" 'bookmark-set)
 
-  (spacemacs/declare-prefix "m" "lang tools")
-  (spacemacs/declare-prefix-for-mode 'dart-mode "ml" "lang_tools")
-  (spacemacs/set-leader-keys-for-major-mode 'dart-mode
-    "lj" 'dart-jump-to-defn
-    "lf" 'dart-format-file)
+  (add-hook 'evil-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
+  (add-hook 'focus-out-hook 'save-all)
+  (add-hook 'after-init-hook 'global-company-mode)
+
+  (add-hook 'dart-mode-hook 'dart-hook) ;; y u didnt work?!
+  (dart-hook)
+  (message "Spacemacs user-config finished")
 )
 
 
@@ -373,7 +370,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
  '(evil-want-Y-yank-to-eol nil)
  '(package-selected-packages
    (quote
-    (web-beautify shell-pop tidy ample-theme git-gutter+ evil-search-highlight-persist yaml-mode fiplr company-quickhelp find-file-in-project web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data helm-fuzzier tree-mode el-get erc-hl-nicks erc-image erc-social-graph erc-view-log erc-yt slack emojify alert circe oauth2 websocket log4e gntp ht jabber fsm selectric-mode xkcd 2048-game pacmacs dash-functional typit mmt auto-dictionary flyspell-correct-ivy ivy flyspell-correct-helm flyspell-correct-popup flyspell-correct flyspell-popup marmalade-demo lua-mode company-go base16-theme smart-mode-line-powerline-theme color-theme-sanityinc-tomorrow dart-mode smeargle orgit org mwim magit-gitflow helm-gitignore helm-company helm-c-yasnippet gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit with-editor company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async quelpa package-build spacemacs-theme))))
+    (package-lint web-beautify shell-pop git-gutter+ evil-search-highlight-persist yaml-mode company-quickhelp find-file-in-project web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data helm-fuzzier tree-mode erc-hl-nicks erc-image erc-social-graph erc-view-log erc-yt slack emojify alert circe oauth2 websocket log4e gntp ht jabber fsm selectric-mode xkcd 2048-game pacmacs dash-functional typit mmt auto-dictionary flyspell-correct-ivy ivy flyspell-correct-helm flyspell-correct-popup flyspell-correct flyspell-popup marmalade-demo lua-mode company-go base16-theme smart-mode-line-powerline-theme color-theme-sanityinc-tomorrow dart-mode smeargle orgit org mwim magit-gitflow helm-gitignore helm-company helm-c-yasnippet gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit with-editor company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async quelpa package-build spacemacs-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
