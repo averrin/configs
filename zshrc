@@ -27,6 +27,10 @@ branch() {
   git checkout -b $1; git push --set-upstream origin $1;
 }
 
+e() {
+    nohup emacs $1 &;
+}
+
 alias stash="git stash"
 alias pop="git stash pop"
 alias merge="git checkout master; git pull; git checkout -; git merge master"
