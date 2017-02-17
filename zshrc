@@ -27,8 +27,15 @@ branch() {
   git checkout -b $1; git push --set-upstream origin $1;
 }
 
+tag() {
+  git checkout master;
+  git pull;
+  git tag $1;
+  git push --tags;
+}
+
 e() {
-    nohup emacs $1 &;
+    nohup emacs $1 >/dev/null 2>&1 &;
 }
 
 alias stash="git stash"
