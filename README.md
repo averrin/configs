@@ -1,3 +1,3 @@
 ## Install
 
-    curl -L bit.ly/tmux_init | sh
+    curl -L bit.ly/sync_configs | sh
