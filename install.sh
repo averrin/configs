@@ -14,6 +14,9 @@ ln -s $dir/gitconfig .gitconfig
 rm -rf ./.emacs.d
 rm -rf ./.spacemacs
 git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
+cd ~/.emacs.d
+git checkout develop
+cd -
 ln -s $dir/spacemacs .spacemacs
 bindir=$(dirname $(which vim))
 cd $bindir

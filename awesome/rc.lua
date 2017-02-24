@@ -183,7 +183,7 @@ globalkeys = awful.util.table.join(
       if matcher(client.focus) then
         client.focus.minimized = true
       else
-        awful.client.run_or_raise('bash -c "st -e tmux & echo $! > ~/.ht.pid"', matcher)
+        awful.client.run_or_raise('bash -c "st -e tmux-next & echo $! > ~/.ht.pid"', matcher)
       end
     end),
     awful.key({ altkey }, 'k', function ()
@@ -201,7 +201,7 @@ globalkeys = awful.util.table.join(
           return
         end
       end
-      awful.client.run_or_raise('bash -c "st -e tmux & echo $! > ~/.ht_2.pid"', matcher)
+      awful.client.run_or_raise('bash -c "st -e tmux-next & echo $! > ~/.ht_2.pid"', matcher)
   end),
 
     -- Layout management (tile mode)

@@ -1,2 +1,9 @@
 #!/bin/bash
-curl -H 'PRIVATE-TOKEN: nw3feasv9cyqFUCzxv9Z' "https://git.wrke.in/api/v3/projects/851/repository/commits/$(git rev-parse HEAD)/statuses" --silent | jq '.[] | .name + ":  " + .description' | sed 's/\"//g' | hl green "Success" | hl red "failed" | column -t -s ':'
+curl -H 'PRIVATE-TOKEN: nw3feasv9cyqFUCzxv9Z' "https://git.wrke.in/api/v3/projects/851/repository/commits/$(git rev-parse HEAD)/statuses" --silent | \
+    jq '.[] | .name + ":  " + .description' | \
+    sed 's/\"//g' | \
+    hl green "Success" | \
+    hl red "failed" | \
+    hl green "passed" | \
+    hl yellow "Build started" \
+    | column -t -s ':'

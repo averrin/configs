@@ -52,6 +52,7 @@ values."
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
+                                      dired+
                                       nlinum
                                       diff-hl
                                       git-link
@@ -68,7 +69,7 @@ values."
    ;; them if they become unused. `all' installs *all* packages supported by
    ;; Spacemacs and never uninstall them. (default is `used-only')
 
-   dotspacemacs-install-packages 'used-but-keep-unused))
+   dotspacemacs-install-packages 'used-only))
 
 (defun dotspacemacs/init ()
   "Initialization function.
@@ -308,9 +309,16 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (setq exec-path-from-shell-arguments '("-l"))
   (setq use-dialog-box nil)
 
-  (add-to-list 'auto-mode-alist '("\\zsh\\'" . sh-mode))
-  (add-to-list 'auto-mode-alist '("\\.zsh\\'" . sh-mode))
   (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
+
+  (package-initialize)
+  (require 'dired-x) ; Enable dired-x
+  (require 'dired+)  ; Enable dired+
+  (setq-default dired-omit-files-p t)  ; Don't show hidden files by default
+  (setq dired-omit-files (concat dired-omit-files "\\|^\\..+$\\|\\.pyc$"))
+
+  (global-set-key (kbd "C-j") (kbd "RET"))
+  (add-hook 'dired-mode-hook 'ao/dired-omit-caller)
   )
 
 (defun save-all ()
@@ -322,16 +330,48 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (shell-command "task")
   )
 
+(defvar ao/v-dired-omit t
+  "If dired-omit-mode enabled by default. Don't setq me.")
+
+(defun ao/dired-omit-switch ()
+  "This function is a small enhancement for `dired-omit-mode', which will
+   \"remember\" omit state across Dired buffers."
+  (interactive)
+  (if (eq ao/v-dired-omit t)
+      (setq ao/v-dired-omit nil)
+    (setq ao/v-dired-omit t))
+  (ao/dired-omit-caller)
+  (when (equal major-mode 'dired-mode)
+    (revert-buffer)))
+
+(defun ao/dired-omit-caller ()
+  (if ao/v-dired-omit
+      (setq dired-omit-mode t)
+    (setq dired-omit-mode nil)))
+
+(defun ao/dired-back-to-top()
+  "Move to the first file."
+  (interactive)
+  (beginning-of-buffer)
+  (dired-next-line 2))
+
+(defun ao/dired-jump-to-bottom()
+  "Move to last file."
+  (interactive)
+  (end-of-buffer)
+  (dired-next-line -1))
+
 (defun dotspacemacs/user-config ()
   (require 'helm)
   (require 'doom-nlinum)
 
-  (setq doom-enable-bold t    ; if nil, bolding are universally disabled
-        doom-enable-italic t  ; if nil, italics are universally disabled
-
+  (setq doom-enable-bold t
+        doom-enable-italic t
         doom-one-brighter-modeline nil
         doom-one-brighter-comments nil
         )
+ 
+  (setq dired-listing-switches "-aBhl  --group-directories-first")
 
   (display-time-mode 1)
   (global-company-mode t)
@@ -364,12 +404,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (spacemacs/set-leader-keys "gp" 'magit-push-current-to-upstream)
   (spacemacs/set-leader-keys "gd" 'magit-diff)
   (spacemacs/set-leader-keys "gg" 'git-link)
-  (spacemacs/set-leader-keys "ww" 'ace-window)
-  (spacemacs/set-leader-keys "bj" 'bookmark-jump)
-  (spacemacs/set-leader-keys "bJ" 'bookmark-jump-other-window)
-  (spacemacs/set-leader-keys "bl" 'bookmark-bmenu-list)
-  (spacemacs/set-leader-keys "bs" 'bookmark-set)
   (spacemacs/set-leader-keys "y" 'open-task)
+  (spacemacs/set-leader-keys "ff" 'font-lock-fontify-buffer)
 
   (add-hook 'focus-out-hook 'save-all)
   (add-hook 'after-init-hook 'global-company-mode)
@@ -386,28 +422,28 @@ before packages are loaded. If you are unsure, you should try in setting them in
        (add-to-list 'git-link-commit-remote-alist
                     '("git.wrke.in" git-link-gitlab))))
 
+  ;; Dired
+  (add-hook 'dired-mode-hook 'ao/dired-omit-caller)
+  (define-key evil-normal-state-map (kbd "_") 'projectile-dired)
+  (define-key evil-normal-state-map (kbd "-") 'dired-jump)
+  ;; (setq diredp-hide-details-initially-flag nil)
+  ;; Make `gg' and `G' do the correct thing
+  (eval-after-load "dired-mode"
+    (evilified-state-evilify dired-mode dired-mode-map
+             "K" 'dired-up-directory
+             "f" 'helm-find-files
+             "h" 'diredp-up-directory-reuse-dir-buffer
+             "l" 'diredp-find-file-reuse-dir-buffer
+             "I" 'ao/dired-omit-switch
+             "gg" 'ao/dired-back-to-top
+             "G" 'ao/dired-jump-to-bottom))
+
   (message "Spacemacs user-config finished")
 )
 
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(evil-want-Y-yank-to-eol nil)
- '(helm-follow-mode-persistent t)
- '(package-selected-packages
-   (quote
-    (livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern tern coffee-mode mmm-mode markdown-toc gh-md diff-hl swiper package-lint web-beautify shell-pop git-gutter+ evil-search-highlight-persist yaml-mode company-quickhelp find-file-in-project web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data helm-fuzzier tree-mode erc-hl-nicks erc-image erc-social-graph erc-view-log erc-yt slack emojify alert circe oauth2 websocket log4e gntp ht jabber fsm selectric-mode xkcd 2048-game pacmacs dash-functional typit mmt auto-dictionary flyspell-correct-ivy ivy flyspell-correct-helm flyspell-correct-popup flyspell-correct flyspell-popup marmalade-demo lua-mode company-go base16-theme smart-mode-line-powerline-theme color-theme-sanityinc-tomorrow smeargle orgit org mwim magit-gitflow helm-gitignore helm-company helm-c-yasnippet gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit with-editor company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async quelpa package-build spacemacs-theme))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
 (defun dotspacemacs/emacs-custom-settings ()
   "Emacs custom settings.
 This is an auto-generated function, do not modify its content directly, use
@@ -422,7 +458,7 @@ This function is called at the very end of Spacemacs initialization."
  '(helm-follow-mode-persistent t)
  '(package-selected-packages
    (quote
-    (multi-project nlinum doom-themes melpa-upstream-visit sublimity writeroom-mode dired+ org-projectile org-present org-pomodoro org-download htmlize gnuplot livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern tern coffee-mode mmm-mode markdown-toc gh-md diff-hl swiper package-lint web-beautify shell-pop git-gutter+ evil-search-highlight-persist yaml-mode company-quickhelp find-file-in-project web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data helm-fuzzier tree-mode erc-hl-nicks erc-image erc-social-graph erc-view-log erc-yt slack emojify alert circe oauth2 websocket log4e gntp ht jabber fsm selectric-mode xkcd 2048-game pacmacs dash-functional typit mmt auto-dictionary flyspell-correct-ivy ivy flyspell-correct-helm flyspell-correct-popup flyspell-correct flyspell-popup marmalade-demo lua-mode company-go base16-theme smart-mode-line-powerline-theme color-theme-sanityinc-tomorrow smeargle orgit org mwim magit-gitflow helm-gitignore helm-company helm-c-yasnippet gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit with-editor company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async quelpa package-build spacemacs-theme))))
+    (company-dart dired+ nlinum doom-themes melpa-upstream-visit sublimity writeroom-mode org-projectile org-present org-pomodoro org-download htmlize gnuplot livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern tern coffee-mode mmm-mode markdown-toc gh-md diff-hl swiper package-lint web-beautify shell-pop git-gutter+ evil-search-highlight-persist yaml-mode company-quickhelp find-file-in-project web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data helm-fuzzier tree-mode erc-hl-nicks erc-image erc-social-graph erc-view-log erc-yt slack emojify alert circe oauth2 websocket log4e gntp ht jabber fsm selectric-mode xkcd 2048-game pacmacs dash-functional typit mmt auto-dictionary flyspell-correct-ivy ivy flyspell-correct-helm flyspell-correct-popup flyspell-correct flyspell-popup marmalade-demo lua-mode company-go base16-theme smart-mode-line-powerline-theme color-theme-sanityinc-tomorrow smeargle orgit org mwim magit-gitflow helm-gitignore helm-company helm-c-yasnippet gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit with-editor company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async quelpa package-build spacemacs-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
