@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<opml version="1.0">
+    <head>
+        <title>BazQux Reader subscriptions</title>
+        <dateCreated>Fri, 24 Feb 2017 17:12:01 GMT</dateCreated>
+    </head>
+    <body>
+        <outline text="4gophers.com" title="4gophers.com" type="rss" xmlUrl="http://4gophers.com/rss"></outline>
+        <outline text="Atom Blog" title="Atom Blog" type="rss" xmlUrl="http://blog.atom.io/feed.xml"></outline>
+        <outline text="Candynet.ru | Новости" title="Candynet.ru | Новости" type="rss" xmlUrl="http://candynet.ru/rss/news"></outline>
+        <outline text="EDC - вещи, которые мы носим с собой" title="EDC - вещи, которые мы носим с собой" type="rss" xmlUrl="http://feeds.feedburner.com/Edcgear"></outline>
+        <outline text="Frontender Magazine" title="Frontender Magazine" type="rss" xmlUrl="http://frontender.info/rss/"></outline>
+        <outline text="GearHungry" title="GearHungry" type="rss" xmlUrl="http://gearhungry.com/feed"></outline>
+        <outline text="Geeky Gadgets" title="Geeky Gadgets" type="rss" xmlUrl="http://feeds.feedburner.com/geeky-gadgets"></outline>
+        <outline text="Got Emacs?" title="Got Emacs?" type="rss" xmlUrl="http://feeds.feedburner.com/GotEmacs"></outline>
+        <outline text="How-To GeekHow-To Geek" title="How-To GeekHow-To Geek" type="rss" xmlUrl="http://feeds.howtogeek.com/HowToGeek"></outline>
+        <outline text="Meduza.io Все" title="Meduza.io Все" type="rss" xmlUrl="https://meduza.io/feed/all"></outline>
+        <outline text="NextCastleParty - Игровой фестиваль в Санкт-Петербурге" title="NextCastleParty - Игровой фестиваль в Санкт-Петербурге" type="rss" xmlUrl="http://feeds.feedburner.com/nextcastle"></outline>
+        <outline text="Planet Emacsen" title="Planet Emacsen" type="rss" xmlUrl="http://planet.emacsen.org/atom.xml"></outline>
+        <outline text="Pragmatic Emacs" title="Pragmatic Emacs" type="rss" xmlUrl="http://pragmaticemacs.com/feed/"></outline>
+        <outline text="Ultimate Hacking Keyboard" title="Ultimate Hacking Keyboard" type="rss" xmlUrl="https://ultimatehackingkeyboard.com/feed"></outline>
+        <outline text="Welcome - Vivaldi Web Browser Community - Vivaldi Web Browser Community" title="Welcome - Vivaldi Web Browser Community - Vivaldi Web Browser Community" type="rss" xmlUrl="https://vivaldi.net/blogs/teamblog?format=feed&amp;type=rss"></outline>
+        <outline text="Новости вселенной Warhammer 40,000" title="Новости вселенной Warhammer 40,000" type="rss" xmlUrl="http://forums.warforge.ru/index.php?act=rssout&amp;id=4"></outline>
+        <outline text="Обзоры товаров из интернет-магазинов, mySKU.ru" title="Обзоры товаров из интернет-магазинов, mySKU.ru" type="rss" xmlUrl="http://mysku.ru/rss/index/"></outline>
+        <outline text="Comix" title="Comix">
+            <outline text="GeekCity" title="GeekCity" type="rss" xmlUrl="http://feeds.feedburner.com/geekcity/geekfeed"></outline>
+            <outline text="SpiderMedia.RU - Комиксы, Кино, Супергерои, Игры, Фигурки, Анимация, Новости, Обзоры" title="SpiderMedia.RU - Комиксы, Кино, Супергерои, Игры, Фигурки, Анимация, Новости, Обзоры" type="rss" xmlUrl="http://spidermedia.ru/rss.xml"></outline>
+            <outline text="StarkIndustries.Ru" title="StarkIndustries.Ru" type="rss" xmlUrl="http://starkindustries.ru/news/rss/"></outline>
+            <outline text="StrangeArts - Комиксы, Супергерои, Кино, Игры, Новости, Обзоры" title="StrangeArts - Комиксы, Супергерои, Кино, Игры, Новости, Обзоры" type="rss" xmlUrl="http://www.strangearts.ru/rss.xml"></outline>
+            <outline text="Вселенная DC Сomics: Супермен, Бэтмен, Флэш и другие герои!" title="Вселенная DC Сomics: Супермен, Бэтмен, Флэш и другие герои!" type="rss" xmlUrl="http://dccomics.ru/rss.xml"></outline>
+        </outline>
+        <outline text="Design" title="Design">
+            <outline text="Awwwards - Sites of the day" title="Awwwards - Sites of the day" type="rss" xmlUrl="http://feeds.feedburner.com/awwwards-sites-of-the-day"></outline>
+            <outline text="Dribbble/Popular" title="Dribbble/Popular" type="rss" xmlUrl="http://dribbble.com/shots/popular.rss"></outline>
+            <outline text="Little Big Details" title="Little Big Details" type="rss" xmlUrl="http://feeds.feedburner.com/littlebigdetails"></outline>
+            <outline text="Ui Parade - User Interface Inspiration" title="Ui Parade - User Interface Inspiration" type="rss" xmlUrl="http://feeds.feedburner.com/UiParade"></outline>
+        </outline>
+        <outline text="DIY" title="DIY">
+            <outline text="Adafruit Industries – Makers, hackers, artists, designers and engineers!" title="Adafruit Industries – Makers, hackers, artists, designers and engineers!" type="rss" xmlUrl="https://blog.adafruit.com/feed/"></outline>
+            <outline text="Cool Tools" title="Cool Tools" type="rss" xmlUrl="http://feedpress.me/CoolTools"></outline>
+            <outline text="Dangerous Prototypes" title="Dangerous Prototypes" type="rss" xmlUrl="http://dangerousprototypes.com/feed/"></outline>
+            <outline text="DoItYourself.com | Latest Articles" title="DoItYourself.com | Latest Articles" type="rss" xmlUrl="http://www.doityourself.com/rss/"></outline>
+            <outline text="Hackaday" title="Hackaday" type="rss" xmlUrl="http://hackaday.com/feed/"></outline>
+            <outline text="IKEA Hackers" title="IKEA Hackers" type="rss" xmlUrl="http://feeds.feedburner.com/Ikeahacker"></outline>
+            <outline text="Instructables: exploring" title="Instructables: exploring" type="rss" xmlUrl="http://www.instructables.com/tag/type-id/rss.xml"></outline>
+            <outline text="Make: DIY Projects, How-Tos, Electronics, Crafts and Ideas for Makers" title="Make: DIY Projects, How-Tos, Electronics, Crafts and Ideas for Makers" type="rss" xmlUrl="http://makezine.com/feed/"></outline>
+            <outline text="RoboCraft" title="RoboCraft" type="rss" xmlUrl="http://robocraft.ru/rss"></outline>
+            <outline text="SparkFun Electronics News Posts" title="SparkFun Electronics News Posts" type="rss" xmlUrl="https://www.sparkfun.com/feeds/news"></outline>
+            <outline text="Steampunker.ru - сеть для любителей steampunk&apos;а" title="Steampunker.ru - сеть для любителей steampunk&apos;а" type="rss" xmlUrl="http://steampunker.ru/rss/index/"></outline>
+            <outline text="Trossen Robotics Blog" title="Trossen Robotics Blog" type="rss" xmlUrl="http://feeds.trossenrobotics.com/TrossenRoboticsBlog"></outline>
+        </outline>
+        <outline text="Eng" title="Eng">
+            <outline text="Android Phone Fans" title="Android Phone Fans" type="rss" xmlUrl="http://phandroid.com/feed/"></outline>
+            <outline text="Engadget" title="Engadget" type="rss" xmlUrl="http://www.engadget.com/rss.xml"></outline>
+            <outline text="Mashable!" title="Mashable!" type="rss" xmlUrl="http://feeds.mashable.com/Mashable"></outline>
+            <outline text="ReadWriteWeb" title="ReadWriteWeb" type="rss" xmlUrl="http://feeds.feedburner.com/readwriteweb"></outline>
+            <outline text="Richard Castle RSS Feed" title="Richard Castle RSS Feed" type="rss" xmlUrl="http://www.richardcastle.net/news?rss=true"></outline>
+            <outline text="Smashing Magazine Feed" title="Smashing Magazine Feed" type="rss" xmlUrl="http://rss1.smashingmagazine.com/feed/"></outline>
+            <outline text="xda-developers" title="xda-developers" type="rss" xmlUrl="http://feeds.feedburner.com/xda-developers/ShsH"></outline>
+        </outline>
+        <outline text="Episodes" title="Episodes">
+            <outline text="LostFilm.TV" title="LostFilm.TV" type="rss" xmlUrl="http://lostfilm.tv/rssdd.xml"></outline>
+            <outline text="NewStudio" title="NewStudio" type="rss" xmlUrl="http://newstudio.tv/rss.php"></outline>
+        </outline>
+        <outline text="Main" title="Main">
+            <outline text="ADOM II: Legends of Ancardia (powered by JADE)" title="ADOM II: Legends of Ancardia (powered by JADE)" type="rss" xmlUrl="http://www.ancientdomainsofmystery.com/feeds/posts/default"></outline>
+            <outline text="Age of Geeks" title="Age of Geeks" type="rss" xmlUrl="http://ageofgeeks.com/feed/"></outline>
+            <outline text="android.mobile-review.com" title="android.mobile-review.com" type="rss" xmlUrl="http://android.mobile-review.com/feed/"></outline>
+            <outline text="Be Genius" title="Be Genius" type="rss" xmlUrl="http://feeds.feedburner.com/begenius"></outline>
+            <outline text="cardplace.ru" title="cardplace.ru" type="rss" xmlUrl="http://www.cardplace.ru/blog/?feed=rss2"></outline>
+            <outline text="CSS-Tricks" title="CSS-Tricks" type="rss" xmlUrl="http://feeds.feedburner.com/CssTricks"></outline>
+            <outline text="DesignModo" title="DesignModo" type="rss" xmlUrl="http://feeds.feedburner.com/designmodo"></outline>
+            <outline text="gagadget.com - нескучный сайт о технике" title="gagadget.com - нескучный сайт о технике" type="rss" xmlUrl="http://gagadget.com/rss/"></outline>
+            <outline text="Geektimes / Лучшие публикации за сутки" title="Geektimes / Лучшие публикации за сутки" type="rss" xmlUrl="http://geektimes.ru/rss/best/"></outline>
+            <outline text="JetBrains IntelliJ IDEA Blog" title="JetBrains IntelliJ IDEA Blog" type="rss" xmlUrl="http://feeds2.feedburner.com/jetbrains_intellijidea"></outline>
+            <outline text="Linux.org.ru: Новости" title="Linux.org.ru: Новости" type="rss" xmlUrl="http://feeds.feedburner.com/org/LOR"></outline>
+            <outline text="MIUI Jelly Bean" title="MIUI Jelly Bean" type="rss" xmlUrl="http://miui-jellybean.blogspot.com/feeds/posts/default"></outline>
+            <outline text="New Products at SparkFun" title="New Products at SparkFun" type="rss" xmlUrl="https://www.sparkfun.com/feeds/products"></outline>
+            <outline text="Omg! Ubuntu!" title="Omg! Ubuntu!" type="rss" xmlUrl="http://feeds.feedburner.com/d0od"></outline>
+            <outline text="OpenNews.opennet.ru: Основная лента" title="OpenNews.opennet.ru: Основная лента" type="rss" xmlUrl="http://www.opennet.ru/opennews/opennews_all_noadv.rss"></outline>
+            <outline text="The Changelog - Open Source moves fast. Keep up." title="The Changelog - Open Source moves fast. Keep up." type="rss" xmlUrl="http://feeds.feedburner.com/thechangelog"></outline>
+            <outline text="Web Upd8 - Ubuntu / Linux blog" title="Web Upd8 - Ubuntu / Linux blog" type="rss" xmlUrl="http://feeds2.feedburner.com/webupd8"></outline>
+            <outline text="WebAppers" title="WebAppers" type="rss" xmlUrl="http://feeds.feedburner.com/Webappers"></outline>
+            <outline text="Иноблоггер" title="Иноблоггер" type="rss" xmlUrl="http://feeds.feedburner.com/inoblogger?format=xml"></outline>
+            <outline text="Сообщество EasyElectronics.ru" title="Сообщество EasyElectronics.ru" type="rss" xmlUrl="http://we.easyelectronics.ru/rss"></outline>
+            <outline text="Сообщество разработчиков электроники" title="Сообщество разработчиков электроники" type="rss" xmlUrl="http://tqfp.org/rss/index/"></outline>
+            <outline text="Точка Бифуркации" title="Точка Бифуркации" type="rss" xmlUrl="http://feeds.feedburner.com/point-b/hVcp"></outline>
+            <outline text="Хабрахабр / Захабренные / Тематические / Посты" title="Хабрахабр / Захабренные / Тематические / Посты" type="rss" xmlUrl="http://habrahabr.ru/rss/hubs/"></outline>
+        </outline>
+        <outline text="Авторские" title="Авторские">
+            <outline text="Блог Романа Ворушина" title="Блог Романа Ворушина" type="rss" xmlUrl="http://vorushin.ru/feeds/entries/"></outline>
+            <outline text="Маниакальный веблог" title="Маниакальный веблог" type="rss" xmlUrl="http://softwaremaniacs.org/blog/feed/"></outline>
+        </outline>
+        <outline text="Новости" title="Новости">
+            <outline text="ИноСМИ - Все, что достойно перевода" title="ИноСМИ - Все, что достойно перевода" type="rss" xmlUrl="http://inosmi.ru/export/rss2/index.xml"></outline>
+        </outline>
+    </body>
+</opml>
