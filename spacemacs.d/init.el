@@ -42,7 +42,8 @@ values."
      auto-completion
      better-defaults
      emacs-lisp
-     git
+     (git :variables
+          magit-save-repository-buffers 'dontask)
      syntax-checking
      org
      emoji
@@ -52,13 +53,13 @@ values."
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
-                                      dired+
-                                      nlinum
-                                      diff-hl
-                                      git-link
-                                      elfeed
-                                      elfeed-goodies
-                                      )
+      dired+
+      nlinum
+      diff-hl
+      git-link
+      elfeed
+      elfeed-goodies
+    )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -309,6 +310,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   (load-file "~/.spacemacs.d/elfeed.el")
   (load-file "~/.spacemacs.d/dired.el")
+  (load-file "~/.spacemacs.d/evil.el")
   (setq exec-path-from-shell-check-startup-files nil)
   (setq exec-path-from-shell-arguments '("-l"))
   (setq use-dialog-box nil)
@@ -348,21 +350,13 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (spaceline-toggle-buffer-encoding-abbrev-off)
   (global-diff-hl-mode)
   (diff-hl-flydiff-mode t)
-  (global-evil-mc-mode 1)
   (global-nlinum-mode 1)
   (setq tab-width 4)
   (setq web-mode-markup-indent-offset 2)
   (setq frame-title-format "e > %b")
   (setq display-time-24hr-format t)
   (setq word-wrap t)
-
-  (vhl/define-extension 'evil 'evil-paste-after 'evil-paste-before
-                        'evil-paste-pop 'evil-move)
-  (vhl/install-extension 'evil)
-
-  (define-key evil-normal-state-map (kbd "C-SPC") 'evil-scroll-page-down)
-  (define-key evil-normal-state-map (kbd "C-S-SPC") 'evil-scroll-page-up)
-  (define-key evil-normal-state-map (kbd "gj") 'pop-global-mark)
+  (setq dotspacemacs-large-file-size 3)
 
   (global-set-key (kbd "C-j") (kbd "RET"))
   (define-key helm-map (kbd "C-j") 'helm-confirm-and-exit-minibuffer)
@@ -380,10 +374,6 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (add-hook 'after-init-hook 'global-company-mode)
   (add-hook 'find-file-hook 'doom-buffer-mode)
 
-  (defun bb/evil-delete (orig-fn beg end &optional type x &rest args)
-    (apply orig-fn beg end type ?x args))
-  (advice-add 'evil-delete :around 'bb/evil-delete)
-
   (eval-after-load "git-link"
     '(progn
        (add-to-list 'git-link-remote-alist
@@ -391,8 +381,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
        (add-to-list 'git-link-commit-remote-alist
                     '("git.wrke.in" git-link-gitlab))))
 
-
-
+  (averrin/evil-config)
   (averrin/dired-config)
   (averrin/elfeed-config)
   (message "Spacemacs user-config finished")
