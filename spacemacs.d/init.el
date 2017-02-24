@@ -340,8 +340,6 @@ before packages are loaded. If you are unsure, you should try in setting them in
         doom-one-brighter-comments nil
         )
 
-  (setq dired-listing-switches "-aBhl  --group-directories-first")
-
   (display-time-mode 1)
   (global-company-mode t)
   (spacemacs/toggle-mode-line-minor-modes-off)

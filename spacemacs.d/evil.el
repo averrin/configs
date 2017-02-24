@@ -1,7 +1,10 @@
 (defun bb/evil-delete (orig-fn beg end &optional type _ &rest args)
   (let ((text (filter-buffer-substring beg end)))
+    (message (format "%s - %s | %s" beg end type))
     (apply orig-fn beg end type _ args)
-    (evil-set-register ?z text)
+    (unless (eq text nil)
+      (evil-set-register ?z text)
+      )
     (evil-set-register ?\" (evil-get-register ?0))
     ))
 
