@@ -1,6 +1,9 @@
 (defun bb/evil-delete (orig-fn beg end &optional type _ &rest args)
-  (let ((text (filter-buffer-substring beg end)))
-    (message (format "%s - %s | %s" beg end type))
+  (interactive "<R><x><y>")
+  (let (
+        (text (filter-buffer-substring beg end))
+        )
+    (message "%s - %s | %s" beg end type)
     (apply orig-fn beg end type _ args)
     (unless (eq text nil)
       (evil-set-register ?z text)
@@ -21,5 +24,5 @@
   (define-key evil-normal-state-map (kbd "q") 'kill-this-buffer)
   (define-key evil-normal-state-map (kbd "gp") (kbd "\"zp"))
 
-  (advice-add 'evil-delete :around 'bb/evil-delete)
+  ;; (advice-add 'evil-delete :around 'bb/evil-delete)
   )

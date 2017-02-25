@@ -1,6 +1,4 @@
 #!/bin/bash
-#TODO: install for st
-#TODO: settings for rofi
 
 dir=".configs"
 
@@ -29,6 +27,7 @@ curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools
 ln -s $dir/zshrc .zshrc
 cd ~/.oh-my-zsh/plugins
 git clone git://github.com/zsh-users/zsh-syntax-highlighting.git
+cd ~
 
 cd ~
 rm -rf ./dircolors.256dark
@@ -50,13 +49,32 @@ fc-cache -vf ~/.fonts
 mkdir -p ~/.config/fontconfig/conf.d/
 cd ~/.config/fontconfig/conf.d/
 wget https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf
+cd ~
 
 ## Tmux
+cd ~
 ln -s $dir/tmux.conf .tmux.conf
 ln -s $dir/tmux .tmux
 rm -rf ~/.tmux/plugins/tpm
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-cd
+cd ~
+
+## St
+cd $dir
+wget http://dl.suckless.org/st/st-0.7.tar.gz
+tar -xf st-0.7.tar.gz
+cd ./st-0.7
+rm -rf config.h
+ln -s ../st-config.h config.h
+make
+sudo make install
+cd ~
+
+## Rofi
+cd ~
+rm -rf .XResources
+ln -s $dir/XResources .XResources
+cd ~
 
 echo ""
 echo "*********************************"
