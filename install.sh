@@ -1,24 +1,31 @@
 #!/bin/bash
 
 dir=".configs"
+st_version="0.7"
+spacemacs_branch="develop"
 
 sudo apt-get install tmux zsh git-core python-pip htop wget vim emacs rofi -y
+
+rm -rf $dir
 git clone --recursive https://github.com/averrin/configs.git $dir
 cd ~
 
+rm -rf .gitconfig
 ln -s $dir/gitconfig .gitconfig
 
 ## Emacs
 rm -rf ./.emacs.d
 rm -rf ./.spacemacs
+rm -rf ./.spacemacs.d
 git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
 cd ~/.emacs.d
-git checkout develop
-cd -
+git checkout $spacemacs_branch
+cd ~
 ln -s $dir/spacemacs.d .spacemacs.d
 
 ## ZSH
 cd ~
+rm -rf ~/.oh-my-zsh
 curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
 ln -s $dir/zshrc .zshrc
 cd ~/.oh-my-zsh/plugins
@@ -26,8 +33,8 @@ git clone git://github.com/zsh-users/zsh-syntax-highlighting.git
 cd ~
 
 cd ~
-rm -rf ./dircolors.256dark
-wget https://raw.github.com/seebi/dircolors-solarized/master/dircolors.256dark
+rm -rf ./.dircolors.256dark
+wget https://raw.github.com/seebi/dircolors-solarized/master/dircolors.256dark .dircolors.256dark
 pip install --user git+git://github.com/powerline/powerline
 mkdir ~/.fonts
 cd ~/.fonts
@@ -51,15 +58,13 @@ cd ~
 cd ~
 ln -s $dir/tmux.conf .tmux.conf
 ln -s $dir/tmux .tmux
-# rm -rf ~/.tmux/plugins/tpm
-# git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 cd ~
 
 ## St
 cd $dir
 wget http://dl.suckless.org/st/st-0.7.tar.gz
-tar -xf st-0.7.tar.gz
-cd ./st-0.7
+tar -xf st-$st_version.tar.gz
+cd ./st-$st_version
 rm -rf config.h
 ln -s ../st-config.h config.h
 make

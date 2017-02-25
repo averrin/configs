@@ -10,7 +10,7 @@ bindkey "^n" history-substring-search-down
 bindkey "\eOA" history-substring-search-up
 bindkey "\eOB" history-substring-search-down
 
-eval `dircolors ~/dircolors.256dark`
+eval `dircolors ~/.dircolors.256dark`
 . ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
 
 alias !="sudo"
