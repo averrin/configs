@@ -22,6 +22,8 @@ alias dff='git diff --color | diff-so-fancy | less'
 
 alias ch="git checkout"
 alias master="git checkout master"
+alias e.="nohup emacs . >/dev/null 2>&1 &"
+alias vim="emacsclient -a vim"
 
 branch() {
   git checkout -b $1; git push --set-upstream origin $1;

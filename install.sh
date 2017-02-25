@@ -16,10 +16,6 @@ cd ~/.emacs.d
 git checkout develop
 cd -
 ln -s $dir/spacemacs.d .spacemacs.d
-bindir=$(dirname $(which vim))
-cd $bindir
-sudo mv vim vim_orig
-sudo ln -s emacsclient vim
 
 ## ZSH
 cd ~
