@@ -55,8 +55,8 @@ cd ~
 cd ~
 ln -s $dir/tmux.conf .tmux.conf
 ln -s $dir/tmux .tmux
-rm -rf ~/.tmux/plugins/tpm
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+# rm -rf ~/.tmux/plugins/tpm
+# git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 cd ~
 
 ## St
