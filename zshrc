@@ -1,6 +1,6 @@
 ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="sporty_256"
-plugins=(git extract vi-mode zsh-syntax-highlighting z common-aliases history-substring-search command-not-found dirhistory nvm)
+plugins=(extract vi-mode zsh-syntax-highlighting z common-aliases history-substring-search command-not-found nvm)
 source $ZSH/oh-my-zsh.sh
 
 bindkey "\e[A" history-substring-search-up
@@ -11,7 +11,7 @@ bindkey "\eOA" history-substring-search-up
 bindkey "\eOB" history-substring-search-down
 
 eval `dircolors ~/dircolors.256dark`
-. /home/alexeynabrodov/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
+. ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
 
 alias !="sudo"
 alias commit="git commit -am"
