@@ -48,6 +48,7 @@ run_once("compton -b --detect-rounded-corners --config " .. os.getenv("HOME") ..
 
 -- uncluter
 run_once("unclutter")
+run_once("keynav")
 run_once("killall plasmashell")
 run_once("killall mission-control-5")
 run_once("killall xembedproxy")
