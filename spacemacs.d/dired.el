@@ -14,7 +14,9 @@
       "I" 'ao/dired-omit-switch
       "gg" 'ao/dired-back-to-top
       "G" 'ao/dired-jump-to-bottom))
-  )
+
+  (averrin/dired-colors)
+)
 
 (defun averrin/dired-init()
 

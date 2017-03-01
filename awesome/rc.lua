@@ -48,7 +48,7 @@ run_once("compton -b --detect-rounded-corners --config " .. os.getenv("HOME") ..
 
 -- uncluter
 run_once("unclutter")
-run_once("keynav")
+run_once("~/projects/keynav/keynav")
 run_once("killall plasmashell")
 run_once("killall mission-control-5")
 run_once("killall xembedproxy")
@@ -303,7 +303,9 @@ clientkeys = awful.util.table.join(
                 result = result .. "<b>    Role :</b> None\n"
             end
             result = result .. "<b>      Type :</b> " .. c.type .. "\n"
-            result = result .. "<b>      PID :</b> " .. c.pid .. "\n"
+            if c.pid then
+              result = result .. "<b>      PID :</b> " .. c.pid .. "\n"
+            end
             result = result .. "<b>      XID :</b> " .. c.window .. "\n"
             result = result .. "<b>      Screen :</b> " .. c.screen.index .. "\n"
             result = result .. "<b>      Geometry :</b> " .. c:geometry().x .. "," .. c:geometry().y .. "," .. c:geometry().width .. "," .. c:geometry().height

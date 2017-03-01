@@ -23,6 +23,7 @@
   (define-key evil-normal-state-map (kbd "gj") 'pop-global-mark)
   (define-key evil-normal-state-map (kbd "q") 'kill-this-buffer)
   (define-key evil-normal-state-map (kbd "Q") 'delete-window)
+  (define-key evil-normal-state-map (kbd "K") 'dired-jump)
   (define-key evil-normal-state-map (kbd "gp") (kbd "\"zp"))
 
   ;; (advice-add 'evil-delete :around 'bb/evil-delete)
