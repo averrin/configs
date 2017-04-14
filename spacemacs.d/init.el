@@ -400,12 +400,45 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (company-dart dart-mode helm-dart ace-jump-mode noflet elfeed-goodies elfeed yaml-mode web-mode web-beautify unfill tagedit smeargle slim-mode scss-mode sass-mode pug-mode orgit org-projectile org-present org-pomodoro alert log4e gntp org-download nlinum mwim mmm-mode markdown-toc markdown-mode magit-gitflow lua-mode livid-mode skewer-mode simple-httpd less-css-mode json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc htmlize helm-gitignore helm-css-scss helm-company helm-c-yasnippet haml-mode go-guru go-eldoc gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flycheck-pos-tip evil-magit magit magit-popup git-commit with-editor emoji-cheat-sheet-plus emmet-mode doom-themes all-the-icons font-lock+ dired+ diff-hl company-web web-completion-data company-tern dash-functional tern company-statistics company-go go-mode company-emoji pos-tip flycheck company coffee-mode base16-theme auto-yasnippet yasnippet ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-purpose window-purpose imenu-list helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))))
+    (symon company-dart dart-mode helm-dart ace-jump-mode noflet elfeed-goodies elfeed yaml-mode web-mode web-beautify unfill tagedit smeargle slim-mode scss-mode sass-mode pug-mode orgit org-projectile org-present org-pomodoro alert log4e gntp org-download nlinum mwim mmm-mode markdown-toc markdown-mode magit-gitflow lua-mode livid-mode skewer-mode simple-httpd less-css-mode json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc htmlize helm-gitignore helm-css-scss helm-company helm-c-yasnippet haml-mode go-guru go-eldoc gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flycheck-pos-tip evil-magit magit magit-popup git-commit with-editor emoji-cheat-sheet-plus emmet-mode doom-themes all-the-icons font-lock+ dired+ diff-hl company-web web-completion-data company-tern dash-functional tern company-statistics company-go go-mode company-emoji pos-tip flycheck company coffee-mode base16-theme auto-yasnippet yasnippet ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-purpose window-purpose imenu-list helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
-)
+ '(dired-directory ((((class color) (min-colors 89)) (:foreground "#ef2929" :bold t))))
+ '(dired-flagged ((((class color) (min-colors 89)) (:foreground "#ef2929"))))
+ '(dired-header ((((class color) (min-colors 89)) (:foreground "#303030" :background "#a1db00" :bold t))))
+ '(dired-ignored ((((class color) (min-colors 89)) (:foreground "#a8a8a8"))))
+ '(dired-mark ((((class color) (min-colors 89)) (:foreground "#afff00"))))
+ '(dired-marked ((((class color) (min-colors 89)) (:foreground "#a1db00"))))
+ '(dired-perm-write ((((class color) (min-colors 89)) (:foreground "#dd0000" :bold t))))
+ '(dired-symlink ((((class color) (min-colors 89)) (:foreground "#ff4ea3"))))
+ '(dired-warning ((((class color) (min-colors 89)) (:foreground "#c6c6c6" :background "#a40000" :bold t))))
+ '(diredp-compressed-file-suffix ((((class color) (min-colors 89)) (:foreground "#af5fff"))))
+ '(diredp-date-time ((((class color) (min-colors 89)) (:foreground "#84edb9" :background "#3a3a3a"))))
+ '(diredp-deletion ((((class color) (min-colors 89)) (:foreground "#c6c6c6" :background "#a40000"))))
+ '(diredp-deletion-file-name ((((class color) (min-colors 89)) (:foreground "#dd0000"))))
+ '(diredp-dir-heading ((((class color) (min-colors 89)) (:foreground "#a1db00" :bold t))))
+ '(diredp-dir-name ((((class color) (min-colors 89)) (:foreground "#c4a000" :bold t))))
+ '(diredp-dir-priv ((((class color) (min-colors 89)) (:foreground "#ff8700" :bold t))))
+ '(diredp-display-msg ((((class color) (min-colors 89)) (:foreground "#ff8700"))))
+ '(diredp-exec-priv ((((class color) (min-colors 89)) (:foreground "#dd0000"))))
+ '(diredp-executable-tag ((((class color) (min-colors 89)) (:foreground "#a1db00"))))
+ '(diredp-file-name ((((class color) (min-colors 89)) (:foreground "#c6c6c6"))))
+ '(diredp-file-suffix ((((class color) (min-colors 89)) (:foreground "#ff8700"))))
+ '(diredp-flag-mark ((((class color) (min-colors 89)) (:foreground "#c6c6c6" :background "#ff1f8b" :bold t))))
+ '(diredp-flag-mark-line ((((class color) (min-colors 89)) (:foreground "#303030" :background "#ff7bbb"))))
+ '(diredp-ignored-file-name ((((class color) (min-colors 89)) (:foreground "#8a8a8a"))))
+ '(diredp-link-priv ((((class color) (min-colors 89)) (:foreground "#ff1f8b"))))
+ '(diredp-mode-line-flagged ((((class color) (min-colors 89)) (:foreground "#303030" :background "#a1db00"))))
+ '(diredp-mode-line-marked ((((class color) (min-colors 89)) (:foreground "#c6c6c6" :background "#ff1f8b" bold t))))
+ '(diredp-no-priv ((((class color) (min-colors 89)) (:foreground "#c6c6c6" :background "#3a3a3a"))))
+ '(diredp-number ((((class color) (min-colors 89)) (:foreground "#fce94f"))))
+ '(diredp-other-priv ((((class color) (min-colors 89)) (:foreground "#c6c6c6"))))
+ '(diredp-rare-priv ((((class color) (min-colors 89)) (:foreground "#c6c6c6"))))
+ '(diredp-read-priv ((((class color) (min-colors 89)) (:foreground "#a1db00"))))
+ '(diredp-symlink ((((class color) (min-colors 89)) (:foreground "#ff1f8b"))))
+ '(diredp-write-priv ((((class color) (min-colors 89)) (:foreground "#1f5bff")))))
 )
 
