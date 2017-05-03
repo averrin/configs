@@ -40,22 +40,22 @@ function run_once(cmd)
 end
 
 -- Compositor
-run_once("compton -b --detect-rounded-corners --config " .. os.getenv("HOME") .. "/.config/awesome/compton.conf")
+-- run_once("compton -b --detect-rounded-corners --config " .. os.getenv("HOME") .. "/.config/awesome/compton.conf")
 -- run_once("xbindkeys")
--- run_once("~/.screenlayout/main.sh")
--- run_once("setxkbmap -layout 'us,ru' -option 'grp:ctrl_shift_toggle,grp_led:scroll,caps:escape'")
--- run_once("gxkb")
+run_once("~/.screenlayout/main.sh")
+run_once("setxkbmap -layout 'us,ru' -option 'grp:ctrl_shift_toggle,grp_led:scroll,caps:escape'")
+run_once("gxkb")
 
 -- uncluter
 run_once("unclutter")
-run_once("~/projects/keynav/keynav")
 run_once("killall plasmashell")
 run_once("killall mission-control-5")
 run_once("killall xembedproxy")
 run_once("killall xembedsniproxy")
 run_once("qdbus org.kde.kactivitymanagerd /ActivityManager org.kde.ActivityManager.Stop")
 run_once("emacs --daemon")
-run_once("feh --bg-scale ~/Downloads/bg.jpg")
+run_once("feh --bg-center ~/Downloads/bg.jpg")
+run_once("redshift -l 59.56:30.18")
 -- }}}
 
 -- beautiful init
@@ -89,7 +89,7 @@ tyrannical.tags = {
         name        = "left",
         init        = true,
         exclusive   = false,
-        screen      = {1,2,3},
+        screen      = {1,2},
         layout      = awful.layout.suit.max,
         class       = {
           "Atom", "vivaldi-snapshot", "yakyak", "adom", "Emacs"
@@ -99,7 +99,7 @@ tyrannical.tags = {
         name        = "right",
         init        = true,
         exclusive   = false,
-        screen      = 2,
+        screen      = 3,
         force_screen = true,
         layout      = awful.layout.suit.tile,
         class = {
@@ -127,7 +127,7 @@ ror = {
   ["s"]={"slack", "slack" },
   ["t"]={"skypeforlinux", "skypeforlinux"},
   ["n"]={"dolphin", "dolphin"},
-  ["v"]={"vivaldi-snapshot", "Vivaldi-snapshot"},
+  ["v"]={"vivaldi-snapshot", "vivaldi-snapshot"},
   ["g"]={"telegram", "telegram"},
   ["e"]={"emacs", "Emacs"},
   ["a"]={"emacs", "Emacs"},
@@ -153,10 +153,6 @@ globalkeys = awful.util.table.join(
             -- awful.util.spawn_with_shell('~/projects/shadow-go/shadow --mode runner')
             awful.util.spawn_with_shell('rofi -show combi -switchers combi -combi-modi window,run')
         end),
-    awful.key({ altkey }, "q",
-        function (c)
-            awful.util.spawn_with_shell('~/projects/shadow-go/shadow --mode time')
-        end),
     awful.key({ modkey }, "l",
         function ()
             awful.util.spawn_with_shell('gnome-screensaver-command -l')
@@ -172,7 +168,7 @@ globalkeys = awful.util.table.join(
         end
         if itis then
           c:geometry({
-            x = 0,
+            x = 768,
             y = 0,
             height = 500
           })
@@ -190,7 +186,7 @@ globalkeys = awful.util.table.join(
       end
     end),
     awful.key({ modkey }, 'k', function ()
-      pid = getpid(".ht_2.pid")
+        pid = getpid(".ht_2.pid")
       local matcher = function (c)
         if c then
           awful.rules.match(c, {pid = pid})
@@ -214,7 +210,7 @@ globalkeys = awful.util.table.join(
 )
 
 function getpid(f)
-  file = io.open("/home/alexeynabrodov/" .. f)
+  file = io.open("/home/averrin/" .. f)
   pid = "None"
   if file then
     pid = file:read "*a"

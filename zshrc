@@ -11,7 +11,7 @@ bindkey "\eOA" history-substring-search-up
 bindkey "\eOB" history-substring-search-down
 
 eval `dircolors ~/.dircolors.256dark`
-. ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
+. ~/.local/lib/python3.6/site-packages/powerline/bindings/zsh/powerline.zsh
 
 alias !="sudo"
 alias commit="git commit -am"
@@ -45,3 +45,4 @@ alias pop="git stash pop"
 alias merge="git checkout master; git pull; git checkout -; git merge master --no-ff"
 
 export KEYTIMEOUT=1
+. ~/.zshenv
