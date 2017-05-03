@@ -1,0 +1,2 @@
+#!/bin/bash
+xdg-open "https://git.wrke.in/frontend/mvp-wtalk/commit/$(git rev-parse HEAD)"

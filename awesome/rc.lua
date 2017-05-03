@@ -114,6 +114,7 @@ tyrannical.properties.floating = {
 
 -- Clients
 clientbuttons = awful.util.table.join(
+    -- awful.button({ }, 1, function (c) client.focus = c; c:raise(); awful.util.spawn_with_shell('~/.local/bin/dim') end),
     awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
     awful.button({ modkey }, 1, awful.mouse.client.move),
     awful.button({ modkey }, 3, awful.mouse.client.resize)
@@ -132,6 +133,7 @@ ror = {
   ["a"]={"emacs", "Emacs"},
   ["w"]={"google-chrome", "Google-chrome"},
   ["d"]={"dartium", "Chrome"},
+  ["c"]={"discord", "discord"},
 }
 
 globalkeys = awful.util.table.join(
@@ -184,10 +186,10 @@ globalkeys = awful.util.table.join(
       if matcher(client.focus) then
         client.focus.minimized = true
       else
-        awful.client.run_or_raise('bash -c "st -e env TERM=xterm-256color  tmux & echo $! > ~/.ht.pid"', matcher)
+        awful.client.run_or_raise('bash -c "/usr/bin/st -e env TERM=xterm-256color  tmux & echo $! > ~/.ht.pid"', matcher)
       end
     end),
-    awful.key({ altkey }, 'k', function ()
+    awful.key({ modkey }, 'k', function ()
       pid = getpid(".ht_2.pid")
       local matcher = function (c)
         if c then
@@ -202,7 +204,7 @@ globalkeys = awful.util.table.join(
           return
         end
       end
-      awful.client.run_or_raise('bash -c "st -e env TERM=xterm-256color  tmux & echo $! > ~/.ht_2.pid"', matcher)
+      awful.client.run_or_raise('bash -c "/usr/bin/st -e env TERM=xterm-256color  tmux & echo $! > ~/.ht_2.pid"', matcher)
   end),
 
     -- Layout management (tile mode)
@@ -253,15 +255,15 @@ function genkeys(mod1)
   end
   return rorkeys
 end
-globalkeys = awful.util.table.join(globalkeys, genkeys(altkey))
+globalkeys = awful.util.table.join(globalkeys, genkeys(modkey))
 
 -- {{ Client Keys
 clientkeys = awful.util.table.join(
-    awful.key({ modkey }, "n",
+    awful.key({ altkey }, "n",
       function (c)
         c.minimized = true
       end),
-    awful.key({ modkey }, "m",
+    awful.key({ altkey }, "m",
       function (c)
         c.maximized_horizontal = not c.maximized_horizontal
         c.maximized_vertical   = not c.maximized_vertical
@@ -278,10 +280,10 @@ clientkeys = awful.util.table.join(
                          width = 1304,
                          height = 688 })
         end),
-    awful.key({ modkey }, "f", function (c) c.fullscreen = not c.fullscreen end),
-    awful.key({ modkey }, "o", awful.client.movetoscreen),
+    -- awful.key({ modkey }, "f", function (c) c.fullscreen = not c.fullscreen end),
+    awful.key({ altkey }, "o", awful.client.movetoscreen),
     awful.key({ modkey }, "u", function (c) c.ontop = not c.ontop end),
-    awful.key({ modkey }, "x", function (c) c:kill() end),
+    awful.key({ altkey }, "x", function (c) c:kill() end),
     awful.key({ modkey, "Control" }, "f", awful.client.floating.toggle),
     awful.key({ modkey }, "i",
         function (c)

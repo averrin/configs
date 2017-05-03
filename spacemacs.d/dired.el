@@ -1,9 +1,6 @@
 (defun averrin/dired-config()
   ;; Dired
   (add-hook 'dired-mode-hook 'ao/dired-omit-caller)
-  (define-key evil-normal-state-map (kbd "_") 'projectile-dired)
-  (define-key evil-normal-state-map (kbd "-") 'dired-jump)
-  (define-key evil-normal-state-map (kbd ",p") (kbd "\"xp"))
 
   (eval-after-load "dired-mode"
     (evilified-state-evilify dired-mode dired-mode-map

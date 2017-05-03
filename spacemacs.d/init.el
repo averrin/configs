@@ -31,6 +31,8 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     shell
+     syntax-checking
      dart
      javascript
      markdown
@@ -44,7 +46,6 @@ values."
      emacs-lisp
      (git :variables
           magit-save-repository-buffers 'dontask)
-     syntax-checking
      org
      emoji
      )
@@ -53,17 +54,19 @@ values."
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
+      editorconfig
+      hlinum
+      swiper
+      counsel
+      base16-theme
       dired+
-      nlinum
       diff-hl
       git-link
-      elfeed
-      elfeed-goodies
     )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '()
+   dotspacemacs-excluded-packages '(base16-gruvbox-dark-medium-theme)
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
    ;; `used-only' installs only explicitly used packages and uninstall any
@@ -133,12 +136,8 @@ values."
    dotspacemacs-scratch-mode 'text-mode
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
-   ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(
-                         doom-one
-                         doom-molokai
-                         base16-default-dark
-                         spacemacs-dark)
+   ;; with 2 themes variants, one dark and one light) base16-gruvbox-dark-medium
+   dotspacemacs-themes '(base16-gruvbox-dark-medium)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
@@ -308,9 +307,9 @@ executes.
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
 
-  (load-file "~/.spacemacs.d/elfeed.el")
   (load-file "~/.spacemacs.d/dired.el")
   (load-file "~/.spacemacs.d/evil.el")
+
   (setq exec-path-from-shell-check-startup-files nil)
   (setq exec-path-from-shell-arguments '("-l"))
   (setq use-dialog-box nil)
@@ -332,13 +331,6 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
 (defun dotspacemacs/user-config ()
   (require 'helm)
-  (require 'doom-nlinum)
-
-  (setq doom-enable-bold t
-        doom-enable-italic t
-        doom-one-brighter-modeline nil
-        doom-one-brighter-comments nil
-        )
 
   (display-time-mode 1)
   (global-company-mode t)
@@ -347,30 +339,36 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (spaceline-toggle-buffer-size-off)
   (spaceline-toggle-buffer-encoding-abbrev-off)
   (global-diff-hl-mode)
+  (global-auto-revert-mode t)
   (diff-hl-flydiff-mode t)
-  (global-nlinum-mode 1)
   (setq tab-width 4)
   (setq web-mode-markup-indent-offset 2)
   (setq frame-title-format "e > %b")
   (setq display-time-24hr-format t)
   (setq word-wrap t)
   (setq dotspacemacs-large-file-size 3)
+  (setq helm-follow-mode-persistent 1)
+  (global-linum-mode)
+  (hlinum-activate)
+  (editorconfig-mode 1)
 
   (global-set-key (kbd "C-j") (kbd "RET"))
   (define-key helm-map (kbd "C-j") 'helm-confirm-and-exit-minibuffer)
 
   (spacemacs/set-leader-keys
+    "l" 'spacemacs/shell-pop-multiterm
+    "j" 'avy-goto-word-or-subword-1
     "gc" 'magit-commit
     "gp" 'magit-push-current-to-upstream
     "gd" 'magit-diff-working-tree
     "gg" 'git-link
     "y" 'open-task
-    "rf" 'elfeed
+    "pi" 'projectile-project-info
     "ff" 'font-lock-fontify-buffer)
 
   (add-hook 'focus-out-hook 'save-all)
   (add-hook 'after-init-hook 'global-company-mode)
-  (add-hook 'find-file-hook 'doom-buffer-mode)
+  (add-hook 'term-mode-hook 'spacemacs/toggle-centered-point-off)
 
   (eval-after-load "git-link"
     '(progn
@@ -379,9 +377,13 @@ before packages are loaded. If you are unsure, you should try in setting them in
        (add-to-list 'git-link-commit-remote-alist
                     '("git.wrke.in" git-link-gitlab))))
 
+  (global-unset-key (kbd "M-<down-mouse-1>"))
+  (global-set-key (kbd "M-<mouse-1>") 'mc/add-cursor-on-click)
+
   (averrin/evil-config)
   (averrin/dired-config)
-  (averrin/elfeed-config)
+
+  (setq dartfmt-args (quote ("-l 100")))
   (message "Spacemacs user-config finished")
 )
 
@@ -398,14 +400,48 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(evil-want-Y-yank-to-eol nil)
  '(package-selected-packages
    (quote
-    (company-dart dart-mode helm-dart ace-jump-mode noflet elfeed-goodies elfeed yaml-mode web-mode web-beautify unfill tagedit smeargle slim-mode scss-mode sass-mode pug-mode orgit org-projectile org-present org-pomodoro alert log4e gntp org-download nlinum mwim mmm-mode markdown-toc markdown-mode magit-gitflow lua-mode livid-mode skewer-mode simple-httpd less-css-mode json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc htmlize helm-gitignore helm-css-scss helm-company helm-c-yasnippet haml-mode go-guru go-eldoc gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flycheck-pos-tip evil-magit magit magit-popup git-commit with-editor emoji-cheat-sheet-plus emmet-mode doom-themes all-the-icons font-lock+ dired+ diff-hl company-web web-completion-data company-tern dash-functional tern company-statistics company-go go-mode company-emoji pos-tip flycheck company coffee-mode base16-theme auto-yasnippet yasnippet ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-purpose window-purpose imenu-list helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))))
+    (editorconfig hlinum xterm-color shell-pop multi-term eshell-z eshell-prompt-extras esh-help counsel swiper gruvbox-theme symon string-inflection go-rename company-dart dart-mode helm-dart ace-jump-mode noflet elfeed-goodies elfeed yaml-mode web-mode web-beautify unfill tagedit smeargle slim-mode scss-mode sass-mode pug-mode orgit org-projectile org-present org-pomodoro alert log4e gntp org-download nlinum mwim mmm-mode markdown-toc markdown-mode magit-gitflow lua-mode livid-mode skewer-mode simple-httpd less-css-mode json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc htmlize helm-gitignore helm-css-scss helm-company helm-c-yasnippet haml-mode go-guru go-eldoc gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flycheck-pos-tip evil-magit magit magit-popup git-commit with-editor emoji-cheat-sheet-plus emmet-mode doom-themes all-the-icons font-lock+ dired+ diff-hl company-web web-completion-data company-tern dash-functional tern company-statistics company-go go-mode company-emoji pos-tip flycheck company coffee-mode base16-theme auto-yasnippet yasnippet ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-purpose window-purpose imenu-list helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
-)
+ '(dired-directory ((((class color) (min-colors 89)) (:foreground "#ef2929" :bold t))))
+ '(dired-flagged ((((class color) (min-colors 89)) (:foreground "#ef2929"))))
+ '(dired-header ((((class color) (min-colors 89)) (:foreground "#303030" :background "#a1db00" :bold t))))
+ '(dired-ignored ((((class color) (min-colors 89)) (:foreground "#a8a8a8"))))
+ '(dired-mark ((((class color) (min-colors 89)) (:foreground "#afff00"))))
+ '(dired-marked ((((class color) (min-colors 89)) (:foreground "#a1db00"))))
+ '(dired-perm-write ((((class color) (min-colors 89)) (:foreground "#dd0000" :bold t))))
+ '(dired-symlink ((((class color) (min-colors 89)) (:foreground "#ff4ea3"))))
+ '(dired-warning ((((class color) (min-colors 89)) (:foreground "#c6c6c6" :background "#a40000" :bold t))))
+ '(diredp-compressed-file-suffix ((((class color) (min-colors 89)) (:foreground "#af5fff"))))
+ '(diredp-date-time ((((class color) (min-colors 89)) (:foreground "#84edb9" :background "#3a3a3a"))))
+ '(diredp-deletion ((((class color) (min-colors 89)) (:foreground "#c6c6c6" :background "#a40000"))))
+ '(diredp-deletion-file-name ((((class color) (min-colors 89)) (:foreground "#dd0000"))))
+ '(diredp-dir-heading ((((class color) (min-colors 89)) (:foreground "#a1db00" :bold t))))
+ '(diredp-dir-name ((((class color) (min-colors 89)) (:foreground "#c4a000" :bold t))))
+ '(diredp-dir-priv ((((class color) (min-colors 89)) (:foreground "#ff8700" :bold t))))
+ '(diredp-display-msg ((((class color) (min-colors 89)) (:foreground "#ff8700"))))
+ '(diredp-exec-priv ((((class color) (min-colors 89)) (:foreground "#dd0000"))))
+ '(diredp-executable-tag ((((class color) (min-colors 89)) (:foreground "#a1db00"))))
+ '(diredp-file-name ((((class color) (min-colors 89)) (:foreground "#c6c6c6"))))
+ '(diredp-file-suffix ((((class color) (min-colors 89)) (:foreground "#ff8700"))))
+ '(diredp-flag-mark ((((class color) (min-colors 89)) (:foreground "#c6c6c6" :background "#ff1f8b" :bold t))))
+ '(diredp-flag-mark-line ((((class color) (min-colors 89)) (:foreground "#303030" :background "#ff7bbb"))))
+ '(diredp-ignored-file-name ((((class color) (min-colors 89)) (:foreground "#8a8a8a"))))
+ '(diredp-link-priv ((((class color) (min-colors 89)) (:foreground "#ff1f8b"))))
+ '(diredp-mode-line-flagged ((((class color) (min-colors 89)) (:foreground "#303030" :background "#a1db00"))))
+ '(diredp-mode-line-marked ((((class color) (min-colors 89)) (:foreground "#c6c6c6" :background "#ff1f8b" bold t))))
+ '(diredp-no-priv ((((class color) (min-colors 89)) (:foreground "#c6c6c6" :background "#3a3a3a"))))
+ '(diredp-number ((((class color) (min-colors 89)) (:foreground "#fce94f"))))
+ '(diredp-other-priv ((((class color) (min-colors 89)) (:foreground "#c6c6c6"))))
+ '(diredp-rare-priv ((((class color) (min-colors 89)) (:foreground "#c6c6c6"))))
+ '(diredp-read-priv ((((class color) (min-colors 89)) (:foreground "#a1db00"))))
+ '(diredp-symlink ((((class color) (min-colors 89)) (:foreground "#ff1f8b"))))
+ '(diredp-write-priv ((((class color) (min-colors 89)) (:foreground "#1f5bff")))))
 )
 

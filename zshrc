@@ -23,7 +23,7 @@ alias dff='git diff --color | diff-so-fancy | less'
 alias ch="git checkout"
 alias master="git checkout master"
 alias e.="nohup emacs . >/dev/null 2>&1 &"
-alias vim="emacsclient -a vim"
+alias ec="emacsclient -a vim"
 
 branch() {
   git checkout -b $1; git push --set-upstream origin $1;
@@ -42,6 +42,6 @@ e() {
 
 alias stash="git stash"
 alias pop="git stash pop"
-alias merge="git checkout master; git pull; git checkout -; git merge master"
+alias merge="git checkout master; git pull; git checkout -; git merge master --no-ff"
 
 export KEYTIMEOUT=1
