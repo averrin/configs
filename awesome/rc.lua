@@ -42,9 +42,9 @@ end
 -- Compositor
 -- run_once("compton -b --detect-rounded-corners --config " .. os.getenv("HOME") .. "/.config/awesome/compton.conf")
 -- run_once("xbindkeys")
-run_once("~/.screenlayout/main.sh")
-run_once("setxkbmap -layout 'us,ru' -option 'grp:ctrl_shift_toggle,grp_led:scroll,caps:escape'")
-run_once("gxkb")
+-- run_once("~/.screenlayout/main.sh")
+-- run_once("setxkbmap -layout 'us,ru' -option 'grp:ctrl_shift_toggle,grp_led:scroll,caps:escape'")
+-- run_once("gxkb")
 
 -- uncluter
 run_once("unclutter")
@@ -54,8 +54,8 @@ run_once("killall xembedproxy")
 run_once("killall xembedsniproxy")
 run_once("qdbus org.kde.kactivitymanagerd /ActivityManager org.kde.ActivityManager.Stop")
 run_once("emacs --daemon")
-run_once("feh --bg-center ~/Downloads/bg.jpg")
-run_once("redshift -l 59.56:30.18")
+-- run_once("feh --bg-center ~/Downloads/bg.jpg")
+-- run_once("redshift -l 59.56:30.18")
 -- }}}
 
 -- beautiful init
@@ -89,7 +89,7 @@ tyrannical.tags = {
         name        = "left",
         init        = true,
         exclusive   = false,
-        screen      = {1,2},
+        screen      = {1},
         layout      = awful.layout.suit.max,
         class       = {
           "Atom", "vivaldi-snapshot", "yakyak", "adom", "Emacs"
@@ -99,7 +99,7 @@ tyrannical.tags = {
         name        = "right",
         init        = true,
         exclusive   = false,
-        screen      = 3,
+        screen      = 2,
         force_screen = true,
         layout      = awful.layout.suit.tile,
         class = {
@@ -127,13 +127,13 @@ ror = {
   ["s"]={"slack", "slack" },
   ["t"]={"skypeforlinux", "skypeforlinux"},
   ["n"]={"dolphin", "dolphin"},
-  ["v"]={"vivaldi-snapshot", "vivaldi-snapshot"},
+  ["v"]={"vivaldi-snapshot", "Vivaldi-snapshot"},
   ["g"]={"telegram", "telegram"},
   ["e"]={"emacs", "Emacs"},
   ["a"]={"emacs", "Emacs"},
   ["w"]={"google-chrome", "Google-chrome"},
   ["d"]={"dartium", "Chrome"},
-  ["c"]={"discord", "discord"},
+  ["c"]={"rambox", "Rambox"},
 }
 
 globalkeys = awful.util.table.join(
@@ -168,7 +168,7 @@ globalkeys = awful.util.table.join(
         end
         if itis then
           c:geometry({
-            x = 768,
+            x = 0,
             y = 0,
             height = 500
           })
@@ -210,7 +210,7 @@ globalkeys = awful.util.table.join(
 )
 
 function getpid(f)
-  file = io.open("/home/averrin/" .. f)
+  file = io.open("/home/alexeynabrodov/" .. f)
   pid = "None"
   if file then
     pid = file:read "*a"
