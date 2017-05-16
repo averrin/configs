@@ -21,5 +21,6 @@
   (define-key evil-normal-state-map (kbd "Q") 'delete-window)
   (define-key evil-normal-state-map (kbd "K") 'dired-jump)
   (define-key evil-normal-state-map (kbd "/") 'swiper)
+  (define-key evil-normal-state-map (kbd "f") 'avy-goto-word-or-subword-1)
   (define-key evil-normal-state-map (kbd "gp") (kbd "\"zp"))
   )
