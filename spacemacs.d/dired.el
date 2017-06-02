@@ -20,6 +20,7 @@
   (package-initialize)
   (require 'dired-x) ; Enable dired-x
   (require 'dired+)  ; Enable dired+
+  (require 'dired-rainbow)  ; Enable dired+
   (setq-default dired-omit-files-p t)  ; Don't show hidden files by default
   (setq dired-omit-files (concat dired-omit-files "\\|^\\..+$\\|\\.pyc$"))
 
@@ -64,6 +65,13 @@
   (dired-next-line -1))
 
 (defun averrin/dired-colors()
+
+  (dired-rainbow-define html "#00a7b7" ("htm" "html" "xhtml"))
+  (dired-rainbow-define dart "#A8C6ED" ("dart"))
+  (dired-rainbow-define gen "#555" ("g.dart"))
+  (dired-rainbow-define orig "#555" ("orig"))
+  (dired-rainbow-define-chmod executable-unix "#A4CC37" "-[rw-]+x.*")
+
 
   (let ((class '((class color) (min-colors 89)))
       ;; Palette colors.

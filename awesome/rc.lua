@@ -81,7 +81,7 @@ tyrannical.tags = {
         screen      = {1,2,3},
         layout      = awful.layout.suit.floating,
         class       = {
-          "yakyak", "adom"
+          "yakyak", "adom", "Peek"
         },
         role = {"None"}
     } ,

@@ -13,6 +13,16 @@ bindkey "\eOB" history-substring-search-down
 eval `dircolors ~/.dircolors.256dark`
 . ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
 
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+chf() {
+  local branches branch
+  branches=$(git for-each-ref --count=10 --sort=-committerdate refs/heads/ --format="%(refname:short)") &&
+  branch=$(echo "$branches" |
+           fzf --height 40% --query="$1" +m) &&
+  git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
+}
+
 alias !="sudo"
 alias commit="git commit -am"
 alias push="git push"
