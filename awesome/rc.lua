@@ -134,6 +134,7 @@ ror = {
   ["w"]={"google-chrome", "Google-chrome"},
   ["d"]={"dartium", "Chrome"},
   ["c"]={"rambox", "Rambox"},
+  ["w"]={"wrike", "Wrike"},
 }
 
 globalkeys = awful.util.table.join(
