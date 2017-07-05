@@ -2,6 +2,7 @@
   (global-evil-mc-mode 1)
   (evil-goggles-mode)
   (require 'diff-mode) ;; load diff-* faces
+  (require 'evil-multiedit)
   (setq evil-goggles-faces-alist `(
     ( evil-delete . diff-removed )
     ( evil-yank . diff-changed )
@@ -21,6 +22,10 @@
   (define-key evil-normal-state-map (kbd "Q") 'delete-window)
   (define-key evil-normal-state-map (kbd "K") 'dired-jump)
   (define-key evil-normal-state-map (kbd "/") 'swiper)
-  (define-key evil-normal-state-map (kbd "f") 'avy-goto-word-or-subword-1)
+  (define-key evil-normal-state-map (kbd ".") 'avy-goto-word-or-subword-1)
+  (define-key evil-normal-state-map (kbd "f") 'avy-goto-char-timer)
+  (define-key evil-normal-state-map (kbd ";") 'next-multiframe-window)
   (define-key evil-normal-state-map (kbd "gp") (kbd "\"zp"))
+
+  (evil-multiedit-default-keybinds)
   )

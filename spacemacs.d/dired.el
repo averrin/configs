@@ -2,17 +2,13 @@
   ;; Dired
   (add-hook 'dired-mode-hook 'ao/dired-omit-caller)
 
-  (eval-after-load "dired-mode"
-    (evilified-state-evilify dired-mode dired-mode-map
-      "K" 'dired-up-directory
-      "f" 'helm-find-files
-      "h" 'diredp-up-directory-reuse-dir-buffer
-      "l" 'diredp-find-file-reuse-dir-buffer
-      "I" 'ao/dired-omit-switch
-      "gg" 'ao/dired-back-to-top
-      "G" 'ao/dired-jump-to-bottom))
+  (eval-after-load "dired-mode")
 
   (averrin/dired-colors)
+
+  (global-set-key (kbd "C-j") (kbd "RET"))
+  (define-key dired-mode-map "l" (kbd "RET"))
+  (define-key dired-mode-map ";" 'next-multiframe-window)
 )
 
 (defun averrin/dired-init()
@@ -24,7 +20,6 @@
   (setq-default dired-omit-files-p t)  ; Don't show hidden files by default
   (setq dired-omit-files (concat dired-omit-files "\\|^\\..+$\\|\\.pyc$"))
 
-  (global-set-key (kbd "C-j") (kbd "RET"))
   (add-hook 'dired-mode-hook 'ao/dired-omit-caller)
 
   (setq diredp-hide-details-initially-flag nil)

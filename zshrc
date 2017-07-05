@@ -34,6 +34,7 @@ alias ch="git checkout"
 alias master="git checkout master"
 alias e.="nohup emacs . >/dev/null 2>&1 &"
 alias ec="emacsclient -a vim"
+alias x="xdg-open"
 
 branch() {
   if [ `git rev-parse --verify $1` ]

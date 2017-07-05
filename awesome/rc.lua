@@ -54,6 +54,7 @@ run_once("killall xembedproxy")
 run_once("killall xembedsniproxy")
 run_once("qdbus org.kde.kactivitymanagerd /ActivityManager org.kde.ActivityManager.Stop")
 run_once("emacs --daemon")
+run_once("clipmenud")
 -- run_once("feh --bg-center ~/Downloads/bg.jpg")
 -- run_once("redshift -l 59.56:30.18")
 -- }}}
@@ -103,7 +104,7 @@ tyrannical.tags = {
         force_screen = true,
         layout      = awful.layout.suit.tile,
         class = {
-          "skypeforlinux", "Thunderbird", "st-256color", "Slack"
+          "skypeforlinux", "Thunderbird", "st-256color", "Slack", "norp_toolkit"
         }
     }
 }
@@ -132,7 +133,7 @@ ror = {
   ["e"]={"emacs", "Emacs"},
   ["a"]={"emacs", "Emacs"},
   ["w"]={"google-chrome", "Google-chrome"},
-  ["d"]={"dartium", "Chrome"},
+  ["d"]={"dartium", "chromium-devel"},
   ["c"]={"rambox", "Rambox"},
   ["w"]={"wrike", "Wrike"},
 }
@@ -144,6 +145,11 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Control" }, "j", function () awful.screen.focus_relative( 1) end),
 
     -- Forward
+    awful.key({ altkey,         }, "c",
+      function ()
+        -- awful.util.spawn_with_shell('~/projects/shadow-go/shadow')
+        awful.util.spawn_with_shell('CM_LAUNCHER=rofi clipmenu')
+    end),
     awful.key({ altkey,         }, "Tab",
         function ()
             -- awful.util.spawn_with_shell('~/projects/shadow-go/shadow')
