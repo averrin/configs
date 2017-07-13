@@ -36,6 +36,10 @@ alias e.="nohup emacs . >/dev/null 2>&1 &"
 alias ec="emacsclient -a vim"
 alias x="xdg-open"
 
+alias task="blight openTask"
+alias task_link="blight openTask -c"
+alias tasks="blight tasks"
+
 branch() {
   if [ `git rev-parse --verify $1` ]
   then

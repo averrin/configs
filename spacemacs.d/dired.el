@@ -2,13 +2,23 @@
   ;; Dired
   (add-hook 'dired-mode-hook 'ao/dired-omit-caller)
 
-  (eval-after-load "dired-mode")
+  ;; (eval-after-load "dired-mode")
+  ;; (define-key evil-evilified-state-map ";" 'next-multiframe-window)
+  (eval-after-load "dired-mode"
+  (evilified-state-evilify-map dired-mode-map
+    :mode dired-mode
+    :bindings
+    (kbd ";") 'next-multiframe-window
+    (kbd "f") 'helm-find-files
+    (kbd "K") 'diredp-up-directory
+    (kbd "h") 'diredp-up-directory-reuse-dir-buffer
+    (kbd "l") 'diredp-find-file-reuse-dir-buffer
+    (kbd "I") 'ao/dired-omit-switch
+    (kbd "gg") 'ao/dired-back-to-top
+    (kbd "G") 'ao/dired-jump-to-bottom)
+  )
 
   (averrin/dired-colors)
-
-  (global-set-key (kbd "C-j") (kbd "RET"))
-  (define-key dired-mode-map "l" (kbd "RET"))
-  (define-key dired-mode-map ";" 'next-multiframe-window)
 )
 
 (defun averrin/dired-init()
