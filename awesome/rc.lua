@@ -133,9 +133,10 @@ ror = {
   ["e"]={"emacs", "Emacs"},
   ["a"]={"emacs", "Emacs"},
   ["w"]={"google-chrome", "Google-chrome"},
-  ["d"]={"dartium", "chromium-devel"},
+  ["d"]={"dartium --disable-http2", "chromium-devel"},
   ["c"]={"rambox", "Rambox"},
   ["w"]={"wrike", "Wrike"},
+ -- ["Print"]={"ksnapshot", "Ksnapshot"},
 }
 
 globalkeys = awful.util.table.join(
@@ -143,6 +144,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, ",", function () awful.util.spawn(kdeconf) end),
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     awful.key({ modkey, "Control" }, "j", function () awful.screen.focus_relative( 1) end),
+    awful.key({ altkey }, "Print", function () awful.util.spawn("ksnapshot") end), 
 
     -- Forward
     awful.key({ altkey,         }, "c",

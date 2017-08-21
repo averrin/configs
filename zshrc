@@ -33,7 +33,7 @@ alias dff='git diff --color | diff-so-fancy | less'
 alias ch="git checkout"
 alias master="git checkout master"
 alias e.="nohup emacs . >/dev/null 2>&1 &"
-alias ec="emacsclient -a vim"
+alias ec="emacsclient -nw -a vim"
 alias x="xdg-open"
 
 alias task="blight openTask"
