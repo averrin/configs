@@ -144,7 +144,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, ",", function () awful.util.spawn(kdeconf) end),
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     awful.key({ modkey, "Control" }, "j", function () awful.screen.focus_relative( 1) end),
-    awful.key({ altkey }, "Print", function () awful.util.spawn("ksnapshot") end), 
+    awful.key({ altkey }, "Print", function () awful.util.spawn_with_shell("shutter -s") end), 
 
     -- Forward
     awful.key({ altkey,         }, "c",
