@@ -82,7 +82,7 @@ tyrannical.tags = {
         screen      = {1,2,3},
         layout      = awful.layout.suit.floating,
         class       = {
-          "yakyak", "adom", "Peek"
+          "yakyak", "adom", "Peek", "mapgen"
         },
         role = {"None"}
     } ,
@@ -110,8 +110,12 @@ tyrannical.tags = {
 }
 
 tyrannical.properties.floating = {
-  "yakyak", "adom"
+  "yakyak", "adom", "mapgen"
 }
+tyrannical.properties.placement = {
+  mapgen = awful.placement.centered
+}
+
 
 -- Clients
 clientbuttons = awful.util.table.join(
@@ -209,7 +213,7 @@ globalkeys = awful.util.table.join(
           return
         end
       end
-      awful.client.run_or_raise('bash -c "/usr/bin/st -e env TERM=xterm-256color  tmux & echo $! > ~/.ht_2.pid"', matcher)
+      awful.client.run_or_raise('bash -c "/home/alexeynabrodov/.local/bin/alacritty -e env TERM=xterm-256color  tmux & echo $! > ~/.ht_2.pid"', matcher)
   end),
 
     -- Layout management (tile mode)
@@ -350,10 +354,10 @@ awful.rules.rules = {
         buttons = clientbuttons,
         size_hints_honor = false }
     },
-    {rule = {role= "None"},
+    {rule = {role= "mapgen"},
       properties = {
-        width=100,
-        hight=100
+        width=900,
+        hight=900
       }
   }
 }
@@ -410,7 +414,7 @@ for s = 1, screen.count() do
                 if (awful.client.floating.get(c) or layout == "floating") and (c.class ~= "Conky" and c.class ~= "Kruler" and c.class ~= "krunner") then
                     c.border_width = beautiful.border_width
                 -- Unless they are special ones
-                elseif c.class == "Conky" or c.class == "Kruler" or c.class == "krunner" then
+                elseif c.class == "mapgen" or c.class == "Kruler" or c.class == "krunner" then
                     c.border_width = 0
                 -- No borders with only one visible client
                 elseif #clients == 1 or layout == "max" then

@@ -3,6 +3,7 @@
   (evil-goggles-mode)
   (require 'diff-mode) ;; load diff-* faces
   (require 'evil-multiedit)
+  ;; (require 'origami)
   (setq evil-goggles-faces-alist `(
     ( evil-delete . diff-removed )
     ( evil-yank . diff-changed )
@@ -25,6 +26,7 @@
   (define-key evil-normal-state-map (kbd ".") 'avy-goto-word-or-subword-1)
   (define-key evil-normal-state-map (kbd "f") 'avy-goto-char-timer)
   (define-key evil-normal-state-map (kbd ";") 'next-multiframe-window)
+  (define-key evil-normal-state-map (kbd "L") 'origami-toggle-node)
   (define-key evil-normal-state-map (kbd "gp") (kbd "\"zp"))
 
   (evil-multiedit-default-keybinds)

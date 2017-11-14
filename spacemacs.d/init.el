@@ -30,7 +30,7 @@ values."
    dotspacemacs-configuration-layer-path '()
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(
+   '(rust
      markdown
      shell
      syntax-checking
@@ -41,6 +41,8 @@ values."
      html
      lua
      go
+     semantic
+     c-c++
      helm
      auto-completion
      better-defaults
@@ -55,20 +57,35 @@ values."
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
-      ng2-mode
-      evil-multiedit
-      dired-rainbow
+      darktooth-theme
+      zoom
+      origami
       bookmark+
-      evil-goggles
       editorconfig
       hlinum
       swiper
       counsel
       base16-theme
-      dired+
       diff-hl
       git-link
+      ng2-mode
       qml-mode
+
+      evil-goggles
+      evil-multiedit
+
+      dired+
+      dired-rainbow
+
+      rtags
+      helm-rtags
+      cmake-ide
+      company-irony
+      company-rtags
+      flymake-cppcheck
+      flycheck-rtags
+      flycheck-irony
+      company-irony-c-headers
     )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -154,11 +171,11 @@ values."
                                :weight normal
                                :width normal
                                :powerline-scale 1)
-   ;; dotspacemacs-default-font '("Source Code Pro"
-   ;;                             :size 13
-   ;;                             :weight normal
-   ;;                             :width normal
-   ;;                             :powerline-scale 1)
+   dotspacemacs-default-font '("Iosevka"
+                               :size 14
+                               :weight normal
+                               :width normal
+                               :powerline-scale 1)
    ;; ;; The leader key
    ;; dotspacemacs-leader-key "C-a"
    dotspacemacs-leader-key "SPC"
@@ -275,7 +292,7 @@ values."
    dotspacemacs-line-numbers nil
    ;; Code folding method. Possible values are `evil' and `origami'.
    ;; (default 'evil)
-   dotspacemacs-folding-method 'evil
+   dotspacemacs-folding-method 'origami
    ;; If non-nil smartparens-strict-mode will be enabled in programming modes.
    ;; (default nil)
    dotspacemacs-smartparens-strict-mode nil
@@ -314,14 +331,18 @@ executes.
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
 
+
+  (load-file "~/.spacemacs.d/cpp.el")
   (load-file "~/.spacemacs.d/dired.el")
   (load-file "~/.spacemacs.d/evil.el")
+  (load-file "~/.spacemacs.d/setup-ligatures.el")
 
   (setq exec-path-from-shell-check-startup-files nil)
   (setq exec-path-from-shell-arguments '("-l"))
   (setq use-dialog-box nil)
 
   (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
+
   (averrin/dired-init)
   )
 
@@ -357,6 +378,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
   (setq helm-follow-mode-persistent 1)
   (setq bmkp-auto-light-when-set 'autonamed-bookmark)
   (setq dartfmt-args (quote ("-l 120")))
+  (setq x-stretch-cursor t)
   (global-linum-mode)
   (hlinum-activate)
   (editorconfig-mode 1)
@@ -394,6 +416,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   (averrin/evil-config)
   (averrin/dired-config)
+  (averrin/cpp-config)
 
   (setq dartfmt-args (quote ("-l 100")))
 
@@ -412,6 +435,10 @@ before packages are loaded. If you are unsure, you should try in setting them in
                   )
                 )
     (load-theme 'base16-gruvbox-dark-medium t))
+
+  (add-hook 'realgud-short-key-mode-hook
+            (lambda ()
+              (local-set-key "\C-c" realgud:shortkey-mode-map)))
 
   (message "Spacemacs user-config finished")
 )
@@ -436,7 +463,9 @@ This function is called at the very end of Spacemacs initialization."
  '(evil-want-Y-yank-to-eol nil)
  '(package-selected-packages
    (quote
-    (org-category-capture typescript-mode org-brain impatient-mode zerodark-theme evil-multiedit crux ng2-mode qml-mode password-generator godoctor evil-org evil-lion emojify ht company-lua dired-rainbow dired-hacks-utils pophint bookmark+ evil-goggles ivy editorconfig hlinum xterm-color shell-pop multi-term eshell-z eshell-prompt-extras esh-help counsel swiper gruvbox-theme symon string-inflection go-rename company-dart dart-mode helm-dart ace-jump-mode noflet elfeed-goodies elfeed yaml-mode web-mode web-beautify unfill tagedit smeargle slim-mode scss-mode sass-mode pug-mode orgit org-projectile org-present org-pomodoro alert log4e gntp org-download nlinum mwim mmm-mode markdown-toc markdown-mode magit-gitflow lua-mode livid-mode skewer-mode simple-httpd less-css-mode json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc htmlize helm-gitignore helm-css-scss helm-company helm-c-yasnippet haml-mode go-guru go-eldoc gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flycheck-pos-tip evil-magit magit magit-popup git-commit with-editor emoji-cheat-sheet-plus emmet-mode doom-themes all-the-icons font-lock+ dired+ diff-hl company-web web-completion-data company-tern dash-functional tern company-statistics company-go go-mode company-emoji pos-tip flycheck company coffee-mode base16-theme auto-yasnippet yasnippet ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-purpose window-purpose imenu-list helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))))
+    (darktooth-theme autothemer zoom toml-mode racer flycheck-rust cargo rust-mode origami flycheck-rtags helm-rtags stickyfunc-enhance srefactor flymake-cppcheck flymake-easy company-rtags realgud test-simple loc-changes load-relative disaster company-c-headers cmake-mode clang-format levenshtein company-irony-c-headers company-irony flycheck-irony irony cmake-ide rtags org-category-capture typescript-mode org-brain impatient-mode zerodark-theme evil-multiedit crux ng2-mode qml-mode password-generator godoctor evil-org evil-lion emojify ht company-lua dired-rainbow dired-hacks-utils pophint bookmark+ evil-goggles ivy editorconfig hlinum xterm-color shell-pop multi-term eshell-z eshell-prompt-extras esh-help counsel swiper gruvbox-theme symon string-inflection go-rename company-dart dart-mode helm-dart ace-jump-mode noflet elfeed-goodies elfeed yaml-mode web-mode web-beautify unfill tagedit smeargle slim-mode scss-mode sass-mode pug-mode orgit org-projectile org-present org-pomodoro alert log4e gntp org-download nlinum mwim mmm-mode markdown-toc markdown-mode magit-gitflow lua-mode livid-mode skewer-mode simple-httpd less-css-mode json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc htmlize helm-gitignore helm-css-scss helm-company helm-c-yasnippet haml-mode go-guru go-eldoc gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flycheck-pos-tip evil-magit magit magit-popup git-commit with-editor emoji-cheat-sheet-plus emmet-mode doom-themes all-the-icons font-lock+ dired+ diff-hl company-web web-completion-data company-tern dash-functional tern company-statistics company-go go-mode company-emoji pos-tip flycheck company coffee-mode base16-theme auto-yasnippet yasnippet ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-purpose window-purpose imenu-list helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async)))
+ '(zoom-mode t nil (zoom))
+ '(zoom-size (quote (0.618 . 0.618))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

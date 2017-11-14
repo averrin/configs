@@ -39,6 +39,7 @@ alias x="xdg-open"
 alias task="blight openTask"
 alias task_link="blight openTask -c"
 alias tasks="blight tasks"
+alias grep="grep -P"
 
 branch() {
   if [ `git rev-parse --verify $1` ]

@@ -10,7 +10,7 @@ The master branch **is for Awesome 4.0+**. If you use **Awesome 3.5,**
 
 #### April 2016
 
-Tyrannical 1.0.0 have been released. This is the first and last version for
+Tyrannical 1.0.0 has been released. This is the first and last version for
 Awesome 3.5. Tyrannical is still in active developement and a brand new
 implementation will be released shortly after Awesome 3.6 is released.
 
@@ -105,7 +105,7 @@ can also to other value by using the class name as table key:
 Tyrannical focus model is very fine tuned. It is possible to add rules on how
 the focus will be attributes to clients and tags.
 
-**block_children_focus_stealing:** 
+**block_children_focus_stealing:**
 This is a fancy X11 name for something very common: modal dialogs and popups.
 If this is set to `true`, then a dialog wont be able to steal the focus from
 whatever your doing. This is useful for some misbehaving apps such as Firefox
@@ -211,7 +211,7 @@ tyrannical.tags = {
         exclusive   = true,
         screen      = 1,
         layout      = awful.layout.suit.max                          ,
-        class ={ 
+        class ={
             "Kate", "KDevelop", "Codeblocks", "Code::Blocks" , "DDD", "kate4"}
     } ,
     {
@@ -239,7 +239,7 @@ tyrannical.properties.floating = {
     "MPlayer"      , "pinentry"        , "ksnapshot"  , "pinentry"     , "gtksu"          ,
     "xine"         , "feh"             , "kmix"       , "kcalc"        , "xcalc"          ,
     "yakuake"      , "Select Color$"   , "kruler"     , "kcolorchooser", "Paste Special"  ,
-    "New Form"     , "Insert Picture"  , "kcharselect", "mythfrontend" , "plasmoidviewer" 
+    "New Form"     , "Insert Picture"  , "kcharselect", "mythfrontend" , "plasmoidviewer"
 }
 
 -- Make the matching clients (by classes) on top of the default layout
@@ -272,9 +272,9 @@ Then edit this section to fit your needs.
 | **icon**                  | Tag icon                                             | path             |
 | **init**                  | Create when awesome launch                           | boolean          |
 | **layout**                | The tag layout                                       | layout           |
-| **mwfact**                | Tiled layout master/slave ratio                      | float(0-1)       |
-| **ncol**                  | Number of columns                                    | number           |
-| **nmaster**               | Number of master clients                             | number           |
+| **master_width_factor**   | Tiled layout master/slave ratio                      | float(0-1)       |
+| **column_count**          | Number of columns                                    | number           |
+| **master_count**          | Number of master clients                             | number           |
 | **no_focus_stealing_in**  | Do not select this tag when a new client is added    | boolean          |
 | **no_focus_stealing_out** | Do not unselect when a new client is added elsewhere | boolean          |
 | **screen**                | Tag screen(s)                                        | number or array  |
@@ -335,13 +335,13 @@ See:
 | **block_children_focus_stealing**      | Prevent popups from stealing focus                  | boolean          |
 | **default_layout**                     | The default layout for tags                         | layout           |
 | **group_children**                     | Add dialogs to the same tags as their parent client | boolean          |
-| **mwfact**                             | The default master/slave ratio                      | float (0-1)      |
+| **master_width_factor**                | The default master/slave ratio                      | float (0-1)      |
 | **force_odd_as_intrusive**             | Make all non-normal (dock, splash) intrusive        | boolean          |
 | **no_focus_stealing_out**              | Do not unselect tags when a new client is added     | boolean          |
 | **favor_focused**                      | Prefer the focused screen to the screen property    | boolean          |
 
 
-It's worth noting that some settings like `mwfact` and `default_layout` should
+It's worth noting that some settings like `master_width_factor` and `default_layout` should
 be set **before** the tag arrow. Otherwise they wont take effect at startup.
 
 **favor_focused** Is enabled by default for tags created after startup for
@@ -402,7 +402,7 @@ will allow the client into that tag. This function switch between `tile` and
         local count = #match:clients() + 1 --The client is not there yet
         if count == 2 then
             awful.layout.set(awful.layout.suit.tile,tag)
-            awful.tag.setproperty(tag,"mwfact",0.5)
+            awful.tag.setproperty(tag,"master_width_factor",0.5)
         else
             awful.layout.set(awful.layout.suit.magnifier,tag)
         end
@@ -422,16 +422,16 @@ Here are some example:
 ```lua
     -- Spawn in a new tag
     awful.util.spawn("urxvt",{new_tag=true})
-    
+
     -- Or for more advanced use case, you can use a full tag definition too
     awful.util.spawn("urxvt",{ new_tag= {
        name = "MyNewTag",
        exclusive = true,
     })
-    
+
     -- Spawn in the current tag, floating and on top
     awful.util.spawn(terminal,{intrusive=true, floating=true, ontop=true})
-    
+
     -- Spawn in an existing tag (assume `my_tag` exist)
     -- Note that `tag` can also be an array of tags or a function returning
     -- an array of tags
@@ -497,7 +497,7 @@ awful.rules.rules = {
 ```
 This example changes the class of URxvt with name "dev" from "urxvt" to "urxvt:dev" which then can be matched to a tag.
 
-For more information on possible porperties look at [Awful Rules](http://awesome.naquadah.org/wiki/Understanding_Rules) or [API](http://awesome.naquadah.org/doc/api/modules/client.html)
+For more information on possible properties look at [Awful Rules](http://awesome.naquadah.org/wiki/Understanding_Rules) or [API](http://awesome.naquadah.org/doc/api/modules/client.html)
 
 #### What is Tyrannical license?
 
