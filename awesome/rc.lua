@@ -195,7 +195,7 @@ globalkeys = awful.util.table.join(
       if matcher(client.focus) then
         client.focus.minimized = true
       else
-        awful.client.run_or_raise('bash -c "/usr/bin/st -e env TERM=xterm-256color  tmux & echo $! > ~/.ht.pid"', matcher)
+        awful.client.run_or_raise('bash -c "/usr/sbin/alacritty -e env TERM=xterm-256color  tmux & echo $! > ~/.ht.pid"', matcher)
       end
     end),
     awful.key({ modkey }, 'k', function ()
@@ -213,7 +213,7 @@ globalkeys = awful.util.table.join(
           return
         end
       end
-      awful.client.run_or_raise('bash -c "/home/alexeynabrodov/.local/bin/alacritty -e env TERM=xterm-256color  tmux & echo $! > ~/.ht_2.pid"', matcher)
+      awful.client.run_or_raise('bash -c "/usr/sbin/alacritty -e env TERM=xterm-256color  tmux & echo $! > ~/.ht_2.pid"', matcher)
   end),
 
     -- Layout management (tile mode)
@@ -223,7 +223,7 @@ globalkeys = awful.util.table.join(
 )
 
 function getpid(f)
-  file = io.open("/home/alexeynabrodov/" .. f)
+  file = io.open("/home/averrin/" .. f)
   pid = "None"
   if file then
     pid = file:read "*a"

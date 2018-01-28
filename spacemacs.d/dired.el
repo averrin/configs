@@ -23,10 +23,10 @@
 
 (defun averrin/dired-init()
 
-  (package-initialize)
   (require 'dired-x) ; Enable dired-x
   (require 'dired+)  ; Enable dired+
   (require 'dired-rainbow)  ; Enable dired+
+  (package-initialize)
   ;; (require 'dired-collapse)
   (setq-default dired-omit-files-p t)  ; Don't show hidden files by default
   (setq dired-omit-files (concat dired-omit-files "\\|^\\..+$\\|\\.pyc$"))
