@@ -24,7 +24,7 @@ chf() {
 }
 
 alias !="sudo"
-alias commit="git commit -am"
+alias cmt="git commit -am"
 alias push="git push"
 alias pull="git pull"
 alias st="git status --short --branch"
@@ -33,13 +33,17 @@ alias dff='git diff --color | diff-so-fancy | less'
 alias ch="git checkout"
 alias master="git checkout master"
 alias e.="nohup emacs . >/dev/null 2>&1 &"
-alias ec="emacsclient -nw -a vim"
+alias ec="emacs -nw"
 alias x="xdg-open"
 
 alias task="blight openTask"
 alias task_link="blight openTask -c"
 alias tasks="blight tasks"
 alias grep="grep -P"
+
+commit() {
+    blight commit "$@";
+}
 
 branch() {
   if [ `git rev-parse --verify $1` ]
@@ -67,3 +71,6 @@ alias merge="git checkout master; git pull; git checkout -; git merge master --n
 
 export KEYTIMEOUT=1
 . ~/.zshenv
+
+#export NVM_DIR="/home/alexeynabrodov/.nvm"
+#[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
