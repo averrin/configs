@@ -24,6 +24,8 @@ chf() {
 }
 
 alias !="sudo"
+alias ls="exa"
+alias la="exa -la"
 alias cmt="git commit -am"
 alias push="git push"
 alias pull="git pull"
