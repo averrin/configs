@@ -74,6 +74,11 @@
       [remap newline]          #'newline-and-indent
 
       :n "K" #'dired-jump
+      :n ";" #'evil-window-next
+
+      ;; My page scrolling
+      :nv "C-SPC" #'evil-scroll-page-down
+      :nv "C-S-SPC" #'evil-scroll-page-up
 
       (:after dired
         (:map dired-mode-map
@@ -82,51 +87,6 @@
           :n "K" #'dired-up-directory
           :n "l" #'dired-find-file
          ))
-
-      ;; Ensure there are no conflicts
-      :nmvo doom-leader-key nil
-      :nmvo doom-localleader-key nil
-
-      ;; --- Global keybindings ---------------------------
-      ;; Make M-x available everywhere
-      :gnvime "M-x" #'execute-extended-command
-      :gnvime "A-x" #'execute-extended-command
-
-      ;; A little sandbox to run code in
-      :gnvime "M-;" #'eval-expression
-      :gnvime "M-:" #'doom/open-scratch-buffer
-
-      ;; Text-scaling
-      :ne "M-+"       (λ! (text-scale-set 0))
-      :ne "M-="       #'text-scale-increase
-      :ne "M--"       #'text-scale-decrease
-
-      :ne "C-`"       #'+popup/toggle
-      :ne "C-~"       #'+popup/raise
-      :ne "M-t"       #'+workspace/new
-      :ne "M-T"       #'+workspace/display
-      :ne "M-w"       #'delete-window
-      :ne "M-W"       #'delete-frame
-      :ne "C-M-f"     #'toggle-frame-fullscreen
-      :ne "M-n"       #'evil-buffer-new
-      :ne "M-N"       #'make-frame
-      :ne "M-1"       (λ! (+workspace/switch-to 0))
-      :ne "M-2"       (λ! (+workspace/switch-to 1))
-      :ne "M-3"       (λ! (+workspace/switch-to 2))
-      :ne "M-4"       (λ! (+workspace/switch-to 3))
-      :ne "M-5"       (λ! (+workspace/switch-to 4))
-      :ne "M-6"       (λ! (+workspace/switch-to 5))
-      :ne "M-7"       (λ! (+workspace/switch-to 6))
-      :ne "M-8"       (λ! (+workspace/switch-to 7))
-      :ne "M-9"       (λ! (+workspace/switch-to 8))
-      :ne "M-0"       #'+workspace/switch-to-last
-
-      ;; My page scrolling
-      :nv "C-SPC" #'evil-scroll-page-down
-      :nv "C-S-SPC" #'evil-scroll-page-up
-
-      :n ";" #'evil-window-next
-
 
       ;; --- <leader> -------------------------------------
       (:leader
@@ -149,6 +109,7 @@
           :desc "Prev error"            :n "p" #'flycheck-previous-error
           )
 
+        ;;TODO: only dart-mode
         (:desc "lang" :prefix "m"
           :desc "Jump to def"          :n "j" #'dart-jump-to-defn
           :desc "Quick fix"          :n "q" #'helm-dart-quick-fix
