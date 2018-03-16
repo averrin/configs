@@ -60,8 +60,8 @@
 (setq +doom-modeline-buffer-file-name-style 'relative-from-project)
 
 (def-modeline! main
-  (bar matches " " buffer-info "  " selection-info)
-  ("  %l:%c %p  | " major-mode vcs flycheck))
+  (bar flycheck matches " " buffer-info "  " selection-info)
+  ("  %l:%c %p  | " major-mode vcs))
 
 (add-hook 'focus-out-hook 'save-all)
 
