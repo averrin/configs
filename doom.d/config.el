@@ -1,5 +1,3 @@
-;;; config/default/config.el -*- lexical-binding: t; -*-
-
 ;;
 ;; Plugins
 ;;
@@ -50,32 +48,9 @@
 ;; (setq display-line-numbers-type 'relative)
 (setq doom-line-numbers-style 'relative)
 (add-hook! dart-mode #'doom|enable-line-numbers)
-;; disable :unless predicates with (sp-pair "'" nil :unless nil)
-;; disable :post-handlers with (sp-pair "{" nil :post-handlers nil)
-;; ...or specific :post-handlers with (sp-pair "{" nil :post-handlers '(:rem ("| " "SPC")))
-(after! smartparens
-  ;; Autopair quotes more conservatively; if I'm next to a word/before another
-  ;; quote, I likely don't want another pair.
-  (let ((unless-list '(sp-point-before-word-p
-                       sp-point-after-word-p
-                       sp-point-before-same-p)))
-    (sp-pair "'"  nil :unless unless-list)
-    (sp-pair "\"" nil :unless unless-list))
-  )
-
-(indent-guide-global-mode)
-  ;; Expand {|} => { | }
-  ;; Expand {|} => {
-  ;;   |
-  ;; }
-  (dolist (brace '("(" "{" "["))
-    (sp-pair brace nil
-             :post-handlers '(("||\n[i]" "RET") ("| " "SPC"))
-             ;; I likely don't want a new pair if adjacent to a word or opening brace
-             :unless '(sp-point-before-word-p sp-point-before-same-p)))
 
 (setq buffer-save-without-query t)
-(setq frame-title-format "e » %b")
+(setq frame-title-format "doom | %b")
 (setq tab-width 2)
 (setq web-mode-markup-indent-offset 2)
 (setq helm-follow-mode-persistent 1)
@@ -83,10 +58,6 @@
 (setq x-stretch-cursor t)
 (setq word-wrap t)
 (setq +doom-modeline-buffer-file-name-style 'relative-from-project)
-  ;; Don't do square-bracket space-expansion where it doesn't make sense to
-  (sp-local-pair '(emacs-lisp-mode org-mode markdown-mode gfm-mode)
-                 "[" nil :post-handlers '(:rem ("| " "SPC")))
-
 
 (def-modeline! main
   (bar matches " " buffer-info "  " selection-info)
@@ -97,8 +68,6 @@
 
 ;;
 ;; Bindings
-;;
-
 ;;
 (map! [remap evil-jump-to-tag] #'projectile-find-tag
       [remap find-tag]         #'projectile-find-tag
