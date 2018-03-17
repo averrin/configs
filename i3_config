@@ -15,13 +15,18 @@ exec feh --bg-scale /home/averrin/Downloads/bg.png
 exec setxkbmap -option "grp:ctrl_shift_toggle,grp_led:scroll"
 exec gxkb
 exec kcminit_startup
-exec xautolock -time 1 -locker /home/averrin/.local/bin/lock.sh -corners ++++
+exec xautolock -time 5 -locker /home/averrin/.local/bin/lock.sh -corners ++++
+exec synclient "TapButton1=1"
+exec synclient "TapButton2=2"
+exec synclient "TapButton3=3"
 
 set $mod Mod4
 set $up k
 set $right l
 set $left h
 set $down j
+
+focus_follows_mouse no
 
 # Your preferred terminal emulator
 set $term /usr/bin/st -f "Iosevka:size:14" -e env TERM=xterm-256color tmux
@@ -42,6 +47,8 @@ bindsym $mod+v exec $ror Vivaldi-snapshot vivaldi-snapshot
 bindsym $mod+c exec $ror discord discord
 # bindsym $mod+k exec $ror st-256color "$term"
 bindsym $mod+a exec $ror Emacs emacs
+bindsym $mod+x exec $ror Luakit luakit
+bindsym $mod+t exec $ror Telegram telegram-desktop
 
 bindsym Mod1+l exec /home/averrin/.local/bin/lock.sh
 
