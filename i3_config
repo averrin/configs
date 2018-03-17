@@ -12,7 +12,7 @@
 exec unclutter
 exec redshift
 exec feh --bg-scale /home/averrin/Downloads/bg.png
-exec setxkbmap -option "grp:ctrl_shift_toggle,grp_led:scroll"
+exec setxkbmap -layout "us,ru" -option "grp:ctrl_shift_toggle,grp_led:scroll,compose:ralt,caps:escape"
 exec gxkb
 exec kcminit_startup
 exec xautolock -time 5 -locker /home/averrin/.local/bin/lock.sh -corners ++++
