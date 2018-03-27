@@ -1,3 +1,4 @@
+export KDEWM=i3
 export TERM=xterm-256color
 export EDITOR="emacs -nw"
 

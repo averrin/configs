@@ -28,7 +28,7 @@
 
         ;; Most commonly used
         :desc "Save"                    :n "s" #'save-buffer
-        :desc "Comment line"            :n "l" #'comment-line
+        :desc "Comment line"            :nv "l" #'comment-line
 
         :desc "window"                  :n "w"  evil-window-map
 

@@ -7,6 +7,10 @@
 (package! evil-magit)
 (package! indent-guide)
 (package! ivy-posframe)
+;;(package! company-box
+;;  :recipe (:fetcher github
+;;           :repo "sebastiencs/company-box"
+;;           :files ("*")))
 
 (package! dart-mode
   :recipe (:fetcher github
