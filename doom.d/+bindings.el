@@ -20,6 +20,15 @@
           :n "h" #'dired-up-directory
           :n "K" #'dired-up-directory
           :n "l" #'dired-find-file
+          :n "?" #'counsel-ag
+          :n "f" #'find-file
+
+          :leader
+          :desc "Find file"               :n "." #'find-file
+          :desc "Find in project"         :n "/"  #'counsel-ag
+        (:desc "project" :prefix "p"
+          :desc "Find file in project"    :n  "f" #'projectile-find-file)
+
          ))
 
       ;; --- <leader> -------------------------------------

@@ -22,7 +22,7 @@
     )
     (add-hook! dart-mode
         (set (make-local-variable 'company-backends)
-            '(company-dart (company-dabbrev company-yankpad))))
+            '(company-dart (company-dabbrev))))
 
     (add-hook! dart-mode
         (flycheck-mode)
