@@ -46,6 +46,7 @@
 ;; Config
 ;;
 
+(setq dired-listing-switches "-alh")
 (defun save-all ()
   "Save hook"
   (interactive)
