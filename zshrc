@@ -77,7 +77,7 @@ alias merge="git checkout master; git pull; git checkout -; git merge master --n
 
 export KEYTIMEOUT=1
 . ~/.zshenv
-. ~/projects/icons-in-terminal/build/icons_bash_export.sh
+#. ~/projects/icons-in-terminal/build/icons_bash_export.sh
 
 #export NVM_DIR="/home/alexeynabrodov/.nvm"
 #[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm

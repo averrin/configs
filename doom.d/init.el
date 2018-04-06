@@ -27,8 +27,6 @@
 ;;
 ;;; License: MIT
 
-(require 'core (concat user-emacs-directory "core/core"))
-
 (doom! :feature
        (popup            ; tame sudden yet inevitable temporary windows
         +all             ; catch all popups that start with an asterix

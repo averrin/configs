@@ -6,7 +6,8 @@
 
 (def-package! centered-cursor-mode)
 (def-package! evil-magit)
-(def-package! indent-guide)
+;; (def-package! indent-guide)
+(def-package! highlight-indent-guides)
 (def-package! ag
   :defer t
   :init
@@ -46,7 +47,10 @@
 ;; Config
 ;;
 
-(setq dired-listing-switches "-alh")
+(setq highlight-indent-guides-method 'character)
+(add-hook! prog-mode 'highlight-indent-guides-mode)
+(setq dired-listing-switches "-alFh")
+;(setq dired-use-ls-dired nil)
 (defun save-all ()
   "Save hook"
   (interactive)

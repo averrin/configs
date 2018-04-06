@@ -5,7 +5,8 @@
 (package! ag)
 (package! centered-cursor-mode)
 (package! evil-magit)
-(package! indent-guide)
+;; (package! indent-guide)
+(package! highlight-indent-guides)
 (package! ivy-posframe)
 ;;(package! company-box
 ;;  :recipe (:fetcher github
