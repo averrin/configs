@@ -24,6 +24,9 @@
           :n "f" #'find-file
 
           :leader
+          :desc "M-x"                     :nv "SPC"  #'execute-extended-command
+
+          :desc "window"                  :n "w"  evil-window-map
           :desc "Find file"               :n "." #'find-file
           :desc "Find in project"         :n "/"  #'counsel-ag
         (:desc "project" :prefix "p"

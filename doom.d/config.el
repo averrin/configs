@@ -46,7 +46,7 @@
 ;;
 ;; Config
 ;;
-
+(setq ivy-re-builders-alist '((t . ivy--regex-fuzzy)))
 (setq highlight-indent-guides-method 'character)
 (add-hook! prog-mode 'highlight-indent-guides-mode)
 (setq dired-listing-switches "-alFh")
