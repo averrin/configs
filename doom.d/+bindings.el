@@ -82,7 +82,8 @@
 
         ;;TODO: only dart-mode
         (:desc "lang" :prefix "m"
-          :desc "Jump to def"          :n "j" #'dart-jump-to-defn
+          :desc "Jump to def"          :n "j" #'xref-find-definitions
+          :desc "Find refs"          :n "j" #'xref-find-references
           :desc "Quick fix"          :n "q" #'helm-dart-quick-fix
           :desc "Format"          :n "f" #'dartfmt
           :desc "Sort"          :n "s" #'dart-sort-members

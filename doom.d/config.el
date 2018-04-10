@@ -3,10 +3,11 @@
 ;;
 
 (load! +bindings)
+(load! +icons-in-terminal)
+
+(load! +dart)
 
 (def-package! centered-cursor-mode)
-(def-package! evil-magit)
-;; (def-package! indent-guide)
 (def-package! highlight-indent-guides)
 (def-package! ag
   :defer t
@@ -14,23 +15,7 @@
   (setq ag-highlight-search t
         ag-reuse-buffers t))
 
-;; (if (string-equal system-name "spb-anabrodov")
-    (def-package! dart-mode)
-    (def-package! helm-dart :after dart-mode)
-    (def-package! company-dart :after dart-mode)
-    (add-hook! dart-mode
-        (push 'dart-mode flycheck-global-modes)
-    )
-    (add-hook! dart-mode
-        (set (make-local-variable 'company-backends)
-            '(company-dart (company-dabbrev))))
-
-    (add-hook! dart-mode
-        (flycheck-mode)
-    )
-;; )
-
- (def-package! ivy-posframe
+(def-package! ivy-posframe
   :after (ivy)
   :config
   (setq ivy-display-function nil
@@ -50,7 +35,7 @@
 (setq highlight-indent-guides-method 'character)
 (add-hook! prog-mode 'highlight-indent-guides-mode)
 (setq dired-listing-switches "-alFh")
-;(setq dired-use-ls-dired nil)
+
 (defun save-all ()
   "Save hook"
   (interactive)
@@ -61,8 +46,6 @@
 (doom-themes-visual-bell-config)
 
 (global-centered-cursor-mode +1)
-;; (setq global-display-line-numbers-mode t)
-;; (setq display-line-numbers-type 'relative)
 (setq doom-line-numbers-style 'relative)
 (add-hook! dart-mode #'doom|enable-line-numbers)
 
@@ -74,7 +57,6 @@
 (setq dartfmt-args (quote ("-l 120")))
 (setq x-stretch-cursor t)
 (setq word-wrap t)
-
 
 (defun concatString (list)
   "A non-recursive function that concatenates a list of strings."

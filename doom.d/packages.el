@@ -4,10 +4,14 @@
 ;; (package! ranger)
 (package! ag)
 (package! centered-cursor-mode)
-(package! evil-magit)
+;; (package! evil-magit)
 ;; (package! indent-guide)
 (package! highlight-indent-guides)
 (package! ivy-posframe)
+(package! lsp-mode)
+(package! lsp-ui)
+(package! company-lsp)
+(package! company-box)
 ;;(package! company-box
 ;;  :recipe (:fetcher github
 ;;           :repo "sebastiencs/company-box"
