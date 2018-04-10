@@ -33,7 +33,7 @@ alias la="exa -la"
 alias cmt="git commit -am"
 alias push="git push"
 alias pull="git pull"
-alias st="git status --short --branch"
+alias st="git status --short --branch || ls"
 alias dff='git diff --color | diff-so-fancy | less'
 
 alias ch="git checkout"
