@@ -9,6 +9,7 @@
 
 (def-package! centered-cursor-mode)
 (def-package! highlight-indent-guides)
+(def-package! evil-magit)
 (def-package! ag
   :defer t
   :init

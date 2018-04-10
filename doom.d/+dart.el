@@ -21,7 +21,7 @@
 ;; (if (string-equal system-name "spb-anabrodov")
     (def-package! dart-mode :after company-lsp)
     (def-package! helm-dart :after dart-mode)
-    (def-package! company-dart :after dart-mode)
+    ;; (def-package! company-dart :after dart-mode)
     (add-hook! dart-mode
         (push 'dart-mode flycheck-global-modes)
     )
