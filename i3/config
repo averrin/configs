@@ -12,13 +12,13 @@
 exec unclutter
 # exec redshift
 exec feh --bg-scale /home/alexeynabrodov/Downloads/bg.png
-# exec setxkbmap -layout "us,ru" -option "grp:ctrl_shift_toggle,grp_led:scroll,compose:ralt,caps:escape"
-# exec gxkb
-# exec kcminit_startup
+exec setxkbmap -layout "us,ru" -option "grp:ctrl_shift_toggle,grp_led:scroll,compose:ralt,caps:escape"
+exec gxkb
+exec kcminit_startup
 # exec xautolock -time 5 -locker /home/alexeynabrodov/.local/bin/lock.sh -corners ++++
-# exec synclient "TapButton1=1"
-# exec synclient "TapButton2=2"
-# exec synclient "TapButton3=3"
+exec synclient "TapButton1=1"
+exec synclient "TapButton2=2"
+exec synclient "TapButton3=3"
 exec killall plasmashell
 
 set $mod Mod4
@@ -80,6 +80,7 @@ bindsym $mod+s exec /home/alexeynabrodov/.local/bin/slack.sh
 bindsym $mod+d exec $ror chromium-devel dartium
 bindsym $mod+Shift+l exec --no-startup-id dm-tool lock
 bindsym $mod+a exec $ror Emacs emacs
+bindsym $mod+t exec $ror TelegramDesktop telegram-desktop
 
 bindsym Mod1+o move window to output right
 bindsym Mod1+Shift+o move workspace to output right
@@ -87,6 +88,7 @@ bindsym Mod1+Shift+o move workspace to output right
 bindsym Mod1+Tab exec --no-startup-id $switcher
 bindsym grave exec $tool
 bindsym $mod+Shift+b exec flameshot gui
+bindsym $mod+r exec discord discrod
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -228,4 +230,4 @@ bindsym $mod+Shift+minus move scratchpad
 # If there are multiple scratchpad windows, this command cycles through them.
 bindsym $mod+minus scratchpad show
 
-bindsym $mod+r mode "resize"
+bindsym $mod+Shift+r mode "resize"
