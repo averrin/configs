@@ -84,9 +84,8 @@
         (:desc "lang" :prefix "m"
           :desc "Jump to def"          :n "j" #'xref-find-definitions
           :desc "Find refs"          :n "r" #'xref-find-references
-          :desc "Quick fix"          :n "q" #'helm-dart-quick-fix
+          :desc "Quick fix"          :n "q" #'lsp-ui-sideline-apply-code-actions
           :desc "Format"          :n "f" #'dartfmt
-          :desc "Sort"          :n "s" #'dart-sort-members
           )
 
         (:desc "workspace" :prefix "TAB"

@@ -13,10 +13,6 @@ bindkey "\eOB" history-substring-search-down
 eval `dircolors ~/.dircolors.256dark`
 . ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
 
-# ZSH_THEME="powerlevel9k/powerlevel9k"
-# POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs vcs)
-# POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(vi_mode dir)
-
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 chf() {
@@ -44,7 +40,6 @@ alias x="xdg-open"
 
 alias task="blight openTask"
 alias task_link="blight openTask -c"
-alias tasks="blight tasks"
 alias grep="grep -P"
 
 commit() {
@@ -77,7 +72,4 @@ alias merge="git checkout master; git pull; git checkout -; git merge master --n
 
 export KEYTIMEOUT=1
 . ~/.zshenv
-#. ~/projects/icons-in-terminal/build/icons_bash_export.sh
-
-#export NVM_DIR="/home/alexeynabrodov/.nvm"
-#[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+. ~/projects/icons-in-terminal/build/icons_bash_export.sh

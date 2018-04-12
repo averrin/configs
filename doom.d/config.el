@@ -10,6 +10,7 @@
 (def-package! centered-cursor-mode)
 (def-package! highlight-indent-guides)
 (def-package! evil-magit)
+(def-package! lsp-go)
 (def-package! ag
   :defer t
   :init
@@ -28,6 +29,17 @@
           (internal-border-width . 10))
         ivy-posframe-font (font-spec :family "Iosevka" :size 14 :width 'extra-condensed :weight 'normal :slant 'normal))
   (ivy-posframe-enable))
+
+(def-package! cquery)
+(setq cquery-executable "~/.local/bin/cquery")
+(defun cquery//enable ()
+  (condition-case nil
+      (lsp-cquery-enable)
+    (user-error nil)))
+
+  (use-package cquery
+    :commands lsp-cquery-enable
+    :init (add-hook 'c-mode-common-hook #'cquery//enable))
 
 ;;
 ;; Config

@@ -4,7 +4,6 @@
 (def-package! lsp-ui :after lsp-mode)
 (def-package! company-lsp :after lsp-mode)
 (push 'company-lsp company-backends)
-(def-package! company-box :after company-lsp)
 
 (lsp-define-stdio-client
  lsp-prog-major-mode
@@ -20,14 +19,11 @@
 
 ;; (if (string-equal system-name "spb-anabrodov")
     (def-package! dart-mode :after company-lsp)
-    (def-package! helm-dart :after dart-mode)
-    ;; (def-package! company-dart :after dart-mode)
     (add-hook! dart-mode
         (push 'dart-mode flycheck-global-modes)
     )
     (add-hook! dart-mode
         (set (make-local-variable 'company-backends)
-            ;; '(company-dart (company-dabbrev company-lsp))))
             '(company-lsp (company-dabbrev))))
 
     (add-hook! dart-mode
@@ -36,6 +32,12 @@
     (add-hook! dart-mode #'lsp-prog-major-mode-enable)
     (add-hook! dart-mode 'lsp-prog-major-mode-enable)
 ;; )
+(setq lsp-ui-sideline-code-actions-prefix "💡 ")
+
+(defun my-set-projectile-root ()
+  (when lsp--cur-workspace
+    (setq projectile-project-root (lsp--workspace-root lsp--cur-workspace))))
+(add-hook 'lsp-before-open-hook #'my-set-projectile-root)
 
 
 (provide '+dart)
