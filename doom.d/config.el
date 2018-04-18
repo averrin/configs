@@ -30,18 +30,18 @@
         ivy-posframe-font (font-spec :family "Iosevka" :size 14 :width 'extra-condensed :weight 'normal :slant 'normal))
   (ivy-posframe-enable))
 
-(def-package! cquery)
-(setq cquery-executable "~/.local/bin/cquery")
-(defun cquery//enable ()
-  (condition-case nil
-      (lsp-cquery-enable)
-    (user-error nil)))
+;; (def-package! cquery)
+;; (setq cquery-executable "~/.local/bin/cquery")
+;; (defun cquery//enable ()
+;;   (condition-case nil
+;;       (lsp-cquery-enable)
+;;     (user-error nil)))
 
-  (use-package cquery
-    :commands lsp-cquery-enable
-    :init (add-hook 'c-mode-common-hook #'cquery//enable))
+;;   (use-package cquery
+;;     :commands lsp-cquery-enable
+;;     :init (add-hook 'c-mode-common-hook #'cquery//enable))
 
-;;
+;; ;;
 ;; Config
 ;;
 (setq ivy-re-builders-alist '((t . ivy--regex-fuzzy)))
