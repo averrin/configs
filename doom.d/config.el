@@ -32,15 +32,14 @@
 
 ;; (def-package! cquery)
 ;; (setq cquery-executable "~/.local/bin/cquery")
-;; (defun cquery//enable ()
-;;   (condition-case nil
-;;       (lsp-cquery-enable)
-;;     (user-error nil)))
-
-;;   (use-package cquery
-;;     :commands lsp-cquery-enable
-;;     :init (add-hook 'c-mode-common-hook #'cquery//enable))
-
+(def-package! cquery
+  :hook (c-mode-common . +cc|init-cquery)
+  :config
+  (defun +cc|init-cquery ()
+    (when (memq major-mode '(c-mode c++-mode))
+      (flycheck-mode)
+      (lsp-cquery-enable)))
+  (setq cquery-executable "~/.local/bin/cquery"))
 ;; ;;
 ;; Config
 ;;
