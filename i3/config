@@ -63,12 +63,14 @@ assign [class=chromium-devel] → output right
 
 workspace chat output left
 assign [class=Rambox] → chat
+assign [class=TelegramDesktop] → chat
 
 workspace web output left
 assign [class=Vivaldi-snapshot] → web
 
 workspace code output left
 assign [class=Emacs] → code
+for_window [class=Emacs] move workspace code
 
 #::::::::::::::::ROR:::::::::::::::::
 set $tool /home/alexeynabrodov/projects/i3tool/i3tool
@@ -197,7 +199,7 @@ bindsym XF86MonBrightnessDown exec brightnessctl s 5%-
 # reload the configuration file
 Bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart
+# bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 # bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 

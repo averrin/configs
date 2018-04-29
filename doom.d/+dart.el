@@ -11,15 +11,15 @@
   :config
     (push 'company-lsp company-backends))
 
-(lsp-define-stdio-client
- lsp-dart-major-mode
- "dart"
- (lambda () default-directory)
- '("~/.pub-cache/bin/dart_language_server"))
-
 ;; (if (string-equal system-name "spb-anabrodov")
 (defun averrin//dart-mode-enable ()
   "Init dart-mode"
+  (lsp-define-stdio-client
+    lsp-dart-major-mode
+    "dart"
+    (lambda () default-directory)
+    '("~/.pub-cache/bin/dart_language_server"))
+
   (push 'dart-mode flycheck-global-modes)
   (set (make-local-variable 'company-backends)
       '(company-lsp (company-dabbrev)))
@@ -35,10 +35,10 @@
     :hook (dart-mode . averrin//dart-mode-enable)
 )
 
-;; (defun my-set-projectile-root ()
-;;   (when lsp--cur-workspace
-;;     (setq projectile-project-root (lsp--workspace-root lsp--cur-workspace))))
-;; (add-hook 'lsp-before-open-hook #'my-set-projectile-root)
+(defun my-set-projectile-root ()
+  (when lsp--cur-workspace
+    (setq projectile-project-root (lsp--workspace-root lsp--cur-workspace))))
+(add-hook 'lsp-before-open-hook #'my-set-projectile-root)
 
 
 (provide '+dart)
