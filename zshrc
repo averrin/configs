@@ -24,8 +24,8 @@ chf() {
 }
 
 alias !="sudo"
-alias ls="exa"
-alias la="exa -la"
+alias ls="exa --color=always"
+alias la="exa -la --color=always"
 alias cmt="git commit -am"
 alias push="git push"
 alias pull="git pull"
@@ -41,6 +41,7 @@ alias x="xdg-open"
 alias task="blight openTask"
 alias task_link="blight openTask -c"
 alias grep="grep -P"
+alias less="less -R"
 
 commit() {
     blight commit "$@";
@@ -73,3 +74,5 @@ alias merge="git checkout master; git pull; git checkout -; git merge master --n
 export KEYTIMEOUT=1
 . ~/.zshenv
 #. ~/projects/icons-in-terminal/build/icons_bash_export.sh
+
+PATH=$PATH:/home/alexeynabrodov/.local/share;export PATH; # ADDED BY INSTALLER - DO NOT EDIT OR DELETE THIS COMMENT - 87FF8EFC-483D-BCAA-D67D-735CF60410D1 885C7A40-D2F8-9B76-A9D2-25172514BFBA

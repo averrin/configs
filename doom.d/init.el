@@ -27,10 +27,8 @@
 ;;
 ;;; License: MIT
 
-(doom! :feature
-       (popup            ; tame sudden yet inevitable temporary windows
-        +all             ; catch all popups that start with an asterix
-        +defaults)       ; default popup rules
+(doom!
+    :feature
       ;debugger          ; FIXME stepping through code, to help you add bugs
       ;eval              ; run code, run (also, repls)
        evil              ; come to the dark side, we have cookies
@@ -52,6 +50,9 @@
       ;ido               ; the other *other* search engine...
 
        :ui
+      (popup            ; tame sudden yet inevitable temporary windows
+       +all             ; catch all popups that start with an asterix
+       +defaults)       ; default popup rules
        doom              ; what makes DOOM look the way it does
       ;doom-dashboard    ; a nifty splash screen for Emacs
        doom-modeline     ; a snazzy Atom-inspired mode-line
@@ -137,6 +138,7 @@
       ; +wordnut         ; wordnet (wn) search
       ; +langtool)       ; a proofreader (grammar/style check) for Emacs
 
+       :completion (ivy +childframe)
        :config
        ;; The default module set reasonable defaults for Emacs. It also provides
        ;; a Spacemacs-inspired keybinding scheme, a custom yasnippet library,
