@@ -2,8 +2,9 @@
 ;; Plugins
 ;;
 
-(load! +bindings)
-(load! +icons-in-terminal)
+(load! "+bindings")
+(load! "+icons-in-terminal")
+(load! "+symbols")
 
 (def-package! centered-cursor-mode)
 (def-package! highlight-indent-guides)
@@ -15,18 +16,18 @@
   (setq ag-highlight-search t
         ag-reuse-buffers t))
 
-(def-package! ivy-posframe
-  :after (ivy)
-  :config
-  (setq ivy-display-function nil
-        ivy-fixed-height-minibuffer nil)
-  (push '(swiper . nil) ivy-display-functions-alist)
-  (push '(t . ivy-posframe-display-at-frame-center) ivy-display-functions-alist)
-  (setq ivy-posframe-parameters
-        '((min-width . 120)
-          (internal-border-width . 10))
-        ivy-posframe-font (font-spec :family "Iosevka" :size 14 :width 'extra-condensed :weight 'normal :slant 'normal))
-  (ivy-posframe-enable))
+;; (def-package! ivy-posframe
+;;   :after (ivy)
+;;   :config
+;;   (setq ivy-display-function nil
+;;         ivy-fixed-height-minibuffer nil)
+;;   (push '(swiper . nil) ivy-display-functions-alist)
+;;   (push '(t . ivy-posframe-display-at-frame-center) ivy-display-functions-alist)
+;;   (setq ivy-posframe-parameters
+;;         '((min-width . 120)
+;;           (internal-border-width . 10))
+;;         ivy-posframe-font (font-spec :family "Iosevka" :size 14 :width 'extra-condensed :weight 'normal :slant 'normal))
+;;   (ivy-posframe-enable))
 
 ;; (def-package! cquery)
 ;; (setq cquery-executable "~/.local/bin/cquery")
@@ -88,6 +89,7 @@
 (setq highlight-indent-guides-method 'character)
 (add-hook! prog-mode 'highlight-indent-guides-mode)
 (setq dired-listing-switches "-alFh")
+(setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1)
 
 (defun save-all ()
   "Save hook"
