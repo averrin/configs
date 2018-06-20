@@ -42,7 +42,7 @@
        :emacs
        dired             ; making dired pretty [functional]
        ediff             ; comparing files in Emacs
-       electric-indent   ; smarter, keyword-based electric-indent
+       electric   ; smarter, keyword-based electric-indent
        imenu             ; an imenu sidebar and searchable code index
       ;term              ; terminals in Emacs
 
@@ -54,8 +54,9 @@
       make              ; run make tasks from Emacs
       magit             ;
       ;password-store    ; password manager for nerds
+       pdf               ; pdf enhancements
       ;prodigy           ; FIXME managing external services & code builders
-      rgb               ; creating color strings
+      ;rgb               ; creating color strings
 
        :lang
       ;assembly          ; assembly for fun or debugging
@@ -92,7 +93,7 @@
       ;php               ; perl's insecure younger brother
       ;plantuml          ; diagrams for confusing people more
       ;purescript        ; javascript, but functional
-      python            ; beautiful is better than ugly
+      ;python            ; beautiful is better than ugly
       ;rest              ; Emacs as a REST client
       ;ruby              ; 1.step do {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
       ;rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
@@ -114,14 +115,13 @@
       ; +wordnut         ; wordnet (wn) search
       ; +langtool)       ; a proofreader (grammar/style check) for Emacs
 
-      ;:collab
+       :collab
       ;impatient-mode    ; show off code over HTTP
 
-       :completion (ivy +childframe)
        :config
        ;; The default module set reasonable defaults for Emacs. It also provides
        ;; a Spacemacs-inspired keybinding scheme, a custom yasnippet library,
        ;; and additional ex commands for evil-mode. Use it as a reference for
        ;; your own modules.
-       (default +bindings +evil-commands))
+       (default +bindings +snippets +evil-commands))
 
