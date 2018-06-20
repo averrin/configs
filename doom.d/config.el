@@ -2,8 +2,8 @@
 ;; Plugins
 ;;
 
-(load! +bindings)
-(load! +icons-in-terminal)
+(load! "+bindings")
+(load! "+icons-in-terminal")
 
 (def-package! centered-cursor-mode)
 (def-package! highlight-indent-guides)
@@ -61,14 +61,14 @@
     (lambda () default-directory)
     '("~/.pub-cache/bin/dart_language_server"))
 
-  (push 'dart-mode flycheck-global-modes)
+  ;; (push 'dart-mode flycheck-global-modes)
   (set (make-local-variable 'company-backends)
       '(company-lsp (company-dabbrev)))
   (flycheck-mode)
   (lsp-dart-major-mode-enable)
   (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
   (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
-  (setq lsp-ui-sideline-code-actions-prefix "💡 ")
+  ;; (setq lsp-ui-sideline-code-actions-prefix "💡 ")
 )
 
 (def-package! dart-mode
@@ -153,3 +153,7 @@
   ;; Show differences at the word level when a hunk is selected.
   (setq magit-diff-refine-hunk t))
 (add-hook! magit-mode (visual-line-mode +1))
+
+(after! whitespace
+  (advice-remove #'company-box--make-frame #'doom*fix-whitespace-mode-in-childframes)
+  (advice-remove #'posframe--create-posframe #'doom*fix-whitespace-mode-in-childframes))

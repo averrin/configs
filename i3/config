@@ -12,7 +12,7 @@
 # exec --no-startup-id shadowsocks -c 138.68.190.187:8530 -password "YSNbu4NqAMVEDMZPDDDWrorc7TVEeTAQ5JJ9oiw+7J+CfflAfEem3nMPW1oISfzA" -socks localhost:1080 -verbose -cipher chacha20-ietf-poly1305
 exec --no-startup-id unclutter
 # exec redshift
-exec --no-startup-id feh --bg-scale /home/alexeynabrodov/Downloads/bg.png
+exec --no-startup-id feh --bg-scale /home/alexey.nabrodov@team.wrike.com/Downloads/bg.png
 exec --no-startup-id setxkbmap -layout "us,ru" -option "grp:ctrl_shift_toggle,grp_led:scroll,compose:ralt,caps:escape"
 exec --no-startup-id gxkb
 exec --no-startup-id kcminit_startup
@@ -74,12 +74,12 @@ assign [class=Emacs] → code
 for_window [class=Emacs] move workspace code
 
 #::::::::::::::::ROR:::::::::::::::::
-set $tool /home/alexeynabrodov/projects/i3tool/i3tool
-set $ror /home/alexeynabrodov/projects/i3tool/i3tool ror
+set $tool /home/alexey.nabrodov@team.wrike.com/projects/i3tool/i3tool
+set $ror /home/alexey.nabrodov@team.wrike.com/projects/i3tool/i3tool ror
 
 bindsym $mod+v exec $ror Vivaldi-snapshot vivaldi-snapshot
 bindsym $mod+c exec $ror Rambox rambox
-bindsym $mod+s exec /home/alexeynabrodov/.local/bin/slack.sh
+bindsym $mod+s exec /home/alexey.nabrodov@team.wrike.com/.local/bin/slack.sh
 bindsym $mod+d exec $ror chromium-devel dartium
 bindsym $mod+Shift+l exec --no-startup-id dm-tool lock
 bindsym $mod+a exec $ror Emacs emacs

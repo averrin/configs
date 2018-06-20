@@ -23,6 +23,8 @@ chf() {
   git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
 }
 
+. /home/alexey.nabrodov@team.wrike.com/.nix-profile/etc/profile.d/nix.sh
+
 alias !="sudo"
 alias ls="exa --color=always"
 alias la="exa -la --color=always"
