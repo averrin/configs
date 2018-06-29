@@ -20,7 +20,7 @@
           :n "h" #'dired-up-directory
           :n "K" #'dired-up-directory
           :n "l" #'dired-find-file
-          :n "?" #'counsel-ag
+          :n "?" #'counsel-rg
           :n "f" #'find-file
 
           :leader
@@ -28,7 +28,7 @@
 
           :desc "window"                  :n "w"  evil-window-map
           :desc "Find file"               :n "." #'find-file
-          :desc "Find in project"         :n "/"  #'counsel-ag
+          :desc "Find in project"         :n "/"  #'counsel-rg
         (:desc "project" :prefix "p"
           :desc "Find file in project"    :n  "f" #'projectile-find-file)
 
@@ -72,8 +72,8 @@
         ;; :desc "Find in project"         :n "/"  #'swiper-all
         ;; :desc "Find word in project"    :n "*"  (λ! (swiper (symbol-name (symbol-at-point))))
 
-        :desc "Find in project"         :n "/"  #'counsel-ag
-        :desc "Find word in project"    :n "*"  (λ! (counsel-ag (symbol-name (symbol-at-point))))
+        :desc "Find in project"         :n "/"  #'counsel-rg
+        :desc "Find word in project"    :n "*"  (λ! (counsel-rg (symbol-name (symbol-at-point))))
 
         (:desc "flycheck" :prefix "e"
           :desc "Next error"            :n "n" #'flycheck-next-error

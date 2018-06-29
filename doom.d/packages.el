@@ -2,7 +2,6 @@
 ;;; config/default/packages.el
 (disable-packages! irony irony-eldoc flycheck-irony company-irony)
 
-(package! ag)
 (package! centered-cursor-mode)
 (package! evil-magit)
 (package! highlight-indent-guides)

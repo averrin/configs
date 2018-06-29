@@ -10,11 +10,6 @@
 (def-package! highlight-indent-guides)
 (def-package! evil-magit)
 (def-package! lsp-go)
-(def-package! ag
-  :defer t
-  :init
-  (setq ag-highlight-search t
-        ag-reuse-buffers t))
 
 ;; (def-package! ivy-posframe
 ;;   :after (ivy)
