@@ -89,7 +89,7 @@ bindsym Mod1+o move window to output right
 bindsym Mod1+Shift+o move workspace to output right
 
 bindsym Mod1+Tab exec --no-startup-id $switcher
-bindsym grave exec $tool
+bindsym grave exec $tool term
 bindsym $mod+Shift+b exec flameshot gui
 bindsym $mod+r exec discord discrod
 

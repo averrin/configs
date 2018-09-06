@@ -3,12 +3,34 @@
 ;;
 ;; Bindings
 ;;
+(defun append-semicolon-insert ()
+  (interactive)
+  (if (looking-at-p ".*;[ \t]*$")
+    (evil-next-line)
+    (progn
+         (end-of-line)
+         (insert ";\n"))
+  ))
+
+(defun append-semicolon-normal ()
+  (interactive)
+  (if (looking-at-p ".*;[ \t]*$")
+    (evil-next-line)
+    (progn
+        (end-of-line)
+        (insert ";")
+        (evil-force-normal-state)
+        (evil-next-line))
+  ))
+
 (map! [remap evil-jump-to-tag] #'projectile-find-tag
       [remap find-tag]         #'projectile-find-tag
       [remap newline]          #'newline-and-indent
 
       :n "K" #'dired-jump
       :n ";" #'evil-window-next
+      :i "C-j" #'append-semicolon-insert
+      :n "C-j" #'append-semicolon-normal
 
       ;; My page scrolling
       :nv "C-SPC" #'evil-scroll-page-down
@@ -66,6 +88,7 @@
         ;; Most commonly used
         :desc "Save"                    :n "s" #'save-buffer
         :desc "Comment line"            :nv "l" #'comment-line
+        :desc "Replace regex"           :n "r" #'anzu-query-replace-regexp
 
         :desc "window"                  :n "w"  evil-window-map
 

@@ -13,7 +13,6 @@
        spellcheck        ; tasing you for misspelling mispelling
        (syntax-checker   ; tasing you for every semicolon you forget
         +childframe)     ; use childframes for error popups (Emacs 26+ only)
-       version-control   ; remember, remember that commit in November
        workspaces        ; tab emulation, persistence & separate workspaces
 
        :completion
@@ -38,12 +37,14 @@
       ;unicode           ; extended unicode support for various languages
        vi-tilde-fringe   ; fringe tildes to mark beyond EOB
        window-select     ; visually switch windows
+       vc-gutter
 
        :emacs
        dired             ; making dired pretty [functional]
        ediff             ; comparing files in Emacs
        electric   ; smarter, keyword-based electric-indent
        imenu             ; an imenu sidebar and searchable code index
+       vc
       ;term              ; terminals in Emacs
 
        :tools

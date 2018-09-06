@@ -11,7 +11,10 @@
 ;; (package! lsp-ui)
 (package! cquery)
 (package! company-lsp)
+(package! company-rtags)
 (package! company-box)
+(package! clang-format)
+(package! ccls)
 
 (package! lsp-ui
   :recipe (:fetcher github

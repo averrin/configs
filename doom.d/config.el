@@ -24,8 +24,6 @@
 ;;         ivy-posframe-font (font-spec :family "Iosevka" :size 14 :width 'extra-condensed :weight 'normal :slant 'normal))
 ;;   (ivy-posframe-enable))
 
-;; (def-package! cquery)
-;; (setq cquery-executable "~/.local/bin/cquery")
 (def-package! cquery
   :hook (c-mode-common . +cc|init-cquery)
   :config
@@ -35,7 +33,6 @@
       (lsp-cquery-enable)))
   (setq cquery-executable "~/.local/bin/cquery"))
 
-;; (load! +dart)
 
 (def-package! lsp-mode)
 (def-package! lsp-ui
@@ -47,6 +44,40 @@
   :after lsp-mode
   :config
     (push 'company-lsp company-backends))
+
+(setq ccls-executable "/usr/sbin/ccls")
+
+(def-package! clang-format
+  :commands (clang-format-region)
+  )
+
+;; (def-package! ccls
+;;   :init (add-hook! (c-mode c++-mode objc-mode) #'lsp-ccls-enable)
+;;   :when (featurep! :lang cc)
+;;   :after-call (c-mode c++-mode c-mode)
+;;   :commands lsp-ccls-enable
+;;   :hook ((c-mode . +lsp-ccls//c-modes)
+;;          (c++-mode . +lsp-ccls//c-modes))
+;;   :config
+;;   ;; overlay is slow
+;;   ;; Use https://github.com/emacs-mirror/emacs/commits/feature/noverlay
+;;   (setq ccls-sem-highlight-method 'font-lock)
+;;   (ccls-use-default-rainbow-sem-highlight)
+;;   ;; https://github.com/maskray/ccls/blob/master/src/config.h
+;;   (setq ccls-extra-init-params '(
+;;           :completion (:detailedLabel t)
+;;           :diagnostics (:frequencyMs 5000)
+;;           :index (:reparseForDependency 1)))
+
+;;   (with-eval-after-load 'projectile
+;;     (add-to-list 'projectile-globally-ignored-directories ".ccls-cache"))
+
+;;   (evil-set-initial-state 'ccls-tree-mode 'emacs)
+;;   (set-company-backend! '(c-mode c++-mode) 'company-lsp)
+;;   )
+
+;; (load! +dart)
+
 
 ;; (if (string-equal system-name "spb-anabrodov")
 (defun averrin//dart-mode-enable ()
@@ -108,6 +139,9 @@
 (setq x-stretch-cursor t)
 (setq word-wrap t)
 
+(setq evil-snipe-scope 'buffer)
+(setq evil-snipe-repeat-scope 'buffer)
+
 (defun concatString (list)
   "A non-recursive function that concatenates a list of strings."
   (if (listp list)
@@ -117,27 +151,31 @@
               (setq result (concatenate 'string result (if (= (length item) 0) item (concat (if (= (position item list :test #'equal ) 0 ) item (substring item 0 1)) "/"))))))
         result)))
 
-(defun +doom-modeline--buffer-file-name-relative (&optional include-project)
+(defun +doom-modeline--buffer-file-name-relative (_file-path true-file-path &optional include-project)
   "Propertized `buffer-file-name' showing directories relative to project's root only."
   (let ((root (doom-project-root))
         (active (active)))
     (if (null root)
         (propertize "%b" 'face (if active 'doom-modeline-buffer-file))
       (let* ((modified-faces (if (buffer-modified-p) 'doom-modeline-buffer-modified))
-             (relative-dirs (file-relative-name (file-name-directory (file-truename buffer-file-name))
+             (relative-dirs (file-relative-name (file-name-directory true-file-path)
                                                 (if include-project (concat root "../") root)))
              (relative-faces (or modified-faces (if active 'doom-modeline-buffer-path)))
              (file-faces (or modified-faces (if active 'doom-modeline-buffer-file))))
         (if (equal "./" relative-dirs) (setq relative-dirs ""))
         (concat (propertize (concatString (split-string relative-dirs "/")) 'face (if relative-faces `(:inherit ,relative-faces)))
-                (propertize (file-name-nondirectory (file-truename buffer-file-name))
-                            'face (if file-faces `(:inherit ,file-faces))))))))
+                (propertize (file-name-nondirectory true-file-path)
+                            'face (if file-faces `(:inherit ,file-faces))))
+        )
+      )
+    )
+  )
 
 (setq +doom-modeline-buffer-file-name-style 'relative-from-project)
 
-(def-modeline! main
-  (bar flycheck matches " " buffer-info "  " selection-info)
-  ("  %l:%c %p  | " major-mode vcs))
+(def-modeline! 'main
+  '(bar flycheck matches " " buffer-info "  " selection-info)
+  '("  %l:%c %p  | " major-mode vcs))
 
 (add-hook 'focus-out-hook 'save-all)
 
