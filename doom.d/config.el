@@ -119,9 +119,18 @@
 (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1)
 
 (defun save-all ()
-  "Save hook"
   (interactive)
   (save-some-buffers t))
+
+(defun full-auto-save ()
+  (interactive)
+  (save-excursion
+    (dolist (buf (buffer-list))
+      (set-buffer buf)
+      (if (and (buffer-file-name) (buffer-modified-p))
+          (basic-save-buffer)))))
+(add-hook 'auto-save-hook 'full-auto-save)
+(auto-save-visited-mode t)
 
 (setq doom-font (font-spec :family "Iosevka" :size 14))
 (setq doom-theme 'doom-tomorrow-night)
