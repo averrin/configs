@@ -16,6 +16,7 @@ exec --no-startup-id feh --bg-scale /home/alexey.nabrodov@team.wrike.com/Downloa
 exec --no-startup-id setxkbmap -layout "us,ru" -option "grp:ctrl_shift_toggle,grp_led:scroll,compose:ralt,caps:escape"
 exec --no-startup-id gxkb
 exec --no-startup-id kcminit_startup
+exec --no-startup-id dunst
 # exec xautolock -time 5 -locker /home/alexeynabrodov/.local/bin/lock.sh -corners ++++
 exec synclient "TapButton1=1"
 exec synclient "TapButton2=2"

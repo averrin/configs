@@ -39,9 +39,9 @@
       (:after dired
         (:map dired-mode-map
           :n ";" #'evil-window-next
-          :n "h" #'dired-up-directory
-          :n "K" #'dired-up-directory
-          :n "l" #'dired-find-file
+          :n "h" #'dired-single-up-directory
+          :n "K" #'dired-single-up-directory
+          :n "l" #'dired-single-buffer
           :n "?" #'counsel-rg
           :n "f" #'find-file
 

@@ -10,6 +10,7 @@
 (def-package! highlight-indent-guides)
 (def-package! evil-magit)
 (def-package! lsp-go)
+(def-package! dired-single)
 
 ;; (def-package! ivy-posframe
 ;;   :after (ivy)
@@ -141,6 +142,9 @@
 
 (setq evil-snipe-scope 'buffer)
 (setq evil-snipe-repeat-scope 'buffer)
+
+(setq ein:jupyter-default-server-command "jupyter")
+(setq ein:jupyter-default-notebook-directory "~/projects/my-comic-books/data")
 
 (defun concatString (list)
   "A non-recursive function that concatenates a list of strings."

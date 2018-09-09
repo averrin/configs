@@ -49,7 +49,7 @@
 
        :tools
        editorconfig      ; let someone else argue about tabs vs spaces
-      ;ein               ; tame Jupyter notebooks with emacs
+       ein               ; tame Jupyter notebooks with emacs
       ;gist              ; interacting with github gists
       ;macos             ; MacOS-specific commands
       make              ; run make tasks from Emacs

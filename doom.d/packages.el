@@ -15,6 +15,7 @@
 (package! company-box)
 (package! clang-format)
 (package! ccls)
+(package! dired-single)
 
 (package! lsp-ui
   :recipe (:fetcher github
