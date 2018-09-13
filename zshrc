@@ -11,7 +11,7 @@ bindkey "\eOA" history-substring-search-up
 bindkey "\eOB" history-substring-search-down
 
 eval `dircolors ~/.dircolors.256dark`
-. ~/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
+source "/usr/lib/python3.7/site-packages/powerline/bindings/zsh/powerline.zsh"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -22,8 +22,6 @@ chf() {
            fzf --height 40% --query="$1" +m) &&
   git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
 }
-
-. /home/alexey.nabrodov@team.wrike.com/.nix-profile/etc/profile.d/nix.sh
 
 alias !="sudo"
 alias ls="exa --color=always"
