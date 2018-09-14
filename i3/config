@@ -38,9 +38,11 @@ workspace_auto_back_and_forth yes
 focus_on_window_activation focus
 
 # Your preferred terminal emulator
-set $term /usr/local/bin/st -f "Iosevka:size:14" -e env TERM=xterm-256color tmux attach
-bindsym $mod+Return exec $term
+set $term ~/.local/bin/run_st.sh
+set $hide_term ~/.local/bin/hide_st.sh
+bindsym $mod+Return exec --no-startup-id $term
 exec --no-startup-id $term
+exec --no-startup-id sleep 2; $hide_term
 
 # Your preferred application launcher
 set $menu rofi -theme Arc-Dark  -show run
@@ -92,13 +94,12 @@ set $tool /home/averrin/projects/i3tools/i3tools
 set $ror /home/averrin/projects/i3tools/i3tools ror
 
 bindsym $mod+v exec --no-startup-id $ror Vivaldi-snapshot vivaldi-snapshot
-bindsym $mod+c exec --no-startup-id $ror Rambox rambox
-# bindsym $mod+s exec /home/alexey.nabrodov@team.wrike.com/.local/bin/slack.sh
-bindsym $mod+d exec --no-startup-id $ror chromium-devel dartium
+# bindsym $mod+c exec --no-startup-id $ror Rambox rambox
+# bindsym $mod+d exec --no-startup-id $ror chromium-devel dartium
 bindsym $mod+Shift+l exec --no-startup-id --no-startup-id dm-tool lock
 bindsym $mod+a exec --no-startup-id $ror Emacs emacs
 bindsym $mod+t exec --no-startup-id $ror TelegramDesktop telegram-desktop
-bindsym $mod+r exec --no-startup-id $ror discord discrod-canary
+bindsym $mod+r exec --no-startup-id $ror discord discord-canary
 
 bindsym Mod1+o move window to output right
 bindsym Mod1+Shift+o move workspace to output right

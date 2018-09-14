@@ -26,7 +26,7 @@ chf() {
 alias !="sudo"
 alias ls="exa --color=always"
 alias la="exa -la --color=always"
-alias cmt="git commit -am"
+alias commit="git commit -am"
 alias push="git push"
 alias pull="git pull"
 alias st="git status --short --branch || ls"
@@ -42,19 +42,6 @@ alias task="blight openTask"
 alias task_link="blight openTask -c"
 alias grep="grep -P"
 alias less="less -R"
-
-commit() {
-    blight commit "$@";
-}
-
-branch() {
-  if [ `git rev-parse --verify $1` ]
-  then
-    git checkout $1
-  else
-    git checkout -b $1; ec ./CHANGELOG.md; git add ./CHANGELOG.md; git commit -m 'create branch'; git push --set-upstream origin $1;
-  fi
-}
 
 tag() {
   git checkout master;
