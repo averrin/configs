@@ -14,13 +14,13 @@ exec --no-startup-id unclutter
 # exec redshift
 exec --no-startup-id feh --bg-scale /home/alexey.nabrodov@team.wrike.com/Downloads/bg.png
 exec --no-startup-id setxkbmap -layout "us,ru" -option "grp:ctrl_shift_toggle,grp_led:scroll,compose:ralt,caps:escape"
-exec --no-startup-id gxkb
-exec --no-startup-id kcminit_startup
-exec --no-startup-id dunst
+# exec --no-startup-id gxkb
+# exec --no-startup-id kcminit_startup
+# exec --no-startup-id dunst
 # exec xautolock -time 5 -locker /home/alexeynabrodov/.local/bin/lock.sh -corners ++++
-exec synclient "TapButton1=1"
-exec synclient "TapButton2=2"
-exec synclient "TapButton3=3"
+# exec synclient "TapButton1=1"
+# exec synclient "TapButton2=2"
+# exec synclient "TapButton3=3"
 exec killall plasmashell
 
 set $mod Mod4
@@ -38,7 +38,7 @@ workspace_auto_back_and_forth yes
 focus_on_window_activation focus
 
 # Your preferred terminal emulator
-set $term /usr/local/bin/st -f "Iosevka:size:14" -e env TERM=xterm-256color tmux
+set $term /usr/local/bin/st -f "Iosevka:size:14" -e env TERM=xterm-256color tmux attach
 bindsym $mod+Return exec $term
 exec --no-startup-id $term
 
@@ -55,7 +55,13 @@ for_window [class=st-256color] move scratchpad
 for_window [class=st-256color] resize set 1920 500
 for_window [class=st-256color] move position 0 0
 for_window [class=st-256color] move output left
-assign [class=st-256color] → output left
+assign     [class=st-256color] → output left
+
+for_window [class=St] move scratchpad
+for_window [class=St] resize set 1920 500
+for_window [class=St] move position 0 0
+for_window [class=St] move output left
+assign     [class=St] → output left
 
 workspace work output right
 assign [class=Slack] → work
@@ -80,8 +86,9 @@ set $ror /home/alexey.nabrodov@team.wrike.com/projects/i3tool/i3tool ror
 
 bindsym $mod+v exec $ror Vivaldi-snapshot vivaldi-snapshot
 bindsym $mod+c exec $ror Rambox rambox
-bindsym $mod+s exec /home/alexey.nabrodov@team.wrike.com/.local/bin/slack.sh
-bindsym $mod+d exec $ror chromium-devel dartium
+# bindsym $mod+s exec /home/alexey.nabrodov@team.wrike.com/.local/bin/slack.sh
+bindsym $mod+s exec $ror Slack slack
+bindsym $mod+d exec $ror Google-chrome google-chrome
 bindsym $mod+Shift+l exec --no-startup-id dm-tool lock
 bindsym $mod+a exec $ror Emacs emacs
 bindsym $mod+t exec $ror TelegramDesktop telegram-desktop

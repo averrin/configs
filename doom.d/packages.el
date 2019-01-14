@@ -16,6 +16,7 @@
 (package! clang-format)
 (package! ccls)
 (package! dired-single)
+(package! spinner)
 
 (package! lsp-ui
   :recipe (:fetcher github

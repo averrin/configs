@@ -1,6 +1,6 @@
 ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="sporty_256"
-plugins=(extract vi-mode zsh-syntax-highlighting z common-aliases history-substring-search command-not-found nvm)
+plugins=(extract vi-mode zsh-syntax-highlighting z common-aliases history-substring-search command-not-found nvm tms zsh-autosuggestions)
 source $ZSH/oh-my-zsh.sh
 
 bindkey "\e[A" history-substring-search-up
@@ -54,7 +54,16 @@ branch() {
   then
     git checkout $1
   else
-    git checkout -b $1; ec ./CHANGELOG.md; git add ./CHANGELOG.md; git commit -m 'create branch'; git push --set-upstream origin $1;
+    git checkout -b $1;
+    # TODO: move to blight for title fetching
+    change="MINOR\n- [https://www.wrike.com/open.htm?id=$(git branch | grep \* | cut -d ' ' -f2 | cut -d '-' -f1)]"
+    original=$(cat ./CHANGELOG.md)
+    echo -e "$change\n\n" > ./CHANGELOG.md
+    echo $original >> ./CHANGELOG.md
+    ec ./CHANGELOG.md;
+    git add ./CHANGELOG.md;
+    git commit -m 'create branch';
+    git push --set-upstream origin $1;
   fi
 }
 

@@ -11,6 +11,7 @@
 (def-package! evil-magit)
 (def-package! lsp-go)
 (def-package! dired-single)
+(def-package! spinner)
 
 ;; (def-package! ivy-posframe
 ;;   :after (ivy)
@@ -40,6 +41,9 @@
   :after lsp-mode
   :hook (lsp-mode . lsp-ui-mode)
 )
+
+  ;; (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
+  ;; (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
 
 (def-package! company-lsp
   :after lsp-mode
@@ -80,22 +84,30 @@
 ;; (load! +dart)
 
 
+(setq lsp-auto-guess-root t)
+(setq lsp-auto-configure t)
 ;; (if (string-equal system-name "spb-anabrodov")
 (defun averrin//dart-mode-enable ()
   "Init dart-mode"
-  (lsp-define-stdio-client
-    lsp-dart-major-mode
-    "dart"
-    (lambda () default-directory)
-    '("~/.pub-cache/bin/dart_language_server"))
+;;   (lsp-define-stdio-client
+;;     lsp-dart-major-mode
+;;     "dart"
+;;     (lambda () default-directory)
+;;     '("~/.pub-cache/bin/dart_language_server"))
+(lsp-define-stdio-client
+ :name lsp-dart
+ :language-id "dart"
+ :command "~/.pub-cache/bin/dart_language_server")
+(lsp-register-client
+ (make-lsp-client :new-connection (lsp-stdio-connection "~/.pub-cache/bin/dart_language_server")
+                  :major-modes '(dart-mode)
+                  :server-id 'lsp-dart))
 
   ;; (push 'dart-mode flycheck-global-modes)
   (set (make-local-variable 'company-backends)
       '(company-lsp (company-dabbrev)))
   (flycheck-mode)
-  (lsp-dart-major-mode-enable)
-  (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
-  (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
+  ;; (lsp-dart-major-mode-enable)
   ;; (setq lsp-ui-sideline-code-actions-prefix "💡 ")
 )
 
