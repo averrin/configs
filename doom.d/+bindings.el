@@ -87,7 +87,7 @@
 
         ;; Most commonly used
         :desc "Save"                    :n "s" #'save-buffer
-        :desc "Comment line"            :nv "l" #'comment-line
+        :desc "Comment line"            :nv "l" #'evil-commentary-line
         :desc "Replace regex"           :n "r" #'anzu-query-replace-regexp
 
         :desc "window"                  :n "w"  evil-window-map

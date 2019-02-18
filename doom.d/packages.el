@@ -23,8 +23,14 @@
            :repo "emacs-lsp/lsp-ui"
            :files ("*")))
 
+;; (package! dart-mode
+;;   :recipe (:fetcher github
+;;            :branch "lite"
+;;            :repo "averrin/dart-mode"
+;;            :files ("*")))
+
 (package! dart-mode
   :recipe (:fetcher github
-           :branch "lite"
-           :repo "averrin/dart-mode"
+           :branch "master"
+           :repo "bradyt/dart-mode"
            :files ("*")))

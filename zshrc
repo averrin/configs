@@ -58,7 +58,7 @@ branch() {
     # TODO: move to blight for title fetching
     change="MINOR\n- [https://www.wrike.com/open.htm?id=$(git branch | grep \* | cut -d ' ' -f2 | cut -d '-' -f1)]"
     original=$(cat ./CHANGELOG.md)
-    echo -e "$change\n\n" > ./CHANGELOG.md
+    echo -e "$change\n" > ./CHANGELOG.md
     echo $original >> ./CHANGELOG.md
     ec ./CHANGELOG.md;
     git add ./CHANGELOG.md;
