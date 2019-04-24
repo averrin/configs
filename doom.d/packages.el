@@ -17,6 +17,7 @@
 (package! ccls)
 (package! dired-single)
 (package! spinner)
+(package! dired-rainbow)
 
 (package! lsp-ui
   :recipe (:fetcher github
