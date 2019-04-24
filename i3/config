@@ -9,19 +9,7 @@
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
-# exec --no-startup-id shadowsocks -c 138.68.190.187:8530 -password "YSNbu4NqAMVEDMZPDDDWrorc7TVEeTAQ5JJ9oiw+7J+CfflAfEem3nMPW1oISfzA" -socks localhost:1080 -verbose -cipher chacha20-ietf-poly1305
 exec --no-startup-id unclutter
-# exec redshift
-# exec --no-startup-id feh --bg-scale /home/averrin/Downloads/bg.png
-# exec --no-startup-id setxkbmap -layout "us,ru" -option "grp:ctrl_shift_toggle,grp_led:scroll,compose:ralt,caps:escape"
-# exec --no-startup-id gxkb
-# exec --no-startup-id kcminit_startup
-# exec --no-startup-id dunst
-# exec xautolock -time 5 -locker /home/alexeynabrodov/.local/bin/lock.sh -corners ++++
-# exec synclient "TapButton1=1"
-# exec synclient "TapButton2=2"
-# exec synclient "TapButton3=3"
-# exec killall plasmashell
 
 set $mod Mod4
 set $up k
@@ -44,6 +32,9 @@ bindsym $mod+Return exec --no-startup-id $term
 exec --no-startup-id $term
 exec --no-startup-id sleep 2; $hide_term
 
+exec --no-startup-id discord-canary
+exec --no-startup-id telegram-desktop
+
 # Your preferred application launcher
 set $menu rofi -theme Arc-Dark  -show run
 set $switcher rofi -theme Arc-Dark -show combi
@@ -60,9 +51,8 @@ for_window [class=st-256color] move output left
 assign [class=st-256color] → output left
 
 for_window [class="plasmashell"] floating enable
+for_window [class="CityGen Viewer"] floating enable
 
-
-# Float by type
 for_window [window_role="pop-up"] floating enable
 for_window [window_role="task_dialog"] floating enable
 for_window [window_type="dialog"] floating enable
@@ -72,14 +62,8 @@ no_focus [class="plasmashell"]
 no_focus [window_role="pop-up"]
 no_focus [window_type="notification"]
 
-workspace work output right
-assign [class=Slack] → work
-assign [class=Slack] → output right
-assign [class=chromium-devel] → work
-assign [class=chromium-devel] → output right
-
 workspace chat output left
-assign [class=Rambox] → chat
+assign [class=discord] → chat
 assign [class=TelegramDesktop] → chat
 
 workspace web output left
@@ -88,6 +72,9 @@ assign [class=Vivaldi-snapshot] → web
 workspace code output left
 assign [class=Emacs] → code
 for_window [class=Emacs] move workspace code
+
+assign [class=Steam] → steam
+for_window [class=Steam] move workspace steam
 
 #::::::::::::::::ROR:::::::::::::::::
 set $tool /home/averrin/projects/i3tools/i3tools
@@ -100,6 +87,7 @@ bindsym $mod+Shift+l exec --no-startup-id --no-startup-id dm-tool lock
 bindsym $mod+a exec --no-startup-id $ror Emacs emacs
 bindsym $mod+t exec --no-startup-id $ror TelegramDesktop telegram-desktop
 bindsym $mod+r exec --no-startup-id $ror discord discord-canary
+bindsym $mod+b exec --no-startup-id $ror plexmediaplayer plexmediaplayer
 
 bindsym Mod1+o move window to output right
 bindsym Mod1+Shift+o move workspace to output right
