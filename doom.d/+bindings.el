@@ -40,12 +40,15 @@
         (:map dired-mode-map
           :n ";" #'evil-window-next
           :n "K" #'dired-single-up-directory
-	  :n "l" #'dired-single-buffer
+          :n "l" #'dired-single-buffer
         ))
 
       ;; --- <leader> -------------------------------------
       (:leader
         :desc "M-x"                     :nv "SPC"  #'execute-extended-command
+
+        :nv "J" #'evil-avy-goto-line
+        :nv "j" #'evil-avy-goto-subword-1
 
         ;; Most commonly used
         :desc "Save"                    :n "s" #'save-buffer
