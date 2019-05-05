@@ -1,6 +1,6 @@
 ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="sporty_256"
-plugins=(extract vi-mode zsh-syntax-highlighting z common-aliases history-substring-search command-not-found nvm)
+plugins=(extract vi-mode z history-substring-search command-not-found nvm)
 source $ZSH/oh-my-zsh.sh
 
 bindkey "\e[A" history-substring-search-up
@@ -10,7 +10,7 @@ bindkey "^n" history-substring-search-down
 bindkey "\eOA" history-substring-search-up
 bindkey "\eOB" history-substring-search-down
 
-eval `dircolors ~/.dircolors.256dark`
+#eval `dircolors ~/.dircolors.256dark`
 source "/usr/lib/python3.7/site-packages/powerline/bindings/zsh/powerline.zsh"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -34,24 +34,54 @@ alias dff='git diff --color | diff-so-fancy | less'
 
 alias ch="git checkout"
 alias master="git checkout master"
-alias e.="nohup emacs . >/dev/null 2>&1 &"
+#alias e.="nohup emacs . >/dev/null 2>&1 &"
 alias ec="emacs -nw"
-alias x="xdg-open"
+alias x="open"
 
 alias task="blight openTask"
 alias task_link="blight openTask -c"
-alias grep="grep -P"
 alias less="less -R"
+
+
+# ls, the common ones I use a lot shortened for rapid fire usage
+alias l='ls -lFh'     #size,show type,human readable
+alias la='ls -lAFh'   #long list,show almost all,show type,human readable
+alias lr='ls -tRFh'   #sorted by date,recursive,show type,human readable
+alias lt='ls -ltFh'   #long list,sorted by date,show type,human readable
+alias ll='ls -l'      #long list
+alias ldot='ls -ld .*'
+alias lS='ls -1FSsh'
+alias lart='ls -1Fcart'
+alias lrt='ls -1Fcrt'
+
+alias zshrc='${=EDITOR} ~/.zshrc' # Quick access to the ~/.zshrc file
+
+alias grep='grep --color'
+alias sgrep='grep -R -n -H -C 5 --exclude-dir={.git,.svn,CVS} '
+
+alias t='tail -f'
+
+# Command line head / tail shortcuts
+alias -g H='| head'
+alias -g T='| tail'
+alias -g G='| grep'
+alias -g L="| less"
+alias -g M="| most"
+alias -g LL="2>&1 | less"
+alias -g CA="2>&1 | cat -A"
+alias -g NE="2> /dev/null"
+alias -g NUL="> /dev/null 2>&1"
+alias -g P="2>&1| pygmentize -l pytb"
+
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
 
 tag() {
   git checkout master;
   git pull;
   git tag $1;
   git push --tags;
-}
-
-e() {
-    nohup emacs $1 >/dev/null 2>&1 &;
 }
 
 alias stash="git stash"

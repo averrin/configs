@@ -10,6 +10,12 @@
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
 exec --no-startup-id unclutter
+# exec --no-startup-id gxkb
+# exec --no-startup-id kcminit_startup
+# exec --no-startup-id dunst
+exec synclient "TapButton1=1"
+exec synclient "TapButton2=2"
+exec synclient "TapButton3=3"
 
 set $mod Mod4
 set $up k
@@ -26,7 +32,7 @@ workspace_auto_back_and_forth yes
 focus_on_window_activation focus
 
 # Your preferred terminal emulator
-set $term ~/.local/bin/run_st.sh
+set $term /usr/local/bin/st -f "Iosevka:size:14" -e env TERM=xterm-256color tmux attach
 set $hide_term ~/.local/bin/hide_st.sh
 bindsym $mod+Return exec --no-startup-id $term
 exec --no-startup-id $term
@@ -48,7 +54,7 @@ for_window [class=st-256color] move scratchpad
 for_window [class=st-256color] resize set 1920 500
 for_window [class=st-256color] move position 0 0
 for_window [class=st-256color] move output left
-assign [class=st-256color] → output left
+assign     [class=st-256color] → output left
 
 for_window [class="plasmashell"] floating enable
 for_window [class="CityGen Viewer"] floating enable
@@ -57,6 +63,8 @@ for_window [window_role="pop-up"] floating enable
 for_window [window_role="task_dialog"] floating enable
 for_window [window_type="dialog"] floating enable
 for_window [window_type="menu"] floating enable
+
+for_window [title="Emulator"] floating enable
 
 no_focus [class="plasmashell"]
 no_focus [window_role="pop-up"]
