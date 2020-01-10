@@ -13,9 +13,9 @@ exec --no-startup-id unclutter
 # exec --no-startup-id gxkb
 # exec --no-startup-id kcminit_startup
 # exec --no-startup-id dunst
-exec synclient "TapButton1=1"
-exec synclient "TapButton2=2"
-exec synclient "TapButton3=3"
+# exec synclient "TapButton1=1"
+# exec synclient "TapButton2=2"
+# exec synclient "TapButton3=3"
 
 set $mod Mod4
 set $up k
@@ -50,13 +50,21 @@ for_window [class="^.*"] border pixel 1
 new_window pixel 1
 new_float normal
 
+# read 1 character and mark the current window with this character
+bindsym $mod+m exec i3-input -F 'mark %s' -l 1 -P 'Mark: '
+
+# read 1 character and go to the window with the character
+bindsym $mod+g exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Goto: '
+
 for_window [class=st-256color] move scratchpad
 for_window [class=st-256color] resize set 1920 500
 for_window [class=st-256color] move position 0 0
 for_window [class=st-256color] move output left
 assign     [class=st-256color] → output left
+assign     [class=st-256color] sticky enable
 
 for_window [class="plasmashell"] floating enable
+# for_window [class="plasmashell"] move position 0 38
 for_window [class="CityGen Viewer"] floating enable
 
 for_window [window_role="pop-up"] floating enable
@@ -69,6 +77,7 @@ for_window [title="Emulator"] floating enable
 no_focus [class="plasmashell"]
 no_focus [window_role="pop-up"]
 no_focus [window_type="notification"]
+for_window [window_type="notification"] move position 1500 38
 
 workspace chat output left
 assign [class=discord] → chat
@@ -245,3 +254,4 @@ bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+minus scratchpad show
 
 bindsym $mod+Shift+r mode "resize"
+bindsym $mod+w sticky toggle

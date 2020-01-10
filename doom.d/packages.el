@@ -22,7 +22,7 @@
 (package! diredfl)
 
 (package! lsp-ui
-  :recipe (:fetcher github
+  :recipe (:host github
            :repo "emacs-lsp/lsp-ui"
            :files ("*")))
 
@@ -33,7 +33,7 @@
 ;;            :files ("*")))
 
 (package! dart-mode
-  :recipe (:fetcher github
+  :recipe (:host github
            :branch "master"
            :repo "bradyt/dart-mode"
            :files ("*")))

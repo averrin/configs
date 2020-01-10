@@ -4,17 +4,16 @@
 
 (load! "+bindings")
 
-(def-package! centered-cursor-mode)
-(def-package! highlight-indent-guides)
-(def-package! evil-magit)
-;;(def-package! lsp-go)
-(def-package! dired-single)
-(def-package! spinner)
-(def-package! dart-mode)
+(use-package! centered-cursor-mode)
+(use-package! highlight-indent-guides)
+(use-package! evil-magit)
+(use-package! dired-single)
+(use-package! spinner)
+(use-package! dart-mode)
 (add-hook 'dart-mode-hook 'lsp)
-(def-package! diredfl)
+(use-package! diredfl)
 (diredfl-global-mode t)
-(def-package! perfect-margin)
+(use-package! perfect-margin)
 ;; (perfect-margin-mode 1)
 (defcustom perfect-margin-ignore-regexps
   '("^minibuf" "^[*]")
@@ -22,7 +21,7 @@
 Each string is used as regular expression to match the window buffer name."
   :group 'perfect-margin)
 
-(def-package! dired-rainbow
+(use-package! dired-rainbow
   :config
     (progn
         (dired-rainbow-define-chmod directory "#6cb2eb" "d.*")
@@ -56,18 +55,8 @@ Each function is called with window as its sole arguemnt, returning a non-nil va
 
 (setq lsp-auto-guess-root t)
 
-(def-package! cquery
-  :hook (c-mode-common . +cc|init-cquery)
-  :config
-  (defun +cc|init-cquery ()
-    (when (memq major-mode '(c-mode c++-mode))
-      (flycheck-mode)
-      (lsp-cquery-enable)))
-  (setq cquery-executable "~/.local/bin/cquery"))
-
-
-(def-package! lsp-mode)
-(def-package! lsp-ui
+(use-package! lsp-mode)
+(use-package! lsp-ui
   :after lsp-mode
   :hook (lsp-mode . lsp-ui-mode)
 )
@@ -75,25 +64,20 @@ Each function is called with window as its sole arguemnt, returning a non-nil va
 ;  (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
  ; (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
 
-(def-package! company-lsp
+(use-package! company-lsp
   :after lsp-mode
   :config
     (push 'company-lsp company-backends))
 
-(setq ccls-executable "/usr/sbin/ccls")
+(setq ccls-executable "/usr/bin/ccls")
+(setq vhdl-tool-bin-name "/usr/bin/vhdl-tool")
 
-(def-package! clang-format
+(use-package! clang-format
   :commands (clang-format-region)
   )
 
 
-(setq lsp-auto-guess-root t)
 (setq lsp-auto-configure t)
-
-;; (defun my-set-projectile-root ()
-;;   (when lsp--cur-workspace
-;;     (setq projectile-project-root (lsp--workspace-root lsp--cur-workspace))))
-;; (add-hook 'lsp-before-open-hook #'my-set-projectile-root)
 
 ;; ;;
 ;; Config
@@ -118,6 +102,8 @@ Each function is called with window as its sole arguemnt, returning a non-nil va
 (auto-save-visited-mode t)
 
 (setq doom-font (font-spec :family "Iosevka" :size 14))
+;; (setq doom-font (font-spec :family "Hack" :size 14))
+
 (setq doom-theme 'doom-tomorrow-night)
 (doom-themes-visual-bell-config)
 
@@ -184,12 +170,6 @@ Each function is called with window as its sole arguemnt, returning a non-nil va
 (setq show-trailing-whitespace t)
 (add-hook! '(minibuffer-setup-hook doom-popup-mode-hook)
   (setq-local show-trailing-whitespace nil))
-
-;; ;; Magit config
-;; (after! magit
-;;   ;; Show differences at the word level when a hunk is selected.
-;;   (setq magit-diff-refine-hunk t))
-;; (add-hook! magit-mode (visual-line-mode +1))
 
 (after! whitespace
   (advice-remove #'company-box--make-frame #'doom*fix-whitespace-mode-in-childframes)

@@ -117,6 +117,7 @@
           :desc "Sudo edit this file"     :n "S" #'doom/sudo-this-file)
 
         (:desc "code" :prefix "c"
+          :desc "Format"                    :n  "f" #'lsp-format-buffer
           :desc "List errors"               :n  "x" #'flycheck-list-errors
           :desc "Evaluate buffer/region"    :n  "e" #'+eval/buffer
                                             :v  "e" #'+eval/region
