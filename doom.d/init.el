@@ -3,13 +3,6 @@
 
 (doom! :feature
        ;;debugger          ; FIXME stepping through code, to help you add bugs
-       eval              ; run code, run (also, repls)
-       (evil +everywhere); come to the dark side, we have cookies
-       file-templates    ; auto-snippets for empty files
-       (lookup           ; helps you navigate your code and documentation
-        +docsets)        ; ...or in Dash docsets locally
-       snippets          ; my elves. They type so I don't have to
-       workspaces        ; tab emulation, persistence & separate workspaces
 
        :completion
        company           ; the ultimate code completion backend
@@ -18,11 +11,13 @@
        ivy              ; a search engine for love and life
 
        :ui
+       ophints
+       workspaces        ; tab emulation, persistence & separate workspaces
        ;;deft              ; notational velocity for Emacs
        doom              ; what makes DOOM look the way it does
        ;; doom-dashboard    ; a nifty splash screen for Emacs
        ;; doom-quit         ; DOOM quit-message prompts when you quit Emacs
-       evil-goggles      ; display visual hints when editing in evil
+       ;; evil-goggles      ; display visual hints when editing in evil
        ;;fill-column       ; a `fill-column' indicator
        hl-todo           ; highlight TODO/FIXME/NOTE tags
        ;;indent-guides     ; highlighted indent columns
@@ -41,6 +36,9 @@
        window-select     ; visually switch windows
 
        :editor
+       snippets          ; my elves. They type so I don't have to
+       file-templates    ; auto-snippets for empty files
+       (evil +everywhere); come to the dark side, we have cookies
        fold              ; (nigh) universal code folding
        ;;(format +onsave)  ; automated prettiness
        ;;lispy             ; vim for lisp, for people who dont like vim
@@ -55,11 +53,13 @@
         )
        electric          ; smarter, keyword-based electric-indent
        ;;eshell            ; a consistent, cross-platform shell (WIP)
-       imenu             ; an imenu sidebar and searchable code index
+       ;; imenu             ; an imenu sidebar and searchable code index
        ;;term              ; terminals in Emacs
        vc                ; version-control and Emacs, sitting in a tree
 
        :tools
+       (lookup           ; helps you navigate your code and documentation
+        +docsets)        ; ...or in Dash docsets locally
        ;;ansible
        ;;docker
        editorconfig      ; let someone else argue about tabs vs spaces
@@ -83,7 +83,7 @@
 
        :lang
        ;;assembly          ; assembly for fun or debugging
-       (cc +irony +rtags); C/C++/Obj-C madness
+       (cc +irony +rtags +lsp); C/C++/Obj-C madness
        ;;clojure           ; java with a lisp
        ;;common-lisp       ; if you've seen one lisp, you've seen them all
        ;;coq               ; proofs-as-programs

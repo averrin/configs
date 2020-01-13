@@ -11,11 +11,11 @@ export OVERRIDE_WRIKE_DART_DEPS_BRANCH=true
 export DART_FLAGS="--checked"
 export PUB_HOSTED_URL=http://pub-dev.wrke.in
 
-export GOPATH=/Users/alexey.nabrodov/Projects/go;
-
+export GOPATH="/Users/wrikeczech/go"
 export PATH="$PATH":"$GOPATH/bin"
 export PATH="$PATH":"$HOME/.pub-cache/bin"
 export PATH="$PATH":"$HOME/.cargo/bin"
 export PATH="$PATH":"$HOME/Projects/powerline/scripts"
 export PATH="$PATH":"$HOME/.local/bin"
 export PATH="$PATH":"$HOME/.local/share/flutter/bin"
+export PATH="/usr/local/sbin:$PATH"

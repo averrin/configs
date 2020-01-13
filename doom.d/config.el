@@ -6,13 +6,13 @@
 ;;(load! "+icons-in-terminal")
 ;;(load! "+symbols")
 
-(def-package! centered-cursor-mode)
-(def-package! highlight-indent-guides)
-(def-package! evil-magit)
-;;(def-package! lsp-go)
-(def-package! dired-single)
-(def-package! spinner)
-(def-package! dart-mode)
+(use-package! centered-cursor-mode)
+(use-package! highlight-indent-guides)
+(use-package! evil-magit)
+;;(use-package! lsp-go)
+(use-package! dired-single)
+(use-package! spinner)
+(use-package! dart-mode)
 (add-hook 'dart-mode-hook 'lsp)
 
 (when (string= system-type "darwin")
@@ -20,7 +20,7 @@
 
 (setq dired-k-human-readable t)
 
-(def-package! dired-rainbow)
+(use-package! dired-rainbow)
   ;; :config
     ;; (progn
         (dired-rainbow-define-chmod directory "#6cb2eb" "d.*")
@@ -51,7 +51,7 @@
   (add-to-list 'projectile-project-root-files-bottom-up "BUILD"))
 
 (setq lsp-auto-guess-root t)
-;; (def-package! ivy-posframe
+;; (use-package! ivy-posframe
 ;;   :after (ivy)
 ;;   :config
 ;;   (setq ivy-display-function nil
@@ -64,18 +64,10 @@
 ;;         ivy-posframe-font (font-spec :family "Iosevka" :size 14 :width 'extra-condensed :weight 'normal :slant 'normal))
 ;;   (ivy-posframe-enable))
 
-(def-package! cquery
-  :hook (c-mode-common . +cc|init-cquery)
-  :config
-  (defun +cc|init-cquery ()
-    (when (memq major-mode '(c-mode c++-mode))
-      (flycheck-mode)
-      (lsp-cquery-enable)))
-  (setq cquery-executable "~/.local/bin/cquery"))
+(setq ccls-executable "/usr/local/bin/ccls")
 
-
-(def-package! lsp-mode)
-(def-package! lsp-ui
+(use-package! lsp-mode)
+(use-package! lsp-ui
   :after lsp-mode
   :hook (lsp-mode . lsp-ui-mode)
 )
@@ -83,76 +75,17 @@
 ;  (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
  ; (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
 
-(def-package! company-lsp
+(use-package! company-lsp
   :after lsp-mode
   :config
     (push 'company-lsp company-backends))
 
-(setq ccls-executable "/usr/sbin/ccls")
-
-(def-package! clang-format
+(use-package! clang-format
   :commands (clang-format-region)
   )
 
-;; (def-package! ccls
-;;   :init (add-hook! (c-mode c++-mode objc-mode) #'lsp-ccls-enable)
-;;   :when (featurep! :lang cc)
-;;   :after-call (c-mode c++-mode c-mode)
-;;   :commands lsp-ccls-enable
-;;   :hook ((c-mode . +lsp-ccls//c-modes)
-;;          (c++-mode . +lsp-ccls//c-modes))
-;;   :config
-;;   ;; overlay is slow
-;;   ;; Use https://github.com/emacs-mirror/emacs/commits/feature/noverlay
-;;   (setq ccls-sem-highlight-method 'font-lock)
-;;   (ccls-use-default-rainbow-sem-highlight)
-;;   ;; https://github.com/maskray/ccls/blob/master/src/config.h
-;;   (setq ccls-extra-init-params '(
-;;           :completion (:detailedLabel t)
-;;           :diagnostics (:frequencyMs 5000)
-;;           :index (:reparseForDependency 1)))
-
-;;   (with-eval-after-load 'projectile
-;;     (add-to-list 'projectile-globally-ignored-directories ".ccls-cache"))
-
-;;   (evil-set-initial-state 'ccls-tree-mode 'emacs)
-;;   (set-company-backend! '(c-mode c++-mode) 'company-lsp)
-;;   )
-
-;; (load! +dart)
-
-
 (setq lsp-auto-guess-root t)
 (setq lsp-auto-configure t)
-;; (if (string-equal system-name "spb-anabrodov")
-;; (defun averrin//dart-mode-enable ()
-;;   "Init dart-mode"
-;; ;;   (lsp-define-stdio-client
-;; ;;     lsp-dart-major-mode
-;; ;;     "dart"
-;; ;;     (lambda () default-directory)
-;; ;;     '("~/.pub-cache/bin/dart_language_server"))
-;; (lsp-define-stdio-client
-;;  :name lsp-dart
-;;  :language-id "dart"
-;;  :command "~/.pub-cache/bin/dart_language_server")
-;; (lsp-register-client
-;;  (make-lsp-client :new-connection (lsp-stdio-connection "~/.pub-cache/bin/dart_language_server")
-;;                   :major-modes '(dart-mode)
-;;                   :server-id 'lsp-dart))
-
-;;   ;; (push 'dart-mode flycheck-global-modes)
-;;   (set (make-local-variable 'company-backends)
-;;       '(company-lsp (company-dabbrev)))
-;;   (flycheck-mode)
-;;   ;; (lsp-dart-major-mode-enable)
-;;   ;; (setq lsp-ui-sideline-code-actions-prefix "💡 ")
-;; )
-
-;; (def-package! dart-mode
-;;     :after company-lsp
-;;     :hook (dart-mode . averrin//dart-mode-enable)
-;; )
 
 (defun my-set-projectile-root ()
   (when lsp--cur-workspace
@@ -166,7 +99,21 @@
 (setq highlight-indent-guides-method 'character)
 (add-hook! prog-mode 'highlight-indent-guides-mode)
 (setq dired-listing-switches "-alFh")
+;; (setq dired-listing-switches "-alFh --group-directories-first")
 (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1)
+
+(defun mydired-sort ()
+  "Sort dired listings with directories first."
+  (save-excursion
+    (let (buffer-read-only)
+      (forward-line 2) ;; beyond dir. header
+      (sort-regexp-fields t "^.*$" "[ ]*." (point) (point-max)))
+    (set-buffer-modified-p nil)))
+
+(defadvice dired-readin
+  (after dired-after-updating-hook first () activate)
+  "Sort dired listings with directories first before adding marks."
+  (mydired-sort))
 
 (defun save-all ()
   (interactive)
@@ -182,13 +129,13 @@
 (add-hook 'auto-save-hook 'full-auto-save)
 (auto-save-visited-mode t)
 
-(setq doom-font (font-spec :family "Iosevka" :size 14))
+;; (setq doom-font (font-spec :family "Iosevka" :size 14))
 (setq doom-theme 'doom-tomorrow-night)
 (doom-themes-visual-bell-config)
 
 (global-centered-cursor-mode +1)
 (setq doom-line-numbers-style 'relative)
-(add-hook! dart-mode #'doom|enable-line-numbers)
+;; (add-hook! dart-mode #'doom|enable-line-numbers)
 
 (setq buffer-save-without-query t)
 (setq frame-title-format "doom | %b")

@@ -11,7 +11,7 @@ bindkey "\eOA" history-substring-search-up
 bindkey "\eOB" history-substring-search-down
 
 #eval `dircolors ~/.dircolors.256dark`
-. /Users/alexey.nabrodov/Library/Python/3.7/lib/python/site-packages/powerline/bindings/zsh/powerline.zsh
+. /usr/local/lib/python3.7/site-packages/powerline/bindings/zsh/powerline.zsh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -45,7 +45,7 @@ alias less="less -R"
 
 # ls, the common ones I use a lot shortened for rapid fire usage
 alias l='ls -lFh'     #size,show type,human readable
-alias la='ls -lAFh'   #long list,show almost all,show type,human readable
+# alias la='ls -lAFh'   #long list,show almost all,show type,human readable
 alias lr='ls -tRFh'   #sorted by date,recursive,show type,human readable
 alias lt='ls -ltFh'   #long list,sorted by date,show type,human readable
 alias ll='ls -l'      #long list
@@ -112,6 +112,4 @@ alias merge="git checkout master; git pull; git checkout -; git merge master --n
 
 export KEYTIMEOUT=1
 . ~/.zshenv
-#. ~/projects/icons-in-terminal/build/icons_bash_export.sh
 
-PATH=$PATH:/home/alexeynabrodov/.local/share;export PATH; # ADDED BY INSTALLER - DO NOT EDIT OR DELETE THIS COMMENT - 87FF8EFC-483D-BCAA-D67D-735CF60410D1 885C7A40-D2F8-9B76-A9D2-25172514BFBA

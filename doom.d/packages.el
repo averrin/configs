@@ -7,7 +7,7 @@
 (package! highlight-indent-guides)
 (package! ivy-posframe)
 (package! lsp-mode)
-(package! lsp-go)
+;; (package! lsp-go)
 ;; (package! lsp-ui)
 (package! cquery)
 (package! company-lsp)
@@ -20,7 +20,7 @@
 (package! dired-rainbow)
 
 (package! lsp-ui
-  :recipe (:fetcher github
+  :recipe (:host github
            :repo "emacs-lsp/lsp-ui"
            :files ("*")))
 
@@ -31,7 +31,7 @@
 ;;            :files ("*")))
 
 (package! dart-mode
-  :recipe (:fetcher github
+  :recipe (:host github
            :branch "master"
            :repo "bradyt/dart-mode"
            :files ("*")))
