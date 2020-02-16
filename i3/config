@@ -32,7 +32,8 @@ workspace_auto_back_and_forth yes
 focus_on_window_activation focus
 
 # Your preferred terminal emulator
-set $term /usr/local/bin/st -f "Iosevka:size:14" -e env TERM=xterm-256color tmux attach
+# set $term /usr/local/bin/st -f "Iosevka:size:14" -e env TERM=xterm-256color tmux attach
+set $term /usr/bin/kitty -d "/home/averrin" ~/.local/bin/tmux.sh
 set $hide_term ~/.local/bin/hide_st.sh
 bindsym $mod+Return exec --no-startup-id $term
 exec --no-startup-id $term
@@ -62,6 +63,13 @@ for_window [class=st-256color] move position 0 0
 for_window [class=st-256color] move output left
 assign     [class=st-256color] → output left
 assign     [class=st-256color] sticky enable
+
+for_window [class=kitty] move scratchpad
+for_window [class=kitty] resize set 1920 500
+for_window [class=kitty] move position 0 0
+for_window [class=kitty] move output left
+assign     [class=kitty] → output left
+assign     [class=kitty] sticky enable
 
 for_window [class="plasmashell"] floating enable
 # for_window [class="plasmashell"] move position 0 38

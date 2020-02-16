@@ -3,6 +3,7 @@
 ;;
 
 (load! "+bindings")
+(load! "+font")
 
 (use-package! centered-cursor-mode)
 (use-package! highlight-indent-guides)
@@ -20,6 +21,19 @@
   "List of strings to determine if window is ignored.
 Each string is used as regular expression to match the window buffer name."
   :group 'perfect-margin)
+
+(use-package! emojify)
+(setq emojify-display-style "image")
+
+(use-package! dimmer)
+(dimmer-configure-which-key)
+(dimmer-configure-helm)
+(dimmer-mode t)
+(setq dimmer-fraction 0.3)
+
+(use-package! all-the-icons-ibuffer
+  :ensure t
+  :init (all-the-icons-ibuffer-mode 1))
 
 (use-package! dired-rainbow
   :config
@@ -101,10 +115,6 @@ Each function is called with window as its sole arguemnt, returning a non-nil va
 (add-hook 'auto-save-hook 'full-auto-save)
 (auto-save-visited-mode t)
 
-(setq doom-font (font-spec :family "Iosevka" :size 14))
-;; (setq doom-font (font-spec :family "Hack" :size 14))
-
-(setq doom-theme 'doom-tomorrow-night)
 (doom-themes-visual-bell-config)
 
 (global-centered-cursor-mode +1)

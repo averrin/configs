@@ -3,6 +3,18 @@
 ;;
 ;; Bindings
 ;;
+(defun window-half-height ()
+     (max 1 (/ (1- (window-height (selected-window))) 2)))
+
+   (defun scroll-up-half ()
+     (interactive)
+     (scroll-up (window-half-height)))
+
+   (defun scroll-down-half ()
+     (interactive)
+     (scroll-down (window-half-height)))
+
+
 (defun append-semicolon-insert ()
   (interactive)
   (if (looking-at-p ".*;[ \t]*$")
@@ -32,6 +44,9 @@
       :i "C-j" #'append-semicolon-insert
       :n "C-j" #'append-semicolon-normal
 
+      ;; :n "M-j" #'scroll-down-half
+      ;; :n "M-k" #'scroll-up-half
+
       ;; My page scrolling
       :nv "C-SPC" #'evil-scroll-page-down
       :nv "C-S-SPC" #'evil-scroll-page-up
@@ -52,7 +67,7 @@
 
         ;; Most commonly used
         :desc "Save"                    :n "s" #'save-buffer
-        :desc "Comment line"            :nv "l" #'evil-commentary-line
+        :desc "Comment line"            :nv "l" #'evilnc-comment-or-uncomment-lines
         :desc "Replace regex"           :n "r" #'anzu-query-replace-regexp
 
         :desc "window"                  :n "w"  evil-window-map

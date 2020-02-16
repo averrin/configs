@@ -20,6 +20,9 @@
 (package! dired-rainbow)
 (package! perfect-margin)
 (package! diredfl)
+(package! emojify)
+(package! dimmer)
+(package! all-the-icons-ibuffer)
 
 (package! lsp-ui
   :recipe (:host github
